@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "World Harvest Impact 2026",
-  description: "World Harvest mid-year impact report across five nations.",
+  title: "Global Missions Impact 2026",
+  description: "Global Missions mid-year impact report across five nations.",
 };
 
 export default function RootLayout({

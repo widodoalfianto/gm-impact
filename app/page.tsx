@@ -15,40 +15,27 @@ if (typeof document !== "undefined" && !document.getElementById("wh-font")) {
 const SERIF = "'Playfair Display', Georgia, serif";
 const SANS = "'Plus Jakarta Sans', system-ui, sans-serif";
 
-const THEMES = {
-  "Harvest Warm": {
-    bg: "#FBF8F4", bgAlt: "#F0E8DC", bgCard: "#E8DDD0",
-    nav: "#1C1B1A", navText: "#F8F4EE",
-    text: "#1C1B1A", textSub: "#5A4F46", textMuted: "#9A9188",
-    accent: "#C4714A", accentLight: "#F5DDD0",
-    gold: "#C89B50", divider: "#DDD5C9",
-    heroBg: "#1C1B1A", heroAccent: "#C89B50", stat: "#C4714A",
-    badge: "#F0E8DC", badgeText: "#7A5A3A",
-    inputBg: "#FBF8F4",
-  },
-  "Midnight Mission": {
-    bg: "#181614", bgAlt: "#211E1B", bgCard: "#2A2622",
-    nav: "#0F0D0B", navText: "#F4EFE8",
-    text: "#F4EFE8", textSub: "#C4BCB3", textMuted: "#7A7268",
-    accent: "#D4A96A", accentLight: "#3A2D1F",
-    gold: "#D4A96A", divider: "#3A3630",
-    heroBg: "#0F0D0B", heroAccent: "#D4A96A", stat: "#D4A96A",
-    badge: "#2A2622", badgeText: "#C4A060",
-    inputBg: "#181614",
-  },
-  "Sage & Stone": {
-    bg: "#F5F7F2", bgAlt: "#E8EDE3", bgCard: "#DCE5D6",
-    nav: "#1D2419", navText: "#F5F7F2",
-    text: "#1D2419", textSub: "#3A5034", textMuted: "#7A8E72",
-    accent: "#5B7B4E", accentLight: "#D5E6CF",
-    gold: "#8BA65A", divider: "#CDD8C5",
-    heroBg: "#1D2419", heroAccent: "#A3C88A", stat: "#5B7B4E",
-    badge: "#DCE5D6", badgeText: "#3A5A2A",
-    inputBg: "#F5F7F2",
-  },
+const SHARE_URL = "https://gm-impact.vercel.app";
+const SHARE_LABEL = "gm-impact.vercel.app";
+const ENCODED_SHARE_URL = encodeURIComponent(SHARE_URL);
+
+const THEME = {
+  bg: "#FBF8F4", bgAlt: "#F0E8DC", bgCard: "#E8DDD0",
+  nav: "#1C1B1A", navText: "#F8F4EE",
+  text: "#1C1B1A", textSub: "#5A4F46", textMuted: "#9A9188",
+  accent: "#C4714A", accentLight: "#F5DDD0",
+  gold: "#C89B50", divider: "#DDD5C9",
+  heroBg: "#1C1B1A", heroAccent: "#C89B50", stat: "#C4714A",
+  badge: "#F0E8DC", badgeText: "#7A5A3A",
+  inputBg: "#FBF8F4",
 };
 
-type ThemeName = keyof typeof THEMES;
+const NAV_ITEMS = [
+  { label: "Impact", href: "#impact" },
+  { label: "Regions", href: "#regions" },
+  { label: "Planters", href: "#planters" },
+  { label: "Next Steps", href: "#next-steps" },
+];
 
 const STATS = [
   { num: "5", label: "Nations Reached" },
@@ -61,45 +48,43 @@ const STATS = [
 
 const REGIONS = [
   {
-    flag: "🇳🇵", name: "Nepal", sub: "Leadership & Medical Outreach",
+    flag: "🇳🇵", name: "Nepal", sub: "Leadership & Medical Outreach", mediaHref: "#visuals",
     stats: [{ n: "46", l: "Pastors Equipped" }, { n: "675", l: "Medically Served" }, { n: "42", l: "Salvations" }],
-    bullets: ["1,000 Bibles distributed", "16 baptisms conducted", "200 backpacks for children", "4 motorcycles for remote pastors"],
+    bullets: ["46 pastors equipped", "675 people medically served", "42 salvations", "1,000 Bibles distributed", "16 baptisms conducted", "200 backpacks for children", "4 motorcycles for remote pastors"],
   },
   {
-    flag: "🇩🇿", name: "Algeria", sub: "Underground Church Strengthening",
+    flag: "🇩🇿", name: "Algeria", sub: "Underground Church Strengthening", mediaHref: "#visuals",
     stats: [{ n: "107", l: "Leaders Trained" }, { n: "5", l: "House Churches" }],
-    bullets: ["Three regions: Kabylia, Bejaia, and Oran", "Ministry continues under sensitive conditions"],
+    bullets: ["107 leaders trained", "5 house churches strengthened", "Three regions served: Kabylia, Bejaia, and Oran", "Ministry continues under sensitive conditions"],
   },
   {
-    flag: "🇮🇩", name: "Indonesia", sub: "Aceh & Malay Unreached Peoples",
+    flag: "🇮🇩", name: "Indonesia", sub: "Aceh & Malay Unreached Peoples", mediaHref: "#visuals",
     stats: [{ n: "24", l: "Professions of Faith" }, { n: "11", l: "Baptisms" }],
-    bullets: ["Active in multiple unreached villages", "Households of Peace established", "Medical, solar panel & children's programs"],
+    bullets: ["24 professions of faith", "11 baptisms", "Active in multiple unreached villages", "Households of Peace established", "Medical outreach, solar panels, and children's programs supported"],
   },
   {
-    flag: "🇦🇫", name: "Afghanistan", sub: "Household-Based Discipleship",
+    flag: "🇦🇫", name: "Afghanistan", sub: "Household-Based Discipleship", mediaHref: "#visuals",
     stats: [{ n: "127", l: "Believers Discipled" }, { n: "27", l: "Households" }, { n: "6", l: "Baptisms" }],
-    bullets: ["Discipleship across 27 households", "6 baptisms conducted in Kabul"],
+    bullets: ["127 believers discipled", "27 households reached through discipleship", "6 baptisms conducted in Kabul"],
   },
   {
-    flag: "🇸🇴", name: "Somalia", sub: "House Church Network Growth",
+    flag: "🇸🇴", name: "Somalia", sub: "House Church Network Growth", mediaHref: "#visuals",
     stats: [{ n: "116", l: "House Churches" }, { n: "11", l: "Baptisms" }, { n: "10", l: "Pastors Training" }],
-    bullets: ["Decentralized discipleship network", "Growing leadership pipeline"],
+    bullets: ["116 house churches supported", "11 baptisms", "10 pastors in training", "Decentralized discipleship network", "Growing leadership pipeline"],
   },
 ];
 
 const SOCIALS = [
-  { name: "Facebook", icon: "f", url: "https://www.facebook.com/worldharvestindonesia" },
-  { name: "Instagram", icon: "◎", url: "https://www.instagram.com/worldharvestind" },
-  { name: "YouTube", icon: "▶", url: "https://www.youtube.com/channel/UCA9-atJcDfmDUbM-p98xcRA" },
-  { name: "Twitter/X", icon: "𝕏", url: "https://www.twitter.com/WorldHarvestInd" },
+  { name: "Photos", icon: "□", url: "#visuals" },
+  { name: "Videos", icon: "▶", url: "#visuals" },
+  { name: "Updates", icon: "•", url: "#next-steps" },
 ];
 
-export default function WHMockup() {
-  const [tn, setTn] = useState<ThemeName>("Harvest Warm");
+export default function GlobalMissionsImpactPage() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [giveAmt, setGiveAmt] = useState<number | null>(50);
   const [customAmt, setCustomAmt] = useState<string>("");
-  const T = THEMES[tn];
+  const T = THEME;
 
   const tagStyle: React.CSSProperties = {
     display: "inline-flex", alignItems: "center", gap: 7,
@@ -156,29 +141,6 @@ export default function WHMockup() {
 
   return (
     <div style={{ fontFamily: SANS, background: T.bg, color: T.text, minHeight: "100vh" }}>
-
-      {/* ── THEME SWITCHER ── */}
-      <div style={{
-        position: "sticky", top: 0, zIndex: 999,
-        background: "#0A0908", display: "flex",
-        alignItems: "center", padding: "8px 16px",
-        gap: 8, flexWrap: "wrap",
-      }}>
-        <span style={{ color: "#666", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", marginRight: 4, fontFamily: SANS }}>Color Theme</span>
-        {Object.keys(THEMES).map(name => (
-          <button key={name} onClick={() => setTn(name as ThemeName)} style={{
-            background: tn === name ? "#fff" : "transparent",
-            color: tn === name ? "#000" : "#888",
-            border: `1px solid ${tn === name ? "#fff" : "#555"}`,
-            borderRadius: 16, padding: "3px 14px",
-            fontSize: 11, cursor: "pointer",
-            fontFamily: SANS, fontWeight: tn === name ? 700 : 400,
-            transition: "all 0.15s",
-          }}>{name}</button>
-        ))}
-        <span style={{ marginLeft: "auto", color: "#666", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: SANS }}>Click region cards to expand ↓</span>
-      </div>
-
       {/* ── NAV ── */}
       <nav style={{
         background: T.nav, color: T.navText,
@@ -192,23 +154,23 @@ export default function WHMockup() {
             background: T.accent, display: "flex",
             alignItems: "center", justifyContent: "center",
             fontFamily: SERIF, fontSize: 14, color: "#fff", fontWeight: 700,
-          }}>W</div>
-          <span style={{ fontFamily: SERIF, fontSize: 17, fontWeight: 700 }}>World Harvest</span>
+          }}>G</div>
+          <span style={{ fontFamily: SERIF, fontSize: 17, fontWeight: 700 }}>Global Missions</span>
           <span style={{
             fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase",
             color: T.heroAccent, fontWeight: 700, marginLeft: 4, opacity: 0.9,
           }}>Impact 2026</span>
         </div>
         <div style={{ display: "flex", gap: 26, fontSize: 13, fontWeight: 500, opacity: 0.72 }}>
-          {["Impact", "Regions", "Next Steps"].map(i => (
-            <span key={i} style={{ cursor: "pointer" }}>{i}</span>
+          {NAV_ITEMS.map(item => (
+            <a key={item.label} href={item.href} style={{ color: "inherit", textDecoration: "none" }}>{item.label}</a>
           ))}
         </div>
-        <button style={{ ...btnPrimary, padding: "8px 20px", fontSize: 13 }}>Give →</button>
+        <a href="#give" style={{ ...btnPrimary, padding: "8px 20px", fontSize: 13, textDecoration: "none" }}>Give →</a>
       </nav>
 
       {/* ── HERO ── */}
-      <section style={{
+      <section id="impact" style={{
         background: T.heroBg, color: T.navText,
         padding: "108px 28px 96px",
         textAlign: "center", position: "relative", overflow: "hidden",
@@ -240,8 +202,8 @@ export default function WHMockup() {
             God is moving in Nepal, Algeria, Indonesia, Afghanistan, and Somalia. Here is what your partnership made possible in the first half of 2026.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <button style={btnPrimary}>See Our Impact ↓</button>
-            <button style={btnGhost}>Share This Page</button>
+            <a href="#regions" style={{ ...btnPrimary, textDecoration: "none" }}>See Our Impact ↓</a>
+            <a href="#visuals" style={{ ...btnGhost, textDecoration: "none" }}>Share This Page</a>
           </div>
         </div>
       </section>
@@ -277,7 +239,7 @@ export default function WHMockup() {
       </section>
 
       {/* ── REGIONS ── */}
-      <section style={{ padding: "80px 28px", background: T.bg }}>
+      <section id="regions" style={{ padding: "80px 28px", background: T.bg }}>
         <div style={{ maxWidth: 1020, margin: "0 auto" }}>
           <div style={{ marginBottom: 52 }}>
             <span style={overline}>Where We Work</span>
@@ -294,7 +256,7 @@ export default function WHMockup() {
                 <div key={r.name}
                   onClick={() => setExpanded(open ? null : i)}
                   style={{
-                    background: T.bgCard, borderRadius: 14, padding: 24,
+                    background: T.bgCard, borderRadius: 8, padding: 24,
                     cursor: "pointer",
                     border: `1.5px solid ${open ? T.accent : "transparent"}`,
                     boxShadow: open ? `0 0 0 4px ${T.accentLight}` : "none",
@@ -307,22 +269,35 @@ export default function WHMockup() {
                       <div style={{ fontSize: 11, color: T.textMuted, fontWeight: 600, marginTop: 2 }}>{r.sub}</div>
                     </div>
                   </div>
-                  <div style={{
-                    display: "flex", gap: 10, justifyContent: "space-around",
-                    paddingBottom: open ? 18 : 0, marginBottom: open ? 18 : 0,
-                    borderBottom: open ? `1px solid ${T.divider}` : "none",
-                  }}>
-                    {r.stats.map(({ n, l }) => (
-                      <div key={l} style={{ textAlign: "center", flex: 1 }}>
-                        <div style={{ fontFamily: SERIF, fontSize: 24, fontWeight: 700, color: T.stat, lineHeight: 1, marginBottom: 5 }}>{n}</div>
-                        <div style={{ fontSize: 10, color: T.textMuted, fontWeight: 600, lineHeight: 1.35 }}>{l}</div>
-                      </div>
-                    ))}
-                  </div>
+                  {!open && (
+                    <div style={{
+                      display: "flex", gap: 10, justifyContent: "space-around",
+                    }}>
+                      {r.stats.map(({ n, l }) => (
+                        <div key={l} style={{ textAlign: "center", flex: 1 }}>
+                          <div style={{ fontFamily: SERIF, fontSize: 24, fontWeight: 700, color: T.stat, lineHeight: 1, marginBottom: 5 }}>{n}</div>
+                          <div style={{ fontSize: 10, color: T.textMuted, fontWeight: 600, lineHeight: 1.35 }}>{l}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {open && (
-                    <ul style={{ margin: 0, padding: "0 0 0 14px", fontSize: 13, lineHeight: 1.9, color: T.textSub }}>
-                      {r.bullets.map(b => <li key={b}>{b}</li>)}
-                    </ul>
+                    <>
+                      <ul style={{ margin: 0, padding: "0 0 0 14px", fontSize: 13, lineHeight: 1.9, color: T.textSub }}>
+                        {r.bullets.map(b => <li key={b}>{b}</li>)}
+                      </ul>
+                      <a
+                        href={r.mediaHref}
+                        onClick={(event: React.MouseEvent<HTMLAnchorElement>) => event.stopPropagation()}
+                        style={{
+                          display: "inline-flex", marginTop: 16,
+                          color: T.accent, fontSize: 12, fontWeight: 700,
+                          textDecoration: "none", borderBottom: `1px solid ${T.accent}55`,
+                        }}
+                      >
+                        Photos &amp; videos coming soon →
+                      </a>
+                    </>
                   )}
                   <div style={{ fontSize: 12, color: T.accent, fontWeight: 600, marginTop: 16 }}>
                     {open ? "↑ Show Less" : "See Details →"}
@@ -354,25 +329,25 @@ export default function WHMockup() {
             Matthew 9:37-38
           </p>
           <p style={{ fontSize: 15, lineHeight: 1.8, color: T.navText, opacity: 0.58, maxWidth: 460, margin: "0 auto 40px" }}>
-            World Harvest is called to reach those where faith carries real risk - in regions where access is limited and hope is desperately needed.
+            Global Missions exists to reach people where faith carries real risk - in regions where access is limited and hope is desperately needed.
           </p>
-          <a href="https://www.worldharvest.id" target="_blank" rel="noreferrer" style={{
+          <a href="#next-steps" style={{
             color: T.heroAccent, fontFamily: SANS, fontWeight: 600,
             fontSize: 14, textDecoration: "none",
             borderBottom: `1px solid ${T.heroAccent}55`, paddingBottom: 2,
           }}>
-            Learn more at worldharvest.id →
+            Connect with Global Missions →
           </a>
         </div>
       </section>
 
       {/* ── SHARE HUB ── */}
-      <section style={{ padding: "72px 28px", background: T.bgAlt, textAlign: "center" }}>
+      <section id="visuals" style={{ padding: "72px 28px", background: T.bgAlt, textAlign: "center" }}>
         <div style={{ maxWidth: 620, margin: "0 auto" }}>
-          <span style={overline}>Spread the Word</span>
-          <h2 style={{ ...h2Style, textAlign: "center" }}>Share This Story</h2>
+          <span style={overline}>Visuals & Sharing</span>
+          <h2 style={{ ...h2Style, textAlign: "center" }}>Photos and Videos Coming Soon</h2>
           <p style={{ ...bodyStyle, textAlign: "center", marginBottom: 40 }}>
-            Use the QR code or link below - perfect for bulletins, projector screens, and social posts.
+            This section will become the home for field photos, short video updates, and shareable media as they become available.
           </p>
           <div style={{ display: "flex", gap: 32, alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
             <div style={{ textAlign: "center" }}>
@@ -383,8 +358,8 @@ export default function WHMockup() {
                 boxShadow: `0 0 0 2px ${T.divider}`,
               }}>
                 <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://worldharvest.id/impact&bgcolor=ffffff&color=1C1B1A&qzone=1"
-                  alt="QR code for worldharvest.id/impact"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${ENCODED_SHARE_URL}&bgcolor=ffffff&color=1C1B1A&qzone=1`}
+                  alt={`QR code for ${SHARE_LABEL}`}
                   style={{ width: 100, height: 100, display: "block", borderRadius: 4 }}
                 />
               </div>
@@ -397,11 +372,11 @@ export default function WHMockup() {
                 fontSize: 13, fontWeight: 700, color: T.accent,
                 letterSpacing: "0.02em",
               }}>
-                🔗 worldharvest.id/impact
+                🔗 {SHARE_LABEL}
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 {SOCIALS.map(s => (
-                  <a key={s.name} href={s.url} target="_blank" rel="noreferrer" style={{
+                  <a key={s.name} href={s.url} style={{
                     background: T.bgCard, color: T.text,
                     textDecoration: "none", borderRadius: 8,
                     padding: "8px 14px", fontSize: 12, fontWeight: 600,
@@ -418,8 +393,22 @@ export default function WHMockup() {
         </div>
       </section>
 
+      {/* ── PLANTERS ── */}
+      <section id="planters" style={{ padding: "80px 28px", background: T.bg }}>
+        <div style={{ maxWidth: 620, margin: "0 auto" }}>
+          <span style={overline}>Planters</span>
+          <h2 style={h2Style}>A simple monthly pledge for Global Missions.</h2>
+          <p style={bodyStyle}>
+            Planters is a new program inviting people to pledge $30/month. Those gifts fuel Global Missions work through sending, discipleship, care, and church planting.
+          </p>
+          <a href="#next-steps" style={{ ...btnPrimary, textDecoration: "none" }}>
+            Join the interest list →
+          </a>
+        </div>
+      </section>
+
       {/* ── NEXT STEPS ── */}
-      <section style={{ padding: "80px 28px", background: T.bg }}>
+      <section id="next-steps" style={{ padding: "80px 28px", background: T.bgAlt }}>
         <div style={{ maxWidth: 540, margin: "0 auto" }}>
           <span style={overline}>Get Involved</span>
           <h2 style={h2Style}>Your Next Step</h2>
@@ -459,10 +448,10 @@ export default function WHMockup() {
       </section>
 
       {/* ── GIVE ── */}
-      <section style={{ padding: "80px 28px", background: T.bgAlt }}>
+      <section id="give" style={{ padding: "80px 28px", background: T.bg }}>
         <div style={{ maxWidth: 540, margin: "0 auto" }}>
           <span style={overline}>Partner With Us</span>
-          <h2 style={h2Style}>Give to the Harvest</h2>
+          <h2 style={h2Style}>Give to Global Missions</h2>
           <p style={bodyStyle}>
             Your generosity reaches the unreached - funding Bibles, medical care, discipleship, and church planting across five nations.
           </p>
@@ -498,7 +487,7 @@ export default function WHMockup() {
           </div>
 
           <button style={{ ...btnPrimary, width: "100%", fontSize: 16, padding: "16px 0", textAlign: "center" }}>
-            Give ${customAmt || giveAmt || 50} to World Harvest →
+            Give ${customAmt || giveAmt || 50} to Global Missions →
           </button>
           <p style={{ textAlign: "center", fontSize: 12, color: T.textMuted, marginTop: 14 }}>
             🔒 Secure &amp; encrypted · All contributions support the mission
@@ -519,15 +508,15 @@ export default function WHMockup() {
                   width: 36, height: 36, borderRadius: "50%", background: T.accent,
                   display: "flex", alignItems: "center", justifyContent: "center",
                   fontFamily: SERIF, fontSize: 14, color: "#fff", fontWeight: 700,
-                }}>W</div>
-                <span style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700 }}>World Harvest</span>
+                }}>G</div>
+                <span style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 700 }}>Global Missions</span>
               </div>
               <p style={{ fontSize: 13, color: T.navText, opacity: 0.48, lineHeight: 1.78, maxWidth: 300, marginBottom: 24 }}>
-                Impacting the world through creative community, education, and media services. Jakarta, Indonesia.
+                Funding prayer, sending, discipleship, care, and church planting among unreached people.
               </p>
               <div style={{ display: "flex", gap: 10 }}>
                 {SOCIALS.map(s => (
-                  <a key={s.name} href={s.url} target="_blank" rel="noreferrer" style={{
+                  <a key={s.name} href={s.url} style={{
                     width: 36, height: 36, borderRadius: 8,
                     border: "1px solid rgba(255,255,255,0.15)",
                     display: "flex", alignItems: "center", justifyContent: "center",
@@ -544,7 +533,7 @@ export default function WHMockup() {
                 padding: 6, margin: "0 auto 10px",
               }}>
                 <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=84x84&data=https://worldharvest.id/impact&bgcolor=ffffff&color=1C1B1A&qzone=0"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=84x84&data=${ENCODED_SHARE_URL}&bgcolor=ffffff&color=1C1B1A&qzone=0`}
                   alt="Share QR"
                   style={{ width: 84, height: 84, display: "block" }}
                 />
@@ -560,8 +549,8 @@ export default function WHMockup() {
             fontSize: 12, color: T.navText, opacity: 0.32,
             flexWrap: "wrap", gap: 8,
           }}>
-            <span>© 2026 World Harvest. All rights reserved.</span>
-            <span>worldharvest.id</span>
+            <span>© 2026 Global Missions. All rights reserved.</span>
+            <span>{SHARE_LABEL}</span>
           </div>
         </div>
       </footer>
