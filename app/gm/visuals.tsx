@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { CountryName, StatArtKind } from "./data";
+import type { CountryName, FlagName, StatArtKind } from "./data";
 
 const STAT_ART_STROKE = "#647970";
 const STAT_ART_WASH = "#F8F6F0";
@@ -149,7 +149,7 @@ export function CountryMap({ name, color }: { name: CountryName; color: string }
   );
 }
 
-export function CountryFlag({ name }: { name: CountryName }) {
+export function CountryFlag({ name }: { name: FlagName }) {
   const flagStyle: CSSProperties = {
     width: 34,
     height: 22,
@@ -198,6 +198,18 @@ export function CountryFlag({ name }: { name: CountryName }) {
         <rect width={12} height={24} fill="#111" />
         <rect x={12} width={12} height={24} fill="#D32011" />
         <rect x={24} width={12} height={24} fill="#007A36" />
+      </svg>
+    );
+  }
+
+  if (name === "Pakistan") {
+    return (
+      <svg viewBox="0 0 36 24" role="img" aria-label="Pakistan flag" style={flagStyle}>
+        <rect width={36} height={24} fill="#115740" />
+        <rect width={9} height={24} fill="#fff" />
+        <circle cx={23} cy={12} r={5.5} fill="#fff" />
+        <circle cx={25} cy={12} r={4.8} fill="#115740" />
+        <path d="M26.4 7.3 L27.2 9.7 L29.7 9.7 L27.7 11.1 L28.5 13.5 L26.4 12.1 L24.4 13.5 L25.1 11.1 L23.1 9.7 L25.6 9.7 Z" fill="#fff" />
       </svg>
     );
   }
