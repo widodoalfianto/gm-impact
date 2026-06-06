@@ -1,5 +1,5 @@
-import { NewsletterLandingPage } from "./gm-content";
+import { MainSiteHomePage } from "./gm/main-site-home";
 
 export default function Page() {
-  return <NewsletterLandingPage />;
+  return <MainSiteHomePage />;
 }
