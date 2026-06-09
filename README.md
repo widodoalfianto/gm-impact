@@ -100,6 +100,32 @@ Vercel, add the same public environment variables to the appropriate Vercel
 environment and set `NEXT_PUBLIC_SITE_URL` to that environment's deployment
 URL.
 
+### Branches and Environments
+
+| Git branch | Vercel environment | Sanity dataset | Purpose |
+| --- | --- | --- | --- |
+| `master` | Production | `production` | Stable client-facing newsletter |
+| `cms/foundation` | Preview | `staging` | CMS development, training, and review |
+| `feat/*` | Preview | `staging` | Short-lived feature review |
+
+The stable CMS Preview URL is
+`https://gm-impact-git-cms-foundation-alfi-ifgf.vercel.app`. Vercel
+Authentication protects this environment.
+
+Configure these variables separately in Vercel:
+
+| Variable | Preview value | Production value |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project ID | Sanity project ID |
+| `NEXT_PUBLIC_SANITY_DATASET` | `staging` | `production` |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | Current configured API date | Current configured API date |
+| `NEXT_PUBLIC_SITE_URL` | CMS Preview URL | Production site URL |
+| `SANITY_API_READ_TOKEN` | Viewer token | Viewer token |
+
+CMS work should reach `master` through a pull request after CI, Vercel Preview,
+editor workflow testing, and client approval. Protect `master` from direct
+feature pushes once the team confirms this workflow.
+
 ### Validation
 
 ```bash
