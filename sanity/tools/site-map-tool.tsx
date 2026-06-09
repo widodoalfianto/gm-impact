@@ -9,7 +9,6 @@ import {
 } from "@sanity/icons";
 import {
   Badge,
-  Box,
   Button,
   Card,
   Container,
@@ -254,7 +253,7 @@ function SiteMapTool() {
   ).length;
 
   return (
-    <Box className={styles.page}>
+    <div className={styles.page}>
       <Container width={5}>
         <Stack gap={6}>
           <Flex
@@ -524,7 +523,7 @@ function SiteMapTool() {
           </Card>
         </Stack>
       </Container>
-    </Box>
+    </div>
   );
 }
 
