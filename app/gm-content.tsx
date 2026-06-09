@@ -151,8 +151,10 @@ function PartnerSection() {
 
 export function GlobalMissionsImpactPage({
   variant = "update",
+  newsletters = NEWSLETTERS,
 }: {
   variant?: "update" | "newsletter";
+  newsletters?: readonly NewsletterSummary[];
 } = {}) {
   const [expanded, setExpanded] = useState<number | null>(null);
   const { animatedStats, statsRef } = useCountUpStats();
@@ -190,7 +192,7 @@ export function GlobalMissionsImpactPage({
             Read the latest stories of sending, discipleship, care, and church planting among unreached communities.
           </p>
           <div className="gm-newsletter-list">
-            {NEWSLETTERS.map((newsletter) => (
+            {newsletters.map((newsletter) => (
               <NewsletterLandingCard key={newsletter.year} newsletter={newsletter} />
             ))}
           </div>
@@ -383,8 +385,17 @@ export function GlobalMissionsImpactPage({
   );
 }
 
-export function NewsletterLandingPage() {
-  return <GlobalMissionsImpactPage variant="newsletter" />;
+export function NewsletterLandingPage({
+  newsletters = NEWSLETTERS,
+}: {
+  newsletters?: readonly NewsletterSummary[];
+} = {}) {
+  return (
+    <GlobalMissionsImpactPage
+      variant="newsletter"
+      newsletters={newsletters}
+    />
+  );
 }
 
 export function ArchiveNewsletterPage({ year }: { year: "2024" | "2025" }) {

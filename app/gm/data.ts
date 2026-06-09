@@ -67,7 +67,7 @@ export const NAV_ITEMS = [
   { label: "Contact", href: `${MAIN_SITE_URL}/contact` },
 ] satisfies readonly NavItem[];
 
-export type StatArtKind = "nations" | "believers" | "baptisms" | "bibles" | "medical" | "leaders";
+export type StatArtKind = ImpactArtKey;
 
 export const STATS: readonly { num: string; label: string; art: StatArtKind }[] = [
   { num: "5", label: "Nations Reached", art: "nations" },
@@ -89,7 +89,7 @@ export const STAT_TARGETS = STATS.map(({ num }) => {
 export const formatStatNumber = (value: number, suffix: string) =>
   `${Math.round(value).toLocaleString("en-US")}${suffix}`;
 
-export type CountryName = "Nepal" | "Algeria" | "Indonesia" | "Afghanistan" | "Somalia";
+export type CountryName = CountryArtName;
 export type FlagName = CountryName | "Pakistan";
 
 export type Region = {
@@ -186,7 +186,7 @@ export const REGIONS: readonly Region[] = [
 ];
 
 export type NewsletterSummary = {
-  year: "2024" | "2025" | "2026";
+  year: string;
   label: string;
   href: string;
   title: string;
@@ -363,3 +363,7 @@ export const ARCHIVE_NEWSLETTERS: Record<"2024" | "2025", ArchiveNewsletter> = {
     ],
   },
 };
+import type {
+  CountryArtName,
+  ImpactArtKey,
+} from "../../lib/gm-visual-library";

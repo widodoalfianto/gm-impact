@@ -4,7 +4,15 @@ import type { CountryName, FlagName, StatArtKind } from "./data";
 const STAT_ART_STROKE = "#647970";
 const STAT_ART_WASH = "#F8F6F0";
 
-export function StatIllustration({ kind, label }: { kind: StatArtKind; label: string }) {
+export function StatIllustration({
+  kind,
+  label,
+  style,
+}: {
+  kind: StatArtKind;
+  label: string;
+  style?: CSSProperties;
+}) {
   const line = {
     fill: "none",
     stroke: STAT_ART_STROKE,
@@ -20,6 +28,7 @@ export function StatIllustration({ kind, label }: { kind: StatArtKind; label: st
       role="img"
       aria-label={`${label} illustration`}
       className="gm-stat-art"
+      style={style}
     >
       <path
         d="M24.5 72.6 C13.6 54.8 27.1 30.6 51.7 20.6 C75.5 10.9 93.3 21.7 112.8 30.1 C137.1 40.5 165.8 47.8 163.5 72.2 C161.2 96.2 126.8 101.5 94.2 101.2 C60.8 100.9 35.2 90 24.5 72.6 Z"
@@ -127,11 +136,30 @@ const COUNTRY_MAP_OUTLINES: Record<CountryName, string[]> = {
   ],
 };
 
-export function CountryMap({ name, color }: { name: CountryName; color: string }) {
+export function CountryMap({
+  name,
+  color,
+  style,
+}: {
+  name: CountryName;
+  color: string;
+  style?: CSSProperties;
+}) {
   const paths = COUNTRY_MAP_OUTLINES[name] ?? [];
 
   return (
-    <svg viewBox={COUNTRY_MAP_VIEWBOX} role="img" aria-label={`${name} map outline`} style={{ width: "100%", maxWidth: 190, height: 96, display: "block" }}>
+    <svg
+      viewBox={COUNTRY_MAP_VIEWBOX}
+      role="img"
+      aria-label={`${name} map outline`}
+      style={{
+        width: "100%",
+        maxWidth: 190,
+        height: 96,
+        display: "block",
+        ...style,
+      }}
+    >
       {paths.map((d, index) => (
         <path
           key={index}
