@@ -23,41 +23,17 @@ import type { Tool } from "sanity";
 import { useClient } from "sanity";
 import { IntentLink } from "sanity/router";
 import { apiVersion } from "../env";
+import {
+  buildNewsletterRoutes,
+  formatPublicationDate,
+  getCurrentNewsletter,
+  getRouteStatus,
+  NEWSLETTER_WORKFLOW_QUERY,
+  newsletterTypeLabels,
+  type NewsletterDocument,
+  type NewsletterRoute,
+} from "./newsletter-workflow";
 import styles from "./site-map-tool.module.css";
-
-type NewsletterDocument = {
-  _id: string;
-  _updatedAt: string;
-  title?: string;
-  slug?: string;
-  publishDate?: string;
-  hideFromIndex?: boolean;
-  newsletterType?: string;
-};
-
-type NewsletterRoute = {
-  id: string;
-  draft?: NewsletterDocument;
-  published?: NewsletterDocument;
-};
-
-type RouteStatus = {
-  label: string;
-  tone: "caution" | "positive" | "primary";
-};
-
-const NEWSLETTER_QUERY = `*[
-  _type == "newsletter" &&
-  !(_id in path("versions.**"))
-] | order(publishDate desc, _updatedAt desc) {
-  _id,
-  _updatedAt,
-  title,
-  "slug": slug.current,
-  publishDate,
-  hideFromIndex,
-  newsletterType
-}`;
 
 const fixedRoutes = [
   {
@@ -82,81 +58,6 @@ const fixedRoutes = [
   },
 ] as const;
 
-const newsletterTypeLabels: Record<string, string> = {
-  countryUpdate: "Country or Field Update",
-  globalImpact: "Global Impact Report",
-  missionTrip: "Mission Trip Highlight",
-  projectUpdate: "Project Update",
-};
-
-function getPublishedId(documentId: string) {
-  return documentId.replace(/^drafts\./, "");
-}
-
-function buildNewsletterRoutes(documents: NewsletterDocument[]) {
-  const routes = new Map<string, NewsletterRoute>();
-
-  documents.forEach((document) => {
-    const id = getPublishedId(document._id);
-    const route = routes.get(id) || { id };
-
-    if (document._id.startsWith("drafts.")) {
-      route.draft = document;
-    } else {
-      route.published = document;
-    }
-
-    routes.set(id, route);
-  });
-
-  return Array.from(routes.values()).sort((left, right) => {
-    const leftDate =
-      left.draft?.publishDate ||
-      left.published?.publishDate ||
-      left.draft?._updatedAt ||
-      left.published?._updatedAt ||
-      "";
-    const rightDate =
-      right.draft?.publishDate ||
-      right.published?.publishDate ||
-      right.draft?._updatedAt ||
-      right.published?._updatedAt ||
-      "";
-
-    return rightDate.localeCompare(leftDate);
-  });
-}
-
-function getRouteStatus(route: NewsletterRoute): RouteStatus {
-  if (route.draft && route.published) {
-    return { label: "Unpublished changes", tone: "caution" };
-  }
-
-  if (route.published) {
-    return { label: "Published", tone: "positive" };
-  }
-
-  return { label: "Draft", tone: "primary" };
-}
-
-function formatDate(value?: string) {
-  if (!value) {
-    return "No publication date";
-  }
-
-  const parsed = new Date(`${value}T00:00:00`);
-
-  if (Number.isNaN(parsed.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(parsed);
-}
-
 function SiteMapTool() {
   const client = useClient({ apiVersion });
   const rawClient = useMemo(
@@ -176,7 +77,9 @@ function SiteMapTool() {
 
       try {
         const documents =
-          await rawClient.fetch<NewsletterDocument[]>(NEWSLETTER_QUERY);
+          await rawClient.fetch<NewsletterDocument[]>(
+            NEWSLETTER_WORKFLOW_QUERY,
+          );
         setRoutes(buildNewsletterRoutes(documents));
         setError(null);
       } catch (loadError) {
@@ -197,7 +100,7 @@ function SiteMapTool() {
     let active = true;
 
     rawClient
-      .fetch<NewsletterDocument[]>(NEWSLETTER_QUERY)
+      .fetch<NewsletterDocument[]>(NEWSLETTER_WORKFLOW_QUERY)
       .then((documents) => {
         if (!active) {
           return;
@@ -391,7 +294,7 @@ function SiteMapTool() {
               {!loading && routes.length > 0 ? (
                 <Stack gap={3}>
                   {routes.map((route) => {
-                    const current = route.draft || route.published;
+                    const current = getCurrentNewsletter(route);
                     const status = getRouteStatus(route);
                     const draftSlug = route.draft?.slug;
                     const publishedSlug = route.published?.slug;
@@ -431,7 +334,7 @@ function SiteMapTool() {
                               </Heading>
                               <Text muted size={1}>
                                 {typeLabel} ·{" "}
-                                {formatDate(current?.publishDate)}
+                                {formatPublicationDate(current?.publishDate)}
                               </Text>
                             </Stack>
                           </Stack>

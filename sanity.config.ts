@@ -17,6 +17,7 @@ import { schemaTypes } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
 import { newsletterTemplates } from "./sanity/templates";
 import { siteMapTool } from "./sanity/tools/site-map-tool";
+import { startHereTool } from "./sanity/tools/start-here-tool";
 
 const visionApiVersion = apiVersion.startsWith("v")
   ? apiVersion
@@ -58,5 +59,5 @@ export default defineConfig({
     types: schemaTypes,
     templates: newsletterTemplates,
   },
-  tools: (previousTools) => [siteMapTool, ...previousTools],
+  tools: (previousTools) => [startHereTool, siteMapTool, ...previousTools],
 });

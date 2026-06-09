@@ -19,11 +19,14 @@ Sanity now powers the newsletter publishing workflow:
 
 - An embedded editor at [http://localhost:3000/studio](http://localhost:3000/studio)
 - Public newsletter routes at `/newsletters/[slug]`
-- Global Impact, Mission Trip, and Country Update creation templates
+- Global Impact, Mission Trip, Project Update, and Country Update templates
 - Reusable metrics, story, quote, gallery, video, prayer, and call-to-action sections
 
-Studio is organized into four tools:
+Studio is organized into five tools:
 
+- `Start Here` is the default office-staff dashboard. It offers guided
+  newsletter templates, recent drafts, incomplete-content reminders, and a
+  ready-for-review queue.
 - `Site Map` shows the website's fixed routes and every CMS newsletter's draft
   status, public URL, edit link, and preview link.
 - `Content` is the primary office-staff workspace. Create and edit newsletters
@@ -72,12 +75,22 @@ repository version.
 
 ### Newsletter Templates
 
-Sanity Studio includes two Global Impact starting points:
+Choose a format from `Start Here` to create a pre-structured newsletter:
+
+- `Global Impact Report` for metrics-led mid-year or annual reporting.
+- `Mission Trip Highlight` for a visual report centered on one trip.
+- `Project Update` for ministry, building, care, or relief progress.
+- `Country or Field Update` for a focused update from one ministry field.
+
+Sanity Studio also includes a complete Global Impact starting point:
 
 - `2026 Global Impact Report` recreates the current 2026 newsletter, including
   its hero, impact metrics, country cards, and partner calls to action.
-- `Global Impact Report` provides the same reusable section structure with
-  starter content for a new year.
+
+After creating a newsletter, complete its title, URL slug, hero heading, short
+summary, listing title, listing summary, and content sections. `Start Here`
+keeps incomplete drafts in `Needs Attention` and moves complete drafts to
+`Ready for Review`.
 
 After publishing a newsletter with a unique slug, it is available at
 `/newsletters/<slug>` and is added automatically to the newsletter landing page
