@@ -1,4 +1,36 @@
-import { defineArrayMember, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
+
+type PreviewBlock = { _type?: string; children?: { text?: string }[] };
+
+/** Flattens an accentTitle (portable text) into plain text for Studio previews. */
+export function accentTitlePreview(blocks?: unknown) {
+  if (!Array.isArray(blocks)) {
+    return typeof blocks === "string" ? blocks : "";
+  }
+
+  return (blocks as PreviewBlock[])
+    .map((block) =>
+      (block.children ?? []).map((child) => child.text ?? "").join(""),
+    )
+    .join(" ")
+    .trim();
+}
+
+/** A heading field that supports inline "Accent" highlighting. */
+export function accentHeadingField(options?: {
+  name?: string;
+  title?: string;
+  description?: string;
+}) {
+  return defineField({
+    name: options?.name ?? "heading",
+    title: options?.title ?? "Heading",
+    type: "accentTitle",
+    description:
+      options?.description ??
+      "Select any words and use the Accent button to highlight them.",
+  });
+}
 
 /**
  * A title field that lets an admin select specific words and mark them as

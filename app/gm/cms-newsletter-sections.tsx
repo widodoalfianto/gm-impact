@@ -625,7 +625,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             {section.body ? (
               <div className="gm-cms-rich-text">
                 <PortableText value={section.body} />
@@ -644,7 +644,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
           >
             <div>
               {section.eyebrow ? <span>{section.eyebrow}</span> : null}
-              {section.heading ? <h2>{section.heading}</h2> : null}
+              <AccentTitle value={section.heading} />
               {section.body ? (
                 <div className="gm-cms-rich-text">
                   <PortableText value={section.body} />
@@ -664,7 +664,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section gm-cms-faq">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             <div className="gm-cms-faq-list">
               {section.items?.map((item) => (
                 <details key={item._key}>
@@ -680,7 +680,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             <div className="gm-cms-logos">
               {section.logos?.map((logo) => {
                 const image = (
@@ -716,12 +716,12 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             {section.description ? <p>{section.description}</p> : null}
             <div className="gm-cms-video">
               <iframe
                 src={stegaClean(section.url)}
-                title={section.heading || "Embedded content"}
+                title="Embedded content"
                 loading="lazy"
                 allowFullScreen
               />
@@ -755,7 +755,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
           >
             <div>
               {section.eyebrow ? <span>{section.eyebrow}</span> : null}
-              {section.heading ? <h2>{section.heading}</h2> : null}
+              <AccentTitle value={section.heading} />
               {section.body ? (
                 <div className="gm-cms-rich-text">
                   <PortableText value={section.body} />
@@ -785,7 +785,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             <div className="gm-cms-gallery">
               {section.images?.map((image) => (
                 <figure key={image._key}>
@@ -803,13 +803,13 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             {section.description ? <p>{section.description}</p> : null}
             {embedUrl ? (
               <div className="gm-cms-video">
                 <iframe
                   src={embedUrl}
-                  title={section.heading}
+                  title="Video"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -830,7 +830,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section gm-cms-prayer">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             <ul>
               {section.items?.map((item) => <li key={item}>{item}</li>)}
             </ul>
@@ -841,7 +841,7 @@ function CmsBlockBody({ section }: { section: CmsBlock }) {
       return (
         <section className="gm-cms-section gm-cms-cta">
           <div className="gm-cms-section-inner">
-            {section.heading ? <h2>{section.heading}</h2> : null}
+            <AccentTitle value={section.heading} />
             {section.description ? <p>{section.description}</p> : null}
             <a
               className="gm-primary-button"

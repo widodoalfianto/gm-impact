@@ -80,7 +80,7 @@ export type CmsBlock =
   | (SectionBase & {
       _type: "storySection";
       eyebrow?: string;
-      heading: string;
+      heading?: PortableTextBlock[];
       body?: PortableTextBlock[];
       image?: CmsImage;
       metrics?: CmsMetric[];
@@ -93,23 +93,23 @@ export type CmsBlock =
     })
   | (SectionBase & {
       _type: "gallerySection";
-      heading: string;
+      heading?: PortableTextBlock[];
       images?: Array<CmsImage & { _key: string }>;
     })
   | (SectionBase & {
       _type: "videoSection";
-      heading: string;
+      heading?: PortableTextBlock[];
       url: string;
       description?: string;
     })
   | (SectionBase & {
       _type: "prayerSection";
-      heading: string;
+      heading?: PortableTextBlock[];
       items?: string[];
     })
   | (SectionBase & {
       _type: "callToActionSection";
-      heading: string;
+      heading?: PortableTextBlock[];
       description: string;
       buttonLabel: string;
       buttonUrl: string;
@@ -138,13 +138,13 @@ export type CmsBlock =
     })
   | (SectionBase & {
       _type: "richTextBlock";
-      heading?: string;
+      heading?: PortableTextBlock[];
       body?: PortableTextBlock[];
     })
   | (SectionBase & {
       _type: "imageTextBlock";
       eyebrow?: string;
-      heading?: string;
+      heading?: PortableTextBlock[];
       body?: PortableTextBlock[];
       image?: CmsImage;
       imagePosition: "left" | "right";
@@ -152,12 +152,12 @@ export type CmsBlock =
     })
   | (SectionBase & {
       _type: "faqBlock";
-      heading?: string;
+      heading?: PortableTextBlock[];
       items?: Array<{ _key: string; question: string; answer: string }>;
     })
   | (SectionBase & {
       _type: "logoStripBlock";
-      heading?: string;
+      heading?: PortableTextBlock[];
       logos?: Array<{ _key: string; image: CmsImage; url?: string }>;
     })
   | (SectionBase & {
@@ -168,7 +168,7 @@ export type CmsBlock =
     })
   | (SectionBase & {
       _type: "embedBlock";
-      heading?: string;
+      heading?: PortableTextBlock[];
       url: string;
       description?: string;
     });

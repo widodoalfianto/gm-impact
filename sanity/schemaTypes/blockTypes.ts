@@ -8,22 +8,7 @@ import {
   PlayIcon,
 } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
-
-type PreviewBlock = { _type?: string; children?: { text?: string }[] };
-
-// Flattens an accentTitle (portable text) into plain text for Studio previews.
-function accentTitlePreview(blocks?: PreviewBlock[]) {
-  if (!Array.isArray(blocks)) {
-    return "";
-  }
-
-  return blocks
-    .map((block) =>
-      (block.children ?? []).map((child) => child.text ?? "").join(""),
-    )
-    .join(" ")
-    .trim();
-}
+import { accentHeadingField, accentTitlePreview } from "./accentTitleType";
 
 const richTextField = defineField({
   name: "body",
@@ -90,19 +75,15 @@ export const richTextBlockType = defineType({
   type: "object",
   icon: BlockContentIcon,
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
+    accentHeadingField({
       description: "Optional heading shown above the text.",
-      validation: (rule) => rule.max(120),
     }),
     richTextField,
   ],
   preview: {
     select: { title: "heading" },
     prepare: ({ title }) => ({
-      title: title || "Rich Text",
+      title: accentTitlePreview(title) || "Rich Text",
       subtitle: "Text section",
     }),
   },
@@ -120,12 +101,7 @@ export const imageTextBlockType = defineType({
       type: "string",
       validation: (rule) => rule.max(80),
     }),
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(120),
-    }),
+    accentHeadingField(),
     richTextField,
     defineField({
       name: "image",
@@ -155,7 +131,7 @@ export const imageTextBlockType = defineType({
   preview: {
     select: { title: "heading", subtitle: "eyebrow", media: "image" },
     prepare: ({ title, subtitle, media }) => ({
-      title: title || "Image and Text",
+      title: accentTitlePreview(title) || "Image and Text",
       subtitle: subtitle || "Image + text",
       media,
     }),
@@ -168,12 +144,7 @@ export const faqBlockType = defineType({
   type: "object",
   icon: HelpCircleIcon,
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "items",
       title: "Questions",
@@ -206,7 +177,7 @@ export const faqBlockType = defineType({
   preview: {
     select: { title: "heading" },
     prepare: ({ title }) => ({
-      title: title || "FAQ",
+      title: accentTitlePreview(title) || "FAQ",
       subtitle: "Questions and answers",
     }),
   },
@@ -218,12 +189,7 @@ export const logoStripBlockType = defineType({
   type: "object",
   icon: ImagesIcon,
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "logos",
       title: "Logos",
@@ -256,7 +222,7 @@ export const logoStripBlockType = defineType({
   preview: {
     select: { title: "heading" },
     prepare: ({ title }) => ({
-      title: title || "Logo Strip",
+      title: accentTitlePreview(title) || "Logo Strip",
       subtitle: "Partner or sponsor logos",
     }),
   },
@@ -304,12 +270,7 @@ export const embedBlockType = defineType({
   type: "object",
   icon: PlayIcon,
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "url",
       title: "Embed URL",
@@ -330,7 +291,7 @@ export const embedBlockType = defineType({
   preview: {
     select: { title: "heading", subtitle: "url" },
     prepare: ({ title, subtitle }) => ({
-      title: title || "Embed",
+      title: accentTitlePreview(title) || "Embed",
       subtitle,
     }),
   },

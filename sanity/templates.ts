@@ -1,6 +1,19 @@
 import { GIVE_URL } from "../app/gm/data";
 import { newsletter2026Value } from "./presets/newsletter2026";
 
+// Builds a portable-text value for accentTitle heading fields (no accents).
+function pt(text: string) {
+  return [
+    {
+      _type: "block",
+      _key: "heading",
+      style: "normal",
+      markDefs: [],
+      children: [{ _type: "span", _key: "heading-text", text, marks: [] }],
+    },
+  ];
+}
+
 const sharedNewsletterDefaults = {
   featured: false,
   hideFromIndex: false,
@@ -105,17 +118,17 @@ export const newsletterTemplates = [
         {
           _type: "gallerySection",
           _key: "trip-gallery",
-          heading: "Moments from the mission",
+          heading: pt("Moments from the mission"),
         },
         {
           _type: "prayerSection",
           _key: "trip-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "trip-giving",
-          heading: "Partner with Global Missions",
+          heading: pt("Partner with Global Missions"),
           description:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           buttonLabel: "Give to Global Missions",
@@ -142,12 +155,12 @@ export const newsletterTemplates = [
         {
           _type: "prayerSection",
           _key: "field-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "field-giving",
-          heading: "Partner with Global Missions",
+          heading: pt("Partner with Global Missions"),
           description:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           buttonLabel: "Give to Global Missions",
@@ -180,17 +193,17 @@ export const newsletterTemplates = [
         {
           _type: "gallerySection",
           _key: "project-gallery",
-          heading: "Project gallery",
+          heading: pt("Project gallery"),
         },
         {
           _type: "prayerSection",
           _key: "project-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "project-giving",
-          heading: "Help move this project forward",
+          heading: pt("Help move this project forward"),
           description:
             "Partner with Global Missions to support this work and the communities it serves.",
           buttonLabel: "Give to Global Missions",
@@ -225,12 +238,12 @@ export const postTemplates = [
         {
           _type: "prayerSection",
           _key: "field-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "field-giving",
-          heading: "Partner with Global Missions",
+          heading: pt("Partner with Global Missions"),
           description:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           buttonLabel: "Give to Global Missions",
@@ -256,17 +269,17 @@ export const postTemplates = [
         {
           _type: "gallerySection",
           _key: "trip-gallery",
-          heading: "Moments from the mission",
+          heading: pt("Moments from the mission"),
         },
         {
           _type: "prayerSection",
           _key: "trip-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "trip-giving",
-          heading: "Partner with Global Missions",
+          heading: pt("Partner with Global Missions"),
           description:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           buttonLabel: "Give to Global Missions",
@@ -298,17 +311,17 @@ export const postTemplates = [
         {
           _type: "gallerySection",
           _key: "project-gallery",
-          heading: "Project gallery",
+          heading: pt("Project gallery"),
         },
         {
           _type: "prayerSection",
           _key: "project-prayer",
-          heading: "How to pray",
+          heading: pt("How to pray"),
         },
         {
           _type: "callToActionSection",
           _key: "project-giving",
-          heading: "Help move this project forward",
+          heading: pt("Help move this project forward"),
           description:
             "Partner with Global Missions to support this work and the communities it serves.",
           buttonLabel: "Give to Global Missions",

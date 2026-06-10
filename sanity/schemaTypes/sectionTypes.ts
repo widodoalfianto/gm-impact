@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { accentHeadingField, accentTitlePreview } from "./accentTitleType";
 
 const richTextField = defineField({
   name: "body",
@@ -56,12 +57,7 @@ export const storySectionType = defineType({
       type: "string",
       validation: (rule) => rule.max(80),
     }),
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(120),
-    }),
+    accentHeadingField(),
     richTextField,
     defineField({
       name: "image",
@@ -82,6 +78,11 @@ export const storySectionType = defineType({
       subtitle: "eyebrow",
       media: "image",
     },
+    prepare: ({ title, subtitle, media }) => ({
+      title: accentTitlePreview(title) || "Story",
+      subtitle,
+      media,
+    }),
   },
 });
 
@@ -123,12 +124,7 @@ export const gallerySectionType = defineType({
   title: "Photo Gallery",
   type: "object",
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "images",
       title: "Images",
@@ -145,7 +141,7 @@ export const gallerySectionType = defineType({
       title: "heading",
     },
     prepare: ({ title }) => ({
-      title: title || "Photo Gallery",
+      title: accentTitlePreview(title) || "Photo Gallery",
       subtitle: "Gallery section",
     }),
   },
@@ -156,12 +152,7 @@ export const videoSectionType = defineType({
   title: "Video",
   type: "object",
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "url",
       title: "YouTube URL",
@@ -184,6 +175,10 @@ export const videoSectionType = defineType({
       title: "heading",
       subtitle: "url",
     },
+    prepare: ({ title, subtitle }) => ({
+      title: accentTitlePreview(title) || "Video",
+      subtitle,
+    }),
   },
 });
 
@@ -192,13 +187,7 @@ export const prayerSectionType = defineType({
   title: "Prayer Needs",
   type: "object",
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      initialValue: "How to pray",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "items",
       title: "Prayer points",
@@ -217,7 +206,7 @@ export const prayerSectionType = defineType({
       title: "heading",
     },
     prepare: ({ title }) => ({
-      title: title || "Prayer Needs",
+      title: accentTitlePreview(title) || "Prayer Needs",
       subtitle: "Prayer section",
     }),
   },
@@ -228,12 +217,7 @@ export const callToActionSectionType = defineType({
   title: "Call to Action",
   type: "object",
   fields: [
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(80),
-    }),
+    accentHeadingField(),
     defineField({
       name: "description",
       title: "Description",
@@ -263,6 +247,10 @@ export const callToActionSectionType = defineType({
       title: "heading",
       subtitle: "buttonLabel",
     },
+    prepare: ({ title, subtitle }) => ({
+      title: accentTitlePreview(title) || "Call to Action",
+      subtitle,
+    }),
   },
 });
 
