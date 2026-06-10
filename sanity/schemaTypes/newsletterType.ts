@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { accentHeadingField } from "./accentTitleType";
 import { sharedSectionMembers } from "./sectionMembers";
 
 export const newsletterType = defineType({
@@ -62,12 +63,11 @@ export const newsletterType = defineType({
       description: "Short label shown above the main heading.",
       validation: (rule) => rule.required().max(80),
     }),
-    defineField({
+    accentHeadingField({
       name: "heroHeading",
       title: "Main heading",
-      type: "string",
       group: "content",
-      validation: (rule) => rule.required().max(130),
+      required: true,
     }),
     defineField({
       name: "heroAccent",

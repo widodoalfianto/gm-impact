@@ -19,6 +19,8 @@ const CONVERTED_TYPES = new Set([
   "faqBlock",
   "logoStripBlock",
   "embedBlock",
+  "countryGridSection",
+  "partnerGridSection",
 ]);
 
 const client = getCliClient({ apiVersion: "2026-06-08" });
@@ -26,7 +28,7 @@ const apply = process.env.MIGRATE_APPLY === "1";
 const allowNonStaging = process.env.MIGRATE_ALLOW_NON_STAGING === "1";
 
 type Section = { _key: string; _type: string; heading?: unknown };
-type Doc = { _id: string; sections?: Section[] };
+type Doc = { _id: string; sections?: Section[]; heroHeading?: unknown };
 
 function toPortableText(key: string, text: string) {
   return [
@@ -53,13 +55,19 @@ async function migrate() {
 
   const docs = await client
     .withConfig({ perspective: "raw" })
-    .fetch<Doc[]>(`*[defined(sections)]{ _id, sections }`);
+    .fetch<Doc[]>(`*[defined(sections)]{ _id, sections, heroHeading }`);
 
   const transaction = client.transaction();
   let count = 0;
 
   for (const doc of docs) {
     const patch: Record<string, unknown> = {};
+
+    if (typeof doc.heroHeading === "string" && doc.heroHeading.length > 0) {
+      patch.heroHeading = toPortableText("hero", doc.heroHeading);
+      console.log(`  ${doc._id} · heroHeading: "${doc.heroHeading}"`);
+      count += 1;
+    }
 
     for (const section of doc.sections ?? []) {
       if (

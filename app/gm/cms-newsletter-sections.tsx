@@ -46,8 +46,29 @@ function isKnownCountry(name: string): name is CountryName {
   return knownCountries.includes(name as CountryName);
 }
 
-// Renders an accentTitle (portable text) as a heading, with admin-marked
-// "accent" words highlighted in the display/accent style.
+// Renders an accentTitle (portable text) inline, with admin-marked "accent"
+// words highlighted. Use inside an existing heading element (hero, grids).
+export function AccentText({ value }: { value?: PortableTextBlock[] }) {
+  if (!value?.length) {
+    return null;
+  }
+
+  return (
+    <PortableText
+      value={value}
+      components={{
+        block: ({ children }) => <>{children}</>,
+        marks: {
+          accent: ({ children }) => (
+            <em className="gm-cms-accent">{children}</em>
+          ),
+        },
+      }}
+    />
+  );
+}
+
+// Renders an accentTitle as a standalone <h2> for the standard section blocks.
 function AccentTitle({
   value,
   className,
@@ -61,17 +82,7 @@ function AccentTitle({
 
   return (
     <h2 className={className}>
-      <PortableText
-        value={value}
-        components={{
-          block: ({ children }) => <>{children}</>,
-          marks: {
-            accent: ({ children }) => (
-              <em className="gm-cms-accent">{children}</em>
-            ),
-          },
-        }}
-      />
+      <AccentText value={value} />
     </h2>
   );
 }
@@ -437,7 +448,7 @@ function CountryGrid({
         <div style={{ marginBottom: 60, textAlign: "center" }}>
           <span style={overline}>{section.eyebrow}</span>
           <h2 style={h2Style}>
-            {section.heading}
+            <AccentText value={section.heading} />
             {section.accentHeading ? (
               <>
                 <br />
@@ -501,7 +512,9 @@ function PartnerGrid({
     >
       <div style={{ maxWidth: 1000, margin: "0 auto", textAlign: "center" }}>
         <span style={overline}>{section.eyebrow}</span>
-        <h2 style={h2Style}>{section.heading}</h2>
+        <h2 style={h2Style}>
+          <AccentText value={section.heading} />
+        </h2>
         <p style={{ ...bodyStyle, marginBottom: 48 }}>{section.intro}</p>
         <div className="gm-cta-grid">
           {section.cards?.map((card) => (

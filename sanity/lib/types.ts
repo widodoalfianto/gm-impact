@@ -117,14 +117,14 @@ export type CmsBlock =
   | (SectionBase & {
       _type: "countryGridSection";
       eyebrow: string;
-      heading: string;
+      heading?: PortableTextBlock[];
       accentHeading?: string;
       regions?: CmsCountryImpact[];
     })
   | (SectionBase & {
       _type: "partnerGridSection";
       eyebrow: string;
-      heading: string;
+      heading?: PortableTextBlock[];
       intro: string;
       cards?: CmsPartnerCard[];
     })
@@ -179,7 +179,7 @@ export type CmsNewsletter = {
   newsletterType: string;
   publishDate: string;
   eyebrow: string;
-  heroHeading: string;
+  heroHeading?: PortableTextBlock[];
   heroAccent?: string;
   summary: string;
   heroImage?: CmsImage;
@@ -233,7 +233,7 @@ export type CmsPost = {
   title: string;
   publishDate: string;
   eyebrow: string;
-  heroHeading: string;
+  heroHeading?: PortableTextBlock[];
   heroAccent?: string;
   summary: string;
   heroImage?: CmsImage;

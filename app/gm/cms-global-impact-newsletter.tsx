@@ -3,7 +3,7 @@
 import { stegaClean } from "next-sanity";
 import { DISPLAY, SANS, THEME } from "./data";
 import { heroLightTitle, titleTight } from "./typography";
-import { CmsBlockView } from "./cms-newsletter-sections";
+import { AccentText, CmsBlockView } from "./cms-newsletter-sections";
 import type { CmsNewsletter } from "../../sanity/lib/types";
 
 function HeroCurve() {
@@ -63,7 +63,9 @@ export function CmsGlobalImpactNewsletter({
               ...titleTight,
             }}
           >
-            <span style={heroLightTitle}>{newsletter.heroHeading}</span>
+            <span style={heroLightTitle}>
+              <AccentText value={newsletter.heroHeading} />
+            </span>
             {newsletter.heroAccent ? (
               <>
                 <br />

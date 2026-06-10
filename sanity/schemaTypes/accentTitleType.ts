@@ -21,14 +21,18 @@ export function accentHeadingField(options?: {
   name?: string;
   title?: string;
   description?: string;
+  group?: string;
+  required?: boolean;
 }) {
   return defineField({
     name: options?.name ?? "heading",
     title: options?.title ?? "Heading",
     type: "accentTitle",
+    ...(options?.group ? { group: options.group } : {}),
     description:
       options?.description ??
       "Select any words and use the Accent button to highlight them.",
+    validation: (rule) => (options?.required ? rule.required() : rule),
   });
 }
 

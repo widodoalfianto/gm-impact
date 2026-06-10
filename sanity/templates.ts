@@ -58,14 +58,14 @@ export const newsletterTemplates = [
           _type: "countryGridSection",
           _key: "country-grid",
           eyebrow: "Where We Work",
-          heading: "Nations Reached.",
+          heading: pt("Nations Reached."),
           accentHeading: "One Mission.",
         },
         {
           _type: "partnerGridSection",
           _key: "partner-grid",
           eyebrow: "Partner With Us",
-          heading: "Join the mission beyond the newsletter.",
+          heading: pt("Join the mission beyond the newsletter."),
           intro:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           cards: [

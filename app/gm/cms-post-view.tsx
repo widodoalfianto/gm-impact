@@ -1,4 +1,8 @@
-import { CmsBlockView, CmsImageView } from "./cms-newsletter-sections";
+import {
+  AccentText,
+  CmsBlockView,
+  CmsImageView,
+} from "./cms-newsletter-sections";
 import { DISPLAY, SANS, THEME } from "./data";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
@@ -20,7 +24,7 @@ export function CmsPostView({
         <section className="gm-cms-hero">
           <span>{post.eyebrow}</span>
           <h1>
-            {post.heroHeading}
+            <AccentText value={post.heroHeading} />
             {post.heroAccent ? (
               <>
                 <br />

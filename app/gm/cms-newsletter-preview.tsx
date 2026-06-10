@@ -1,6 +1,10 @@
 import { stegaClean } from "next-sanity";
 import { CmsGlobalImpactNewsletter } from "./cms-global-impact-newsletter";
-import { CmsBlockView, CmsImageView } from "./cms-newsletter-sections";
+import {
+  AccentText,
+  CmsBlockView,
+  CmsImageView,
+} from "./cms-newsletter-sections";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
 import { DISPLAY, SANS, THEME } from "./data";
@@ -25,7 +29,7 @@ export function CmsNewsletterPreview({
         <section className="gm-cms-hero">
           <span>{newsletter.eyebrow}</span>
           <h1>
-            {newsletter.heroHeading}
+            <AccentText value={newsletter.heroHeading} />
             {newsletter.heroAccent ? (
               <>
                 <br />

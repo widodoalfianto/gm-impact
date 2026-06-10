@@ -2,6 +2,19 @@ import { GIVE_URL } from "../../app/gm/data";
 
 const givingUrl = GIVE_URL;
 
+// Portable-text value for accentTitle heading fields.
+function pt(text: string) {
+  return [
+    {
+      _type: "block",
+      _key: "heading",
+      style: "normal",
+      markDefs: [],
+      children: [{ _type: "span", _key: "heading-text", text, marks: [] }],
+    },
+  ];
+}
+
 export const newsletter2026Countries = [
   {
     _id: "country-nepal",
@@ -86,7 +99,7 @@ export const newsletter2026Value = {
   },
   publishDate: "2026-06-08",
   eyebrow: "Global Impact - First Half of 2026",
-  heroHeading: "Reaching the Unreached,",
+  heroHeading: pt("Reaching the Unreached,"),
   heroAccent: "Across Five Nations",
   summary:
     "God is moving in Nepal, Algeria, Indonesia, Afghanistan, and Somalia. Here is what your partnership made possible in the first half of 2026.",
@@ -150,7 +163,7 @@ export const newsletter2026Value = {
       _key: "countries",
       _type: "countryGridSection",
       eyebrow: "Where We Work",
-      heading: "Five Nations.",
+      heading: pt("Five Nations."),
       accentHeading: "One Mission.",
       regions: [
         countryReference(
@@ -241,7 +254,7 @@ export const newsletter2026Value = {
       _key: "partner",
       _type: "partnerGridSection",
       eyebrow: "Partner With Us",
-      heading: "Join the mission beyond the newsletter.",
+      heading: pt("Join the mission beyond the newsletter."),
       intro:
         "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
       cards: [

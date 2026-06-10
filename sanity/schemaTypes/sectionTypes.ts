@@ -379,12 +379,7 @@ export const countryGridSectionType = defineType({
       initialValue: "Where We Work",
       validation: (rule) => rule.max(80),
     }),
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.required().max(100),
-    }),
+    accentHeadingField({ required: true }),
     defineField({
       name: "accentHeading",
       title: "Accented heading",
@@ -405,7 +400,7 @@ export const countryGridSectionType = defineType({
       title: "heading",
     },
     prepare: ({ title }) => ({
-      title: title || "Country Impact Grid",
+      title: accentTitlePreview(title) || "Country Impact Grid",
       subtitle: "Interactive country cards",
     }),
   },
@@ -466,12 +461,7 @@ export const partnerGridSectionType = defineType({
       initialValue: "Partner With Us",
       validation: (rule) => rule.max(80),
     }),
-    defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-      validation: (rule) => rule.max(110),
-    }),
+    accentHeadingField(),
     defineField({
       name: "intro",
       title: "Introduction",
@@ -492,7 +482,7 @@ export const partnerGridSectionType = defineType({
       title: "heading",
     },
     prepare: ({ title }) => ({
-      title: title || "Partner Cards",
+      title: accentTitlePreview(title) || "Partner Cards",
       subtitle: "Calls to action",
     }),
   },
