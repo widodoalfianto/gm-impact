@@ -1,7 +1,4 @@
-import {
-  CmsImageView,
-  CmsNewsletterSectionView,
-} from "./cms-newsletter-sections";
+import { CmsBlockView, CmsImageView } from "./cms-newsletter-sections";
 import { DISPLAY, SANS, THEME } from "./data";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
@@ -44,7 +41,7 @@ export function CmsPostView({
           ) : null}
         </section>
         {post.sections?.map((section) => (
-          <CmsNewsletterSectionView key={section._key} section={section} />
+          <CmsBlockView key={section._key} section={section} />
         ))}
       </main>
       <SiteFooter settings={settings ?? undefined} />

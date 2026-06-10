@@ -34,6 +34,9 @@ export type CmsMetric = {
 
 type SectionBase = {
   _key: string;
+  background?: "default" | "accent";
+  topDivider?: "none" | "soft" | "wave";
+  bottomDivider?: "none" | "soft" | "wave";
 };
 
 export type CmsCountryImpact = {
@@ -45,6 +48,7 @@ export type CmsCountryImpact = {
     visualKey?: CountryArtKey;
   };
   subtitle: string;
+  showArtwork?: boolean;
   metrics?: CmsMetric[];
   highlights?: string[];
   mediaLabel?: string;
@@ -59,7 +63,14 @@ export type CmsPartnerCard = {
   buttonUrl: string;
 };
 
-export type CmsNewsletterSection =
+export type CmsActionLink = {
+  _key?: string;
+  label: string;
+  url: string;
+  style: "primary" | "secondary";
+};
+
+export type CmsBlock =
   | (SectionBase & {
       _type: "impactGrid";
       heading: string;
@@ -116,6 +127,50 @@ export type CmsNewsletterSection =
       heading: string;
       intro: string;
       cards?: CmsPartnerCard[];
+    })
+  | (SectionBase & {
+      _type: "heroBlock";
+      eyebrow?: string;
+      heading?: PortableTextBlock[];
+      body?: string;
+      image?: CmsImage;
+      actions?: CmsActionLink[];
+    })
+  | (SectionBase & {
+      _type: "richTextBlock";
+      heading?: string;
+      body?: PortableTextBlock[];
+    })
+  | (SectionBase & {
+      _type: "imageTextBlock";
+      eyebrow?: string;
+      heading?: string;
+      body?: PortableTextBlock[];
+      image?: CmsImage;
+      imagePosition: "left" | "right";
+      action?: CmsActionLink;
+    })
+  | (SectionBase & {
+      _type: "faqBlock";
+      heading?: string;
+      items?: Array<{ _key: string; question: string; answer: string }>;
+    })
+  | (SectionBase & {
+      _type: "logoStripBlock";
+      heading?: string;
+      logos?: Array<{ _key: string; image: CmsImage; url?: string }>;
+    })
+  | (SectionBase & {
+      _type: "statsBannerBlock";
+      heading?: string;
+      intro?: string;
+      metrics?: CmsMetric[];
+    })
+  | (SectionBase & {
+      _type: "embedBlock";
+      heading?: string;
+      url: string;
+      description?: string;
     });
 
 export type CmsNewsletter = {
@@ -140,7 +195,7 @@ export type CmsNewsletter = {
     isoCode: string;
   }>;
   landingHighlights?: string[];
-  sections?: CmsNewsletterSection[];
+  sections?: CmsBlock[];
 };
 
 export type CmsNewsletterSummary = {
@@ -188,5 +243,5 @@ export type CmsPost = {
     isoCode: string;
   };
   landingHighlights?: string[];
-  sections?: CmsNewsletterSection[];
+  sections?: CmsBlock[];
 };

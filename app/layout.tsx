@@ -4,6 +4,7 @@ import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import { isSanityConfigured } from "../sanity/env";
 import { SanityLive } from "../sanity/lib/live";
+import { SanityLiveGate } from "./sanity-live-gate";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,10 +39,12 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         {children}
-        {isSanityConfigured ? (
-          <SanityLive includeDrafts={isDraftMode} />
-        ) : null}
-        {isSanityConfigured && isDraftMode ? <VisualEditing /> : null}
+        <SanityLiveGate>
+          {isSanityConfigured ? (
+            <SanityLive includeDrafts={isDraftMode} />
+          ) : null}
+          {isSanityConfigured && isDraftMode ? <VisualEditing /> : null}
+        </SanityLiveGate>
       </body>
     </html>
   );

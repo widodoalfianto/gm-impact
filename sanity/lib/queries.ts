@@ -1,5 +1,36 @@
 import { defineQuery } from "next-sanity";
 
+/**
+ * Shared projection for the block library. Every page-like document
+ * (newsletter, post, and later generic pages) renders the same `sections[]`,
+ * so they all dereference it the same way here.
+ */
+const SECTIONS_PROJECTION = `
+  sections[]{
+    ...,
+    _type == "storySection" => {
+      ...,
+      image
+    },
+    _type == "gallerySection" => {
+      ...,
+      images[]
+    },
+    _type == "countryGridSection" => {
+      ...,
+      regions[]{
+        ...,
+        country->{
+          _id,
+          name,
+          isoCode,
+          visualKey
+        }
+      }
+    }
+  }
+`;
+
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings" && _id == "siteSettings"][0] {
     givingUrl,
@@ -29,29 +60,7 @@ export const NEWSLETTER_BY_SLUG_QUERY = defineQuery(`
       isoCode
     },
     landingHighlights,
-    sections[]{
-      ...,
-      _type == "storySection" => {
-        ...,
-        image
-      },
-      _type == "gallerySection" => {
-        ...,
-        images[]
-      },
-      _type == "countryGridSection" => {
-        ...,
-        regions[]{
-          ...,
-          country->{
-            _id,
-            name,
-            isoCode,
-            visualKey
-          }
-        }
-      }
-    }
+    ${SECTIONS_PROJECTION}
   }
 `);
 
@@ -71,29 +80,7 @@ export const POST_BY_SLUG_QUERY = defineQuery(`
       isoCode
     },
     landingHighlights,
-    sections[]{
-      ...,
-      _type == "storySection" => {
-        ...,
-        image
-      },
-      _type == "gallerySection" => {
-        ...,
-        images[]
-      },
-      _type == "countryGridSection" => {
-        ...,
-        regions[]{
-          ...,
-          country->{
-            _id,
-            name,
-            isoCode,
-            visualKey
-          }
-        }
-      }
-    }
+    ${SECTIONS_PROJECTION}
   }
 `);
 

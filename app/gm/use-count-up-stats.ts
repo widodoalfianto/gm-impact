@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { STAT_TARGETS, STATS } from "./data";
 
-function parseStatValue(value: string) {
-  const match = value.match(/^([\d,]+)(.*)$/);
+function parseStatValue(value: string | undefined | null) {
+  const match = String(value ?? "").match(/^([\d,]+)(.*)$/);
 
   return {
     target: Number((match?.[1] ?? "0").replace(/,/g, "")),

@@ -17,7 +17,7 @@ export const impactGridType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "intro",
@@ -31,7 +31,7 @@ export const impactGridType = defineType({
       title: "Metrics",
       type: "array",
       of: [defineArrayMember({ type: "metric" })],
-      validation: (rule) => rule.required().min(2).max(8),
+      validation: (rule) => rule.required().min(1).max(8),
     }),
   ],
   preview: {
@@ -60,7 +60,7 @@ export const storySectionType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(120),
+      validation: (rule) => rule.max(120),
     }),
     richTextField,
     defineField({
@@ -101,7 +101,7 @@ export const quoteSectionType = defineType({
       name: "attribution",
       title: "Attribution",
       type: "string",
-      validation: (rule) => rule.required().max(100),
+      validation: (rule) => rule.max(100),
     }),
     defineField({
       name: "context",
@@ -127,7 +127,7 @@ export const gallerySectionType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "images",
@@ -137,7 +137,7 @@ export const gallerySectionType = defineType({
       options: {
         layout: "grid",
       },
-      validation: (rule) => rule.required().min(2).max(12),
+      validation: (rule) => rule.required().min(1).max(12),
     }),
   ],
   preview: {
@@ -160,7 +160,7 @@ export const videoSectionType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "url",
@@ -197,7 +197,7 @@ export const prayerSectionType = defineType({
       title: "Heading",
       type: "string",
       initialValue: "How to pray",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "items",
@@ -232,14 +232,14 @@ export const callToActionSectionType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 3,
-      validation: (rule) => rule.required().max(300),
+      validation: (rule) => rule.max(300),
     }),
     defineField({
       name: "buttonLabel",
@@ -323,14 +323,22 @@ export const countryImpactType = defineType({
       name: "subtitle",
       title: "Ministry focus",
       type: "string",
-      validation: (rule) => rule.required().max(100),
+      validation: (rule) => rule.max(100),
+    }),
+    defineField({
+      name: "showArtwork",
+      title: "Show country line art",
+      type: "boolean",
+      description:
+        "Show the country's map and flag illustration on this card. Turn off for a text-only card.",
+      initialValue: true,
     }),
     defineField({
       name: "metrics",
       title: "Card metrics",
       type: "array",
       of: [defineArrayMember({ type: "metric" })],
-      validation: (rule) => rule.required().min(1).max(3),
+      validation: (rule) => rule.min(1).max(3),
     }),
     defineField({
       name: "highlights",
@@ -381,7 +389,7 @@ export const countryGridSectionType = defineType({
       title: "Eyebrow",
       type: "string",
       initialValue: "Where We Work",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "heading",
@@ -424,14 +432,14 @@ export const callToActionCardType = defineType({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
       rows: 3,
-      validation: (rule) => rule.required().max(300),
+      validation: (rule) => rule.max(300),
     }),
     defineField({
       name: "buttonLabel",
@@ -468,20 +476,20 @@ export const partnerGridSectionType = defineType({
       title: "Eyebrow",
       type: "string",
       initialValue: "Partner With Us",
-      validation: (rule) => rule.required().max(80),
+      validation: (rule) => rule.max(80),
     }),
     defineField({
       name: "heading",
       title: "Heading",
       type: "string",
-      validation: (rule) => rule.required().max(110),
+      validation: (rule) => rule.max(110),
     }),
     defineField({
       name: "intro",
       title: "Introduction",
       type: "text",
       rows: 3,
-      validation: (rule) => rule.required().max(300),
+      validation: (rule) => rule.max(300),
     }),
     defineField({
       name: "cards",

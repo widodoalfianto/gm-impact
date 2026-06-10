@@ -1,9 +1,6 @@
 import { stegaClean } from "next-sanity";
 import { CmsGlobalImpactNewsletter } from "./cms-global-impact-newsletter";
-import {
-  CmsImageView,
-  CmsNewsletterSectionView,
-} from "./cms-newsletter-sections";
+import { CmsBlockView, CmsImageView } from "./cms-newsletter-sections";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
 import { DISPLAY, SANS, THEME } from "./data";
@@ -51,7 +48,7 @@ export function CmsNewsletterPreview({
           ) : null}
         </section>
         {newsletter.sections?.map((section) => (
-          <CmsNewsletterSectionView key={section._key} section={section} />
+          <CmsBlockView key={section._key} section={section} />
         ))}
         </main>
       )}
