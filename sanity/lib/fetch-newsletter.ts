@@ -3,6 +3,7 @@ import { sanityFetch } from "./live";
 import {
   NEWSLETTER_BY_SLUG_QUERY,
   NEWSLETTER_INDEX_QUERY,
+  PAGE_BY_SLUG_QUERY,
   POST_BY_SLUG_QUERY,
   POST_INDEX_QUERY,
   SITE_SETTINGS_QUERY,
@@ -10,10 +11,33 @@ import {
 import type {
   CmsNewsletter,
   CmsNewsletterSummary,
+  CmsPage,
   CmsPost,
   CmsPostSummary,
   CmsSiteSettings,
 } from "./types";
+
+export async function getPageBySlug(
+  slug: string,
+  options?: {
+    perspective?: "published" | "drafts";
+    stega?: boolean;
+  },
+) {
+  if (!isSanityConfigured) {
+    return null;
+  }
+
+  const { data } = await sanityFetch({
+    query: PAGE_BY_SLUG_QUERY,
+    params: { slug },
+    perspective: options?.perspective,
+    stega: options?.stega,
+    tags: [`page:${slug}`],
+  });
+
+  return data as CmsPage | null;
+}
 
 export async function getSiteSettings() {
   if (!isSanityConfigured) {

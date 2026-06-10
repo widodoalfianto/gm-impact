@@ -331,3 +331,18 @@ export const postTemplates = [
     },
   },
 ];
+
+export const pageTemplates = [
+  {
+    id: "standard-page",
+    title: "Standard Page",
+    description: "A blank page with a hero and a text section to start from.",
+    schemaType: "page",
+    value: {
+      sections: [
+        { _type: "heroBlock", _key: "hero", eyebrow: "" },
+        { _type: "richTextBlock", _key: "intro" },
+      ],
+    },
+  },
+];

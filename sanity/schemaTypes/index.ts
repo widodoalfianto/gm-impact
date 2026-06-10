@@ -12,6 +12,7 @@ import { countryType } from "./countryType";
 import { imageWithAltType } from "./imageWithAltType";
 import { metricType } from "./metricType";
 import { newsletterType } from "./newsletterType";
+import { pageType } from "./pageType";
 import { postType } from "./postType";
 import { appearanceFields } from "./sectionAppearance";
 import { siteSettingsType } from "./siteSettingsType";
@@ -39,6 +40,7 @@ function withAppearance<T extends { fields: unknown[] }>(type: T): T {
 export const schemaTypes = [
   accentTitleType,
   siteSettingsType,
+  pageType,
   countryType,
   newsletterType,
   postType,

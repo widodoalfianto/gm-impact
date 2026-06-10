@@ -213,6 +213,14 @@ export type CmsNewsletterSummary = {
   }>;
 };
 
+export type CmsPage = {
+  _id: string;
+  title: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  sections?: CmsBlock[];
+};
+
 export type CmsPostSummary = {
   _id: string;
   title: string;

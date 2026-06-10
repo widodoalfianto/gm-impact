@@ -15,7 +15,11 @@ import {
 } from "./sanity/presentation/resolve";
 import { schemaTypes } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
-import { newsletterTemplates, postTemplates } from "./sanity/templates";
+import {
+  newsletterTemplates,
+  pageTemplates,
+  postTemplates,
+} from "./sanity/templates";
 import { siteMapTool } from "./sanity/tools/site-map-tool";
 import { startHereTool } from "./sanity/tools/start-here-tool";
 
@@ -57,7 +61,7 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
-    templates: [...newsletterTemplates, ...postTemplates],
+    templates: [...newsletterTemplates, ...postTemplates, ...pageTemplates],
   },
   document: {
     // Singletons are reached through the structure, never created ad hoc.

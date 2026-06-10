@@ -42,6 +42,16 @@ export const SITE_SETTINGS_QUERY = defineQuery(`
   }
 `);
 
+export const PAGE_BY_SLUG_QUERY = defineQuery(`
+  *[_type == "page" && slug.current == $slug][0] {
+    _id,
+    title,
+    seoTitle,
+    seoDescription,
+    ${SECTIONS_PROJECTION}
+  }
+`);
+
 export const NEWSLETTER_BY_SLUG_QUERY = defineQuery(`
   *[_type == "newsletter" && slug.current == $slug][0] {
     _id,

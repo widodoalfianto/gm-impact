@@ -8,6 +8,14 @@ export const structure: StructureResolver = (S) =>
     .title("GM Impact Content")
     .items([
       S.listItem()
+        .id("pages")
+        .title("Pages")
+        .child(
+          S.documentTypeList("page")
+            .title("Pages")
+            .defaultOrdering([{ field: "title", direction: "asc" }]),
+        ),
+      S.listItem()
         .id("newsletters")
         .title("Newsletters")
         .child(
