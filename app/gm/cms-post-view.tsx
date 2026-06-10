@@ -1,60 +1,52 @@
-import { stegaClean } from "next-sanity";
-import { CmsGlobalImpactNewsletter } from "./cms-global-impact-newsletter";
 import {
   CmsImageView,
   CmsNewsletterSectionView,
 } from "./cms-newsletter-sections";
+import { DISPLAY, SANS, THEME } from "./data";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
-import { DISPLAY, SANS, THEME } from "./data";
 import { pageStyle } from "./theme-vars";
-import type { CmsNewsletter, CmsSiteSettings } from "../../sanity/lib/types";
+import type { CmsPost, CmsSiteSettings } from "../../sanity/lib/types";
 import "./styles.css";
 
-export function CmsNewsletterPreview({
-  newsletter,
+export function CmsPostView({
+  post,
   settings,
 }: {
-  newsletter: CmsNewsletter;
+  post: CmsPost;
   settings?: CmsSiteSettings | null;
 }) {
   return (
     <div className="gm-page" style={pageStyle}>
       <ResponsiveNav />
-      {stegaClean(newsletter.newsletterType) === "globalImpact" ? (
-        <CmsGlobalImpactNewsletter newsletter={newsletter} />
-      ) : (
-        <main>
+      <main>
         <section className="gm-cms-hero">
-          <span>{newsletter.eyebrow}</span>
+          <span>{post.eyebrow}</span>
           <h1>
-            {newsletter.heroHeading}
-            {newsletter.heroAccent ? (
+            {post.heroHeading}
+            {post.heroAccent ? (
               <>
                 <br />
-                <em>{newsletter.heroAccent}</em>
+                <em>{post.heroAccent}</em>
               </>
             ) : null}
           </h1>
-          <p>{newsletter.summary}</p>
-          {newsletter.countries?.length ? (
+          <p>{post.summary}</p>
+          {post.country ? (
             <div className="gm-cms-country-list">
-              {newsletter.countries.map((country) => (
-                <span key={country._id}>{country.name}</span>
-              ))}
+              <span>{post.country.name}</span>
             </div>
           ) : null}
-          {newsletter.heroImage ? (
+          {post.heroImage ? (
             <div className="gm-cms-hero-image">
-              <CmsImageView image={newsletter.heroImage} />
+              <CmsImageView image={post.heroImage} />
             </div>
           ) : null}
         </section>
-        {newsletter.sections?.map((section) => (
+        {post.sections?.map((section) => (
           <CmsNewsletterSectionView key={section._key} section={section} />
         ))}
-        </main>
-      )}
+      </main>
       <SiteFooter settings={settings ?? undefined} />
       <style>{`
         .gm-cms-hero h1,

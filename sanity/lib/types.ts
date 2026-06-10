@@ -4,6 +4,15 @@ import type {
   ImpactArtKey,
 } from "../../lib/gm-visual-library";
 
+export type CmsSiteSettings = {
+  givingUrl?: string;
+  footerBlurb?: string;
+  siteUrl?: string;
+  youtubeUrl?: string;
+  instagramUrl?: string;
+  seoDescription?: string;
+};
+
 export type CmsImage = {
   _type: "image";
   asset: {
@@ -147,4 +156,37 @@ export type CmsNewsletterSummary = {
     name: string;
     isoCode: string;
   }>;
+};
+
+export type CmsPostSummary = {
+  _id: string;
+  title: string;
+  slug: string;
+  publishDate: string;
+  landingTitle: string;
+  landingSummary: string;
+  landingHighlights?: string[];
+  heroImage?: CmsImage;
+  country?: {
+    name: string;
+    isoCode: string;
+  };
+};
+
+export type CmsPost = {
+  _id: string;
+  title: string;
+  publishDate: string;
+  eyebrow: string;
+  heroHeading: string;
+  heroAccent?: string;
+  summary: string;
+  heroImage?: CmsImage;
+  country?: {
+    _id: string;
+    name: string;
+    isoCode: string;
+  };
+  landingHighlights?: string[];
+  sections?: CmsNewsletterSection[];
 };

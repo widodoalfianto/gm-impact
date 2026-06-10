@@ -1,6 +1,18 @@
 import type { ReactNode } from "react";
+import type { CmsSiteSettings } from "../../sanity/lib/types";
 import { INSTAGRAM_URL, SHARE_LABEL, SHARE_URL, SANS, THEME, YOUTUBE_URL } from "./data";
 import { titleTight } from "./typography";
+
+const DEFAULT_FOOTER_BLURB =
+  "Funding prayer, sending, discipleship, care, and church planting among unreached people.";
+
+function hostLabel(url: string) {
+  try {
+    return new URL(url).host;
+  } catch {
+    return url;
+  }
+}
 
 function InstagramIcon() {
   return (
@@ -17,13 +29,20 @@ function InstagramIcon() {
   );
 }
 
-const SOCIALS: readonly { name: string; icon: ReactNode; url: string }[] = [
-  { name: "YouTube", icon: "▶", url: YOUTUBE_URL },
-  { name: "Instagram", icon: <InstagramIcon />, url: INSTAGRAM_URL },
-];
-
-export function SiteFooter() {
+export function SiteFooter({ settings }: { settings?: CmsSiteSettings }) {
   const T = THEME;
+
+  const blurb = settings?.footerBlurb || DEFAULT_FOOTER_BLURB;
+  const shareUrl = settings?.siteUrl || SHARE_URL;
+  const shareLabel = settings?.siteUrl ? hostLabel(shareUrl) : SHARE_LABEL;
+  const socials: { name: string; icon: ReactNode; url: string }[] = [
+    { name: "YouTube", icon: "▶", url: settings?.youtubeUrl || YOUTUBE_URL },
+    {
+      name: "Instagram",
+      icon: <InstagramIcon />,
+      url: settings?.instagramUrl || INSTAGRAM_URL,
+    },
+  ];
 
   return (
     <footer id="socials" style={{ background: T.nav, color: T.navText, padding: "72px 28px 42px" }}>
@@ -38,10 +57,10 @@ export function SiteFooter() {
               <span style={{ fontFamily: SANS, fontSize: 24, fontWeight: 500, lineHeight: 1, ...titleTight }}>Global Missions</span>
             </div>
             <p style={{ fontSize: 17, color: T.navText, lineHeight: 1.5, maxWidth: 460, margin: "0 auto 28px" }}>
-              Funding prayer, sending, discipleship, care, and church planting among unreached people.
+              {blurb}
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-              {SOCIALS.map(s => (
+              {socials.map(s => (
                 <a key={s.name} href={s.url} className="gm-icon-link" title={s.name}>{s.icon}</a>
               ))}
             </div>
@@ -55,7 +74,7 @@ export function SiteFooter() {
           flexWrap: "wrap", gap: 8,
         }}>
           <span>© 2026 Global Missions. All rights reserved.</span>
-          <a href={SHARE_URL} className="gm-text-link" style={{ fontSize: 13 }}>{SHARE_LABEL}</a>
+          <a href={shareUrl} className="gm-text-link" style={{ fontSize: 13 }}>{shareLabel}</a>
         </div>
       </div>
     </footer>

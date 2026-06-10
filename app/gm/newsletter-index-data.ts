@@ -1,5 +1,8 @@
 import { NEWSLETTERS, type FlagName, type NewsletterSummary } from "./data";
-import { getNewsletterSummaries } from "../../sanity/lib/fetch-newsletter";
+import {
+  getNewsletterSummaries,
+  getPostSummaries,
+} from "../../sanity/lib/fetch-newsletter";
 import { urlFor } from "../../sanity/lib/image";
 
 const supportedFlags: readonly FlagName[] = [
@@ -45,12 +48,42 @@ export async function getNewsletterLandingItems(): Promise<
         : undefined,
     };
   });
-  const cmsHrefs = new Set(cmsItems.map((newsletter) => newsletter.href));
+  const cmsPosts = await getPostSummaries();
+  const postItems: NewsletterSummary[] = cmsPosts.map((post) => {
+    const year = post.publishDate.slice(0, 4);
+
+    return {
+      year,
+      label: `${year} Field Update`,
+      href: `/posts/${post.slug}`,
+      title: post.landingTitle || post.title,
+      snippet: post.landingSummary,
+      chips: post.landingHighlights ?? [],
+      countries:
+        post.country && isSupportedFlag(post.country.name)
+          ? [post.country.name]
+          : [],
+      image: post.heroImage
+        ? {
+            src: urlFor(post.heroImage)
+              .width(1200)
+              .height(800)
+              .fit("crop")
+              .url(),
+            alt: post.heroImage.alt || post.landingTitle,
+          }
+        : undefined,
+    };
+  });
+
+  const cmsHrefs = new Set(
+    [...cmsItems, ...postItems].map((item) => item.href),
+  );
   const legacyItems = NEWSLETTERS.filter(
     (newsletter) => !cmsHrefs.has(newsletter.href),
   );
 
-  return [...cmsItems, ...legacyItems].sort(
+  return [...cmsItems, ...postItems, ...legacyItems].sort(
     (left, right) => Number(right.year) - Number(left.year),
   );
 }

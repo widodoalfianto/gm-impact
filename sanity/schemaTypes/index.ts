@@ -2,6 +2,8 @@ import { countryType } from "./countryType";
 import { imageWithAltType } from "./imageWithAltType";
 import { metricType } from "./metricType";
 import { newsletterType } from "./newsletterType";
+import { postType } from "./postType";
+import { siteSettingsType } from "./siteSettingsType";
 import {
   actionLinkType,
   callToActionCardType,
@@ -18,8 +20,10 @@ import {
 } from "./sectionTypes";
 
 export const schemaTypes = [
+  siteSettingsType,
   countryType,
   newsletterType,
+  postType,
   imageWithAltType,
   metricType,
   actionLinkType,

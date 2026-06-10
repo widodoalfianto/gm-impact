@@ -15,7 +15,7 @@ import {
 } from "./sanity/presentation/resolve";
 import { schemaTypes } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
-import { newsletterTemplates } from "./sanity/templates";
+import { newsletterTemplates, postTemplates } from "./sanity/templates";
 import { siteMapTool } from "./sanity/tools/site-map-tool";
 import { startHereTool } from "./sanity/tools/start-here-tool";
 
@@ -30,10 +30,6 @@ export default defineConfig({
   projectId,
   dataset,
   plugins: [
-    structureTool({
-      title: "Content",
-      structure,
-    }),
     presentationTool({
       title: "Preview and Edit",
       previewUrl: {
@@ -48,6 +44,10 @@ export default defineConfig({
         mainDocuments,
       },
     }),
+    structureTool({
+      title: "Content",
+      structure,
+    }),
     visionTool({
       title: "Query Lab (Developers)",
       defaultApiVersion: visionApiVersion,
@@ -57,7 +57,16 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
-    templates: newsletterTemplates,
+    templates: [...newsletterTemplates, ...postTemplates],
+  },
+  document: {
+    // Singletons are reached through the structure, never created ad hoc.
+    newDocumentOptions: (previousOptions, { creationContext }) =>
+      creationContext.type === "global"
+        ? previousOptions.filter(
+            (option) => option.templateId !== "siteSettings",
+          )
+        : previousOptions,
   },
   tools: (previousTools) => [startHereTool, siteMapTool, ...previousTools],
 });

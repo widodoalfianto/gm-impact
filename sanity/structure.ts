@@ -1,5 +1,7 @@
+import { CogIcon } from "@sanity/icons";
 import type { StructureResolver } from "sanity/structure";
 import { apiVersion } from "./env";
+import { SITE_SETTINGS_ID } from "./schemaTypes/siteSettingsType";
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -56,6 +58,14 @@ export const structure: StructureResolver = (S) =>
                 ),
             ]),
         ),
+      S.listItem()
+        .id("field-updates")
+        .title("Field Updates")
+        .child(
+          S.documentTypeList("post")
+            .title("Field Updates")
+            .defaultOrdering([{ field: "publishDate", direction: "desc" }]),
+        ),
       S.divider(),
       S.listItem()
         .id("countries")
@@ -64,5 +74,16 @@ export const structure: StructureResolver = (S) =>
           S.documentTypeList("country")
             .title("Countries and Artwork")
             .defaultOrdering([{ field: "name", direction: "asc" }]),
+        ),
+      S.divider(),
+      S.listItem()
+        .id("site-settings")
+        .title("Site Settings")
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .schemaType("siteSettings")
+            .documentId(SITE_SETTINGS_ID)
+            .title("Site Settings"),
         ),
     ]);

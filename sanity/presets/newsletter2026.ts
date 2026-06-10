@@ -1,5 +1,6 @@
-const givingUrl =
-  "https://worldharvest.givecloud.co/IFGF%20Global%20Mission";
+import { GIVE_URL } from "../../app/gm/data";
+
+const givingUrl = GIVE_URL;
 
 export const newsletter2026Countries = [
   {

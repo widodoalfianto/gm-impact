@@ -1,32 +1,18 @@
+import { PinIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { sharedSectionMembers } from "./sectionMembers";
 
-export const newsletterType = defineType({
-  name: "newsletter",
-  title: "Newsletter",
+export const postType = defineType({
+  name: "post",
+  title: "Field Update",
   type: "document",
+  icon: PinIcon,
   groups: [
     { name: "content", title: "Content", default: true },
     { name: "landing", title: "Newsletter listing" },
     { name: "seo", title: "Search and sharing" },
   ],
   fields: [
-    defineField({
-      name: "newsletterType",
-      title: "Newsletter format",
-      type: "string",
-      group: "content",
-      options: {
-        layout: "radio",
-        list: [
-          { title: "Global Impact Report", value: "globalImpact" },
-          { title: "Mission Trip Highlight", value: "missionTrip" },
-          { title: "Country or Field Update", value: "countryUpdate" },
-          { title: "Project Update", value: "projectUpdate" },
-        ],
-      },
-      validation: (rule) => rule.required(),
-    }),
     defineField({
       name: "title",
       title: "Internal title",
@@ -41,10 +27,7 @@ export const newsletterType = defineType({
       title: "URL slug",
       type: "slug",
       group: "content",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
+      options: { source: "title", maxLength: 96 },
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -53,6 +36,14 @@ export const newsletterType = defineType({
       type: "date",
       group: "content",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "country",
+      title: "Country",
+      type: "reference",
+      group: "content",
+      description: "The main country or field this update comes from.",
+      to: [{ type: "country" }],
     }),
     defineField({
       name: "eyebrow",
@@ -93,29 +84,8 @@ export const newsletterType = defineType({
       group: "content",
     }),
     defineField({
-      name: "countries",
-      title: "Countries",
-      type: "array",
-      group: "content",
-      of: [
-        defineArrayMember({
-          type: "reference",
-          to: [{ type: "country" }],
-        }),
-      ],
-      validation: (rule) => rule.unique().max(12),
-    }),
-    defineField({
-      name: "heroActions",
-      title: "Hero buttons",
-      type: "array",
-      group: "content",
-      of: [defineArrayMember({ type: "actionLink" })],
-      validation: (rule) => rule.max(2),
-    }),
-    defineField({
       name: "sections",
-      title: "Newsletter sections",
+      title: "Update sections",
       type: "array",
       group: "content",
       description:
@@ -155,7 +125,7 @@ export const newsletterType = defineType({
     }),
     defineField({
       name: "featured",
-      title: "Feature this newsletter",
+      title: "Feature this update",
       type: "boolean",
       group: "landing",
       initialValue: false,
@@ -166,7 +136,7 @@ export const newsletterType = defineType({
       type: "boolean",
       group: "landing",
       description:
-        "Keep this off for public newsletters. Turn it on for private demos or drafts.",
+        "Keep this off for public updates. Turn it on for private demos or drafts.",
       initialValue: false,
     }),
     defineField({
@@ -197,23 +167,14 @@ export const newsletterType = defineType({
   preview: {
     select: {
       title: "title",
-      type: "newsletterType",
       date: "publishDate",
       media: "heroImage",
+      country: "country.name",
     },
-    prepare: ({ title, type, date, media }) => {
-      const labels: Record<string, string> = {
-        globalImpact: "Global Impact Report",
-        missionTrip: "Mission Trip Highlight",
-        countryUpdate: "Country or Field Update",
-        projectUpdate: "Project Update",
-      };
-
-      return {
-        title,
-        subtitle: [labels[type] || type, date].filter(Boolean).join(" · "),
-        media,
-      };
-    },
+    prepare: ({ title, date, media, country }) => ({
+      title,
+      subtitle: ["Field Update", country, date].filter(Boolean).join(" · "),
+      media,
+    }),
   },
 });

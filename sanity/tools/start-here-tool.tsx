@@ -49,31 +49,41 @@ const newsletterTemplates = [
     description: "A metrics-led mid-year or annual missions report.",
     icon: ChartUpwardIcon,
     id: "global-impact-newsletter",
+    schemaType: "newsletter",
     title: "Global Impact Report",
+  },
+  {
+    description: "A quick field update from one country or ministry.",
+    icon: EarthGlobeIcon,
+    id: "field-update-post",
+    schemaType: "post",
+    title: "Field Update",
   },
   {
     description: "A visual field report centered on one mission trip.",
     icon: PinIcon,
-    id: "mission-trip-newsletter",
+    id: "mission-trip-post",
+    schemaType: "post",
     title: "Mission Trip Highlight",
   },
   {
     description: "Progress, stories, images, prayer, and next steps.",
     icon: ProjectsIcon,
-    id: "project-update-newsletter",
+    id: "project-update-post",
+    schemaType: "post",
     title: "Project Update",
-  },
-  {
-    description: "A focused update from one country or ministry field.",
-    icon: EarthGlobeIcon,
-    id: "country-update-newsletter",
-    title: "Country or Field Update",
   },
 ] as const;
 
 const workspaceLinks = [
   {
-    description: "Browse and edit every content item.",
+    description: "Edit pages visually on the live site. The best place to make changes.",
+    href: "/studio/presentation",
+    icon: ComposeIcon,
+    title: "Preview and Edit",
+  },
+  {
+    description: "Browse and edit every content item in a form view.",
     href: "/studio/structure",
     icon: DocumentsIcon,
     title: "Content library",
@@ -83,12 +93,6 @@ const workspaceLinks = [
     href: "/studio/site-map",
     icon: EarthGlobeIcon,
     title: "Site Map",
-  },
-  {
-    description: "Preview drafts while you edit them.",
-    href: "/studio/presentation",
-    icon: ComposeIcon,
-    title: "Preview and Edit",
   },
 ] as const;
 
@@ -151,24 +155,24 @@ function NewsletterItem({
         <Flex align="center" gap={2}>
           {previewPath ? (
             <a
-              aria-label={`Preview ${current?.title || "untitled newsletter"}`}
+              aria-label={`Edit ${current?.title || "untitled newsletter"} in Preview and Edit`}
               className={styles.iconButton}
               href={`/studio/presentation?preview=${encodeURIComponent(
                 previewPath,
               )}`}
-              title="Preview newsletter"
+              title="Edit in Preview and Edit"
             >
-              <DocumentsIcon />
+              <EditIcon />
             </a>
           ) : null}
           <IntentLink
-            aria-label={`Edit ${current?.title || "untitled newsletter"}`}
+            aria-label={`Open ${current?.title || "untitled newsletter"} in the form editor`}
             className={styles.iconButton}
             intent="edit"
             params={{ id: route.id, type: "newsletter" }}
-            title="Edit newsletter"
+            title="Open in the form editor"
           >
-            <EditIcon />
+            <DocumentsIcon />
           </IntentLink>
         </Flex>
       </div>
@@ -357,7 +361,7 @@ function StartHereTool() {
                       key={template.id}
                       params={{
                         template: template.id,
-                        type: "newsletter",
+                        type: template.schemaType,
                       }}
                     >
                       <Flex align="flex-start" gap={3}>

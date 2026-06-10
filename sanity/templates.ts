@@ -1,3 +1,4 @@
+import { GIVE_URL } from "../app/gm/data";
 import { newsletter2026Value } from "./presets/newsletter2026";
 
 const sharedNewsletterDefaults = {
@@ -6,8 +7,7 @@ const sharedNewsletterDefaults = {
   publishDate: new Date().toISOString().slice(0, 10),
 };
 
-const givingUrl =
-  "https://worldharvest.givecloud.co/IFGF%20Global%20Mission";
+const givingUrl = GIVE_URL;
 
 export const newsletterTemplates = [
   {
@@ -165,6 +165,124 @@ export const newsletterTemplates = [
     value: {
       ...sharedNewsletterDefaults,
       newsletterType: "projectUpdate",
+      eyebrow: "Project Update",
+      sections: [
+        {
+          _type: "impactGrid",
+          _key: "project-impact",
+          heading: "Project progress",
+        },
+        {
+          _type: "storySection",
+          _key: "project-story",
+          eyebrow: "Why it matters",
+        },
+        {
+          _type: "gallerySection",
+          _key: "project-gallery",
+          heading: "Project gallery",
+        },
+        {
+          _type: "prayerSection",
+          _key: "project-prayer",
+          heading: "How to pray",
+        },
+        {
+          _type: "callToActionSection",
+          _key: "project-giving",
+          heading: "Help move this project forward",
+          description:
+            "Partner with Global Missions to support this work and the communities it serves.",
+          buttonLabel: "Give to Global Missions",
+          buttonUrl: givingUrl,
+        },
+      ],
+    },
+  },
+];
+
+const sharedPostDefaults = {
+  featured: false,
+  hideFromIndex: false,
+  publishDate: new Date().toISOString().slice(0, 10),
+};
+
+export const postTemplates = [
+  {
+    id: "field-update-post",
+    title: "Field Update",
+    description: "A focused update from one country or ministry field.",
+    schemaType: "post",
+    value: {
+      ...sharedPostDefaults,
+      eyebrow: "Field Update",
+      sections: [
+        {
+          _type: "storySection",
+          _key: "field-story",
+          eyebrow: "From the field",
+        },
+        {
+          _type: "prayerSection",
+          _key: "field-prayer",
+          heading: "How to pray",
+        },
+        {
+          _type: "callToActionSection",
+          _key: "field-giving",
+          heading: "Partner with Global Missions",
+          description:
+            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
+          buttonLabel: "Give to Global Missions",
+          buttonUrl: givingUrl,
+        },
+      ],
+    },
+  },
+  {
+    id: "mission-trip-post",
+    title: "Mission Trip Highlight",
+    description: "A visual field report centered on one mission trip.",
+    schemaType: "post",
+    value: {
+      ...sharedPostDefaults,
+      eyebrow: "Mission Trip Highlight",
+      sections: [
+        {
+          _type: "storySection",
+          _key: "trip-story",
+          eyebrow: "From the field",
+        },
+        {
+          _type: "gallerySection",
+          _key: "trip-gallery",
+          heading: "Moments from the mission",
+        },
+        {
+          _type: "prayerSection",
+          _key: "trip-prayer",
+          heading: "How to pray",
+        },
+        {
+          _type: "callToActionSection",
+          _key: "trip-giving",
+          heading: "Partner with Global Missions",
+          description:
+            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
+          buttonLabel: "Give to Global Missions",
+          buttonUrl: givingUrl,
+        },
+      ],
+    },
+  },
+  {
+    id: "project-update-post",
+    title: "Project Update",
+    description:
+      "A focused report on a building, care, relief, or ministry project.",
+    schemaType: "post",
+    value: {
+      ...sharedPostDefaults,
       eyebrow: "Project Update",
       sections: [
         {

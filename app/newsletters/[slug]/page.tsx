@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CmsNewsletterPreview } from "../../gm/cms-newsletter-preview";
-import { getNewsletterBySlug } from "../../../sanity/lib/fetch-newsletter";
+import {
+  getNewsletterBySlug,
+  getSiteSettings,
+} from "../../../sanity/lib/fetch-newsletter";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -24,11 +27,14 @@ export async function generateMetadata({
 
 export default async function CmsNewsletterPage({ params }: PageProps) {
   const { slug } = await params;
-  const newsletter = await getNewsletterBySlug(slug);
+  const [newsletter, settings] = await Promise.all([
+    getNewsletterBySlug(slug),
+    getSiteSettings(),
+  ]);
 
   if (!newsletter) {
     notFound();
   }
 
-  return <CmsNewsletterPreview newsletter={newsletter} />;
+  return <CmsNewsletterPreview newsletter={newsletter} settings={settings} />;
 }
