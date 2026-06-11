@@ -20,8 +20,6 @@ import {
   pageTemplates,
   postTemplates,
 } from "./sanity/templates";
-import { siteMapTool } from "./sanity/tools/site-map-tool";
-import { startHereTool } from "./sanity/tools/start-here-tool";
 
 const visionApiVersion = apiVersion.startsWith("v")
   ? apiVersion
@@ -35,7 +33,7 @@ export default defineConfig({
   dataset,
   plugins: [
     presentationTool({
-      title: "Preview and Edit",
+      title: "Studio",
       previewUrl: {
         initial: "/newsletters/2026",
         previewMode: {
@@ -52,12 +50,18 @@ export default defineConfig({
       title: "Content",
       structure,
     }),
-    visionTool({
-      title: "Query Lab (Developers)",
-      defaultApiVersion: visionApiVersion,
-      defaultDataset: dataset,
-      datasets: [dataset],
-    }),
+    // Developer GROQ playground — only in local development, never in the
+    // deployed Studio that admins use.
+    ...(process.env.NODE_ENV === "development"
+      ? [
+          visionTool({
+            title: "Query Lab",
+            defaultApiVersion: visionApiVersion,
+            defaultDataset: dataset,
+            datasets: [dataset],
+          }),
+        ]
+      : []),
   ],
   schema: {
     types: schemaTypes,
@@ -72,5 +76,4 @@ export default defineConfig({
           )
         : previousOptions,
   },
-  tools: (previousTools) => [startHereTool, siteMapTool, ...previousTools],
 });
