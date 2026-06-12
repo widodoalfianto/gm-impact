@@ -43,16 +43,6 @@ export const structure: StructureResolver = (S) =>
                       { field: "publishDate", direction: "desc" },
                     ]),
                 ),
-              S.listItem()
-                .id("field-updates")
-                .title("Field Updates")
-                .child(
-                  S.documentTypeList("post")
-                    .title("Field Updates")
-                    .defaultOrdering([
-                      { field: "publishDate", direction: "desc" },
-                    ]),
-                ),
             ]),
         ),
       S.divider(),
