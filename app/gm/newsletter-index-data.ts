@@ -1,4 +1,4 @@
-import { NEWSLETTERS, type FlagName, type NewsletterSummary } from "./data";
+import type { FlagName, NewsletterSummary } from "./data";
 import {
   getNewsletterSummaries,
   getPostSummaries,
@@ -78,16 +78,11 @@ export async function getNewsletterLandingItems(): Promise<
     };
   });
 
-  const cmsHrefs = new Set(
-    [...cmsItems, ...postItems].map((item) => item.href),
-  );
-  const legacyItems = NEWSLETTERS.filter(
-    (newsletter) => !cmsHrefs.has(newsletter.href),
-  );
-
+  // Only show CMS-managed articles (newsletters + field updates), not the
+  // legacy hardcoded entries.
   const sortKey = (item: NewsletterSummary) => item.date ?? `${item.year}-01-01`;
 
-  return [...cmsItems, ...postItems, ...legacyItems].sort((left, right) =>
+  return [...cmsItems, ...postItems].sort((left, right) =>
     sortKey(right).localeCompare(sortKey(left)),
   );
 }
