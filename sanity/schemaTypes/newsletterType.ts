@@ -124,6 +124,15 @@ export const newsletterType = defineType({
       validation: (rule) => rule.required().min(1).max(20),
     }),
     defineField({
+      name: "listName",
+      title: "List name",
+      type: "string",
+      group: "landing",
+      description:
+        "Short name shown in the newsletter list and menu, e.g. '2026 Q1' or '2025'. Defaults to the year.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
       name: "landingTitle",
       title: "Listing headline",
       type: "string",

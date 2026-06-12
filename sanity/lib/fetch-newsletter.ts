@@ -1,6 +1,7 @@
 import { isSanityConfigured } from "../env";
 import { sanityFetch } from "./live";
 import {
+  HOME_QUERY,
   NEWSLETTER_BY_SLUG_QUERY,
   NEWSLETTER_INDEX_QUERY,
   PAGE_BY_SLUG_QUERY,
@@ -9,6 +10,7 @@ import {
   SITE_SETTINGS_QUERY,
 } from "./queries";
 import type {
+  CmsHome,
   CmsNewsletter,
   CmsNewsletterSummary,
   CmsPage,
@@ -16,6 +18,21 @@ import type {
   CmsPostSummary,
   CmsSiteSettings,
 } from "./types";
+
+export async function getHome() {
+  if (!isSanityConfigured) {
+    return null;
+  }
+
+  const { data } = await sanityFetch({
+    query: HOME_QUERY,
+    perspective: "published",
+    stega: false,
+    tags: ["homePage"],
+  });
+
+  return data as CmsHome | null;
+}
 
 export async function getPageBySlug(
   slug: string,

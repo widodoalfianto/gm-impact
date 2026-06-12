@@ -13,6 +13,12 @@ export type CmsSiteSettings = {
   seoDescription?: string;
 };
 
+export type CmsHome = {
+  eyebrow?: string;
+  heading?: PortableTextBlock[];
+  intro?: string;
+};
+
 export type CmsImage = {
   _type: "image";
   asset: {
@@ -201,6 +207,7 @@ export type CmsNewsletter = {
 export type CmsNewsletterSummary = {
   _id: string;
   title: string;
+  listName?: string;
   slug: string;
   publishDate: string;
   landingTitle: string;
@@ -224,6 +231,7 @@ export type CmsPage = {
 export type CmsPostSummary = {
   _id: string;
   title: string;
+  listName?: string;
   slug: string;
   publishDate: string;
   landingTitle: string;

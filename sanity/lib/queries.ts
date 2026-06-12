@@ -31,6 +31,14 @@ const SECTIONS_PROJECTION = `
   }
 `;
 
+export const HOME_QUERY = defineQuery(`
+  *[_type == "homePage" && _id == "homePage"][0] {
+    eyebrow,
+    heading,
+    intro
+  }
+`);
+
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings" && _id == "siteSettings"][0] {
     givingUrl,
@@ -103,6 +111,7 @@ export const NEWSLETTER_INDEX_QUERY = defineQuery(`
     | order(featured desc, publishDate desc) {
       _id,
       title,
+      listName,
       "slug": slug.current,
       publishDate,
       landingTitle,
@@ -125,6 +134,7 @@ export const POST_INDEX_QUERY = defineQuery(`
     | order(featured desc, publishDate desc) {
       _id,
       title,
+      listName,
       "slug": slug.current,
       publishDate,
       landingTitle,

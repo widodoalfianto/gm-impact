@@ -941,7 +941,8 @@ html {
 .gm-stats-grid {
   display: grid;
   gap: 56px 18px;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
+  justify-content: center;
   margin: 0 auto;
   max-width: 1320px;
   text-align: center;
@@ -1088,7 +1089,6 @@ html {
   }
 
   .gm-stats-grid {
-    grid-template-columns: repeat(3, minmax(160px, 1fr));
     max-width: 760px;
   }
 
@@ -1139,7 +1139,6 @@ html {
 
   .gm-stats-grid {
     gap: 48px 20px;
-    grid-template-columns: repeat(2, minmax(140px, 1fr));
   }
 
   .gm-stat-art {
@@ -1156,6 +1155,6 @@ html {
 
 @media (max-width: 420px) {
   .gm-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 200px));
   }
 }

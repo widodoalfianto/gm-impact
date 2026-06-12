@@ -94,6 +94,15 @@ export const postType = defineType({
       validation: (rule) => rule.required().min(1).max(20),
     }),
     defineField({
+      name: "listName",
+      title: "List name",
+      type: "string",
+      group: "landing",
+      description:
+        "Short name shown in the newsletter list and menu, e.g. 'Mission Update' or '2026 Q1'. Defaults to the year.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
       name: "landingTitle",
       title: "Listing headline",
       type: "string",

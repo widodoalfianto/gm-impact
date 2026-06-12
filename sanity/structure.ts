@@ -1,12 +1,23 @@
-import { CogIcon } from "@sanity/icons";
+import { CogIcon, HomeIcon } from "@sanity/icons";
 import type { StructureResolver } from "sanity/structure";
 import { apiVersion } from "./env";
+import { HOME_ID } from "./schemaTypes/homeType";
 import { SITE_SETTINGS_ID } from "./schemaTypes/siteSettingsType";
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("GM Impact Content")
     .items([
+      S.listItem()
+        .id("home")
+        .title("Home Page")
+        .icon(HomeIcon)
+        .child(
+          S.document()
+            .schemaType("homePage")
+            .documentId(HOME_ID)
+            .title("Home Page"),
+        ),
       S.listItem()
         .id("pages")
         .title("Pages")

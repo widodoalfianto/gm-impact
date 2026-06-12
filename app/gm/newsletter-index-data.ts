@@ -27,7 +27,7 @@ export async function getNewsletterLandingItems(): Promise<
 
     return {
       year,
-      label: `${year} Newsletter`,
+      label: newsletter.listName || year,
       href: `/newsletters/${newsletter.slug}`,
       title: newsletter.landingTitle || newsletter.title,
       snippet: newsletter.landingSummary,
@@ -54,7 +54,7 @@ export async function getNewsletterLandingItems(): Promise<
 
     return {
       year,
-      label: `${year} Field Update`,
+      label: post.listName || year,
       href: `/posts/${post.slug}`,
       title: post.landingTitle || post.title,
       snippet: post.landingSummary,

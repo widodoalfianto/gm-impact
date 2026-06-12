@@ -17,6 +17,7 @@ import {
   type NewsletterSummary,
   formatStatNumber,
 } from "./gm/data";
+import { AccentText } from "./gm/cms-newsletter-sections";
 import { SiteFooter } from "./gm/footer";
 import { ResponsiveNav } from "./gm/responsive-nav";
 import "./gm/styles.css";
@@ -24,6 +25,7 @@ import { pageStyle } from "./gm/theme-vars";
 import { bodyStyle, h2Style, heroLightTitle, overline, titleAccent, titleTight } from "./gm/typography";
 import { useCountUpStats } from "./gm/use-count-up-stats";
 import { CountryFlag, CountryMap, StatIllustration } from "./gm/visuals";
+import type { CmsHome } from "../sanity/lib/types";
 
 function NewsletterCardVisual({ newsletter }: { newsletter: NewsletterSummary }) {
   if (newsletter.image) {
@@ -152,9 +154,11 @@ function PartnerSection() {
 export function GlobalMissionsImpactPage({
   variant = "update",
   newsletters = NEWSLETTERS,
+  home,
 }: {
   variant?: "update" | "newsletter";
   newsletters?: readonly NewsletterSummary[];
+  home?: CmsHome | null;
 } = {}) {
   const [expanded, setExpanded] = useState<number | null>(null);
   const { animatedStats, statsRef } = useCountUpStats();
@@ -175,7 +179,7 @@ export function GlobalMissionsImpactPage({
         textAlign: "center",
       }}>
         <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-          <span style={overline}>Newsletters</span>
+          <span style={overline}>{home?.eyebrow || "Newsletters"}</span>
           <h1 style={{
             fontFamily: SERIF,
             fontSize: "clamp(54px, 9vw, 112px)",
@@ -186,10 +190,15 @@ export function GlobalMissionsImpactPage({
             color: T.text,
             ...titleTight,
           }}>
-            Global Missions Updates
+            {home?.heading?.length ? (
+              <AccentText value={home.heading} />
+            ) : (
+              "Global Missions Updates"
+            )}
           </h1>
           <p style={{ ...bodyStyle, marginBottom: 48 }}>
-            Read the latest stories of sending, discipleship, care, and church planting among unreached communities.
+            {home?.intro ||
+              "Read the latest stories of sending, discipleship, care, and church planting among unreached communities."}
           </p>
           <div className="gm-newsletter-list">
             {newsletters.map((newsletter) => (
@@ -387,13 +396,16 @@ export function GlobalMissionsImpactPage({
 
 export function NewsletterLandingPage({
   newsletters = NEWSLETTERS,
+  home,
 }: {
   newsletters?: readonly NewsletterSummary[];
+  home?: CmsHome | null;
 } = {}) {
   return (
     <GlobalMissionsImpactPage
       variant="newsletter"
       newsletters={newsletters}
+      home={home}
     />
   );
 }

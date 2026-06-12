@@ -9,6 +9,7 @@ import {
   statsBannerBlockType,
 } from "./blockTypes";
 import { countryType } from "./countryType";
+import { homeType } from "./homeType";
 import { imageWithAltType } from "./imageWithAltType";
 import { metricType } from "./metricType";
 import { newsletterType } from "./newsletterType";
@@ -40,6 +41,7 @@ function withAppearance<T extends { fields: unknown[] }>(type: T): T {
 export const schemaTypes = [
   accentTitleType,
   siteSettingsType,
+  homeType,
   pageType,
   countryType,
   newsletterType,

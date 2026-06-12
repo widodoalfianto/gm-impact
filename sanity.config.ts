@@ -72,7 +72,9 @@ export default defineConfig({
     newDocumentOptions: (previousOptions, { creationContext }) =>
       creationContext.type === "global"
         ? previousOptions.filter(
-            (option) => option.templateId !== "siteSettings",
+            (option) =>
+              option.templateId !== "siteSettings" &&
+              option.templateId !== "homePage",
           )
         : previousOptions,
   },

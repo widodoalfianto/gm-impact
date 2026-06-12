@@ -1,5 +1,4 @@
 import { GIVE_URL } from "../app/gm/data";
-import { newsletter2026Value } from "./presets/newsletter2026";
 
 // Builds a portable-text value for accentTitle heading fields (no accents).
 function pt(text: string) {
@@ -14,6 +13,20 @@ function pt(text: string) {
   ];
 }
 
+function placeholderCountryCard(key: string, countryRef: string) {
+  return {
+    _type: "countryImpact",
+    _key: key,
+    country: { _type: "reference", _ref: countryRef },
+    subtitle: "Ministry focus",
+    metrics: [
+      { _key: `${key}-m1`, _type: "metric", value: "TBD", label: "Stat label" },
+      { _key: `${key}-m2`, _type: "metric", value: "TBD", label: "Stat label" },
+    ],
+    highlights: ["Add a highlight here", "Add another highlight"],
+  };
+}
+
 const sharedNewsletterDefaults = {
   featured: false,
   hideFromIndex: false,
@@ -22,56 +35,72 @@ const sharedNewsletterDefaults = {
 
 const givingUrl = GIVE_URL;
 
+const projectUpdateHero = {
+  ...sharedNewsletterDefaults,
+  newsletterType: "projectUpdate",
+  title: "Project Update",
+  eyebrow: "Project Update",
+  heroHeading: pt("Project update"),
+  summary: "Give a short summary here that details this mission's impacts",
+  landingTitle: "Project update headline",
+  landingSummary: "A short summary for the newsletter card.",
+  landingHighlights: ["Project", "Update"],
+};
+
 export const newsletterTemplates = [
   {
-    id: "global-impact-newsletter",
-    title: "Global Impact Report",
-    description: "A metrics-led mid-year or annual missions report.",
+    // id matches the schema type, so this replaces the default blank template.
+    id: "newsletter",
+    title: "Newsletter",
+    description:
+      "A full newsletter: impact stats, where we work, and partner with us.",
     schemaType: "newsletter",
     value: {
       ...sharedNewsletterDefaults,
       newsletterType: "globalImpact",
+      title: "New Newsletter",
       eyebrow: "Global Impact",
-      heroActions: [
-        {
-          _type: "actionLink",
-          _key: "impact",
-          label: "See Our Impact",
-          url: "#impact",
-          style: "primary",
-        },
-        {
-          _type: "actionLink",
-          _key: "partner",
-          label: "Partner With Us",
-          url: "#planters-giving",
-          style: "secondary",
-        },
-      ],
+      heroHeading: pt("Newsletter heading"),
+      heroAccent: "Accent line",
+      summary: "Give a short summary here that details this mission's impacts",
+      landingTitle: "Newsletter listing headline",
+      landingSummary: "A short summary for the newsletter card.",
+      landingHighlights: ["Highlight one", "Highlight two"],
       sections: [
         {
           _type: "impactGrid",
-          _key: "impact-grid",
+          _key: "impact",
           heading: "Global Impact",
+          metrics: [
+            { _key: "i1", _type: "metric", value: "TBD", label: "Nations Reached", art: "nations" },
+            { _key: "i2", _type: "metric", value: "TBD", label: "New Believers", art: "believers" },
+            { _key: "i3", _type: "metric", value: "TBD", label: "Leaders Trained", art: "leaders" },
+            { _key: "i4", _type: "metric", value: "TBD", label: "Bibles Given", art: "bibles" },
+          ],
         },
         {
           _type: "countryGridSection",
-          _key: "country-grid",
+          _key: "where-we-work",
           eyebrow: "Where We Work",
           heading: pt("Nations Reached."),
           accentHeading: "One Mission.",
+          regions: [
+            placeholderCountryCard("c1", "country-nepal"),
+            placeholderCountryCard("c2", "country-algeria"),
+            placeholderCountryCard("c3", "country-indonesia"),
+          ],
         },
         {
           _type: "partnerGridSection",
-          _key: "partner-grid",
+          _key: "partner",
           eyebrow: "Partner With Us",
           heading: pt("Join the mission beyond the newsletter."),
           intro:
             "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           cards: [
             {
-              _type: "callToActionCard",
               _key: "planters",
+              _type: "callToActionCard",
               heading: "Planters Program",
               description:
                 "Join a community of partners helping plant churches, care for pastors, and support long-term discipleship in unreached places.",
@@ -79,11 +108,11 @@ export const newsletterTemplates = [
               buttonUrl: givingUrl,
             },
             {
-              _type: "callToActionCard",
               _key: "giving",
+              _type: "callToActionCard",
               heading: "Giving",
               description:
-                "Your generosity helps fund Bibles, medical care, discipleship, and church planting.",
+                "Your generosity reaches the unreached by funding Bibles, medical care, discipleship, and church planting across five nations.",
               buttonLabel: "Give to Global Missions",
               buttonUrl: givingUrl,
             },
@@ -93,121 +122,49 @@ export const newsletterTemplates = [
     },
   },
   {
-    id: "global-impact-2026-newsletter",
-    title: "2026 Global Impact Report",
-    description:
-      "The complete current 2026 newsletter, ready to recreate and edit.",
-    schemaType: "newsletter",
-    value: newsletter2026Value,
-  },
-  {
-    id: "mission-trip-newsletter",
-    title: "Mission Trip Highlight",
-    description: "A visual field report centered on one mission trip.",
+    id: "project-update-video",
+    title: "Project update - video",
+    description: "A short project update with an embedded video and text.",
     schemaType: "newsletter",
     value: {
-      ...sharedNewsletterDefaults,
-      newsletterType: "missionTrip",
-      eyebrow: "Mission Trip Highlight",
+      ...projectUpdateHero,
       sections: [
         {
           _type: "storySection",
-          _key: "trip-story",
-          eyebrow: "From the field",
+          _key: "story",
+          eyebrow: "Update",
+          heading: pt("What's happening"),
+          body: pt("Replace this with a few sentences describing the project update."),
         },
         {
-          _type: "gallerySection",
-          _key: "trip-gallery",
-          heading: pt("Moments from the mission"),
-        },
-        {
-          _type: "prayerSection",
-          _key: "trip-prayer",
-          heading: pt("How to pray"),
-        },
-        {
-          _type: "callToActionSection",
-          _key: "trip-giving",
-          heading: pt("Partner with Global Missions"),
-          description:
-            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
-          buttonLabel: "Give to Global Missions",
-          buttonUrl: givingUrl,
+          _type: "videoSection",
+          _key: "video",
+          heading: pt("Watch"),
+          url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+          description: "Replace this with your own video link.",
         },
       ],
     },
   },
   {
-    id: "country-update-newsletter",
-    title: "Country or Field Update",
-    description: "A focused update from one country or ministry field.",
+    id: "project-update-images",
+    title: "Project update - images",
+    description: "A short project update with a collection of images and text.",
     schemaType: "newsletter",
     value: {
-      ...sharedNewsletterDefaults,
-      newsletterType: "countryUpdate",
-      eyebrow: "Field Update",
+      ...projectUpdateHero,
       sections: [
         {
           _type: "storySection",
-          _key: "field-story",
-          eyebrow: "From the field",
-        },
-        {
-          _type: "prayerSection",
-          _key: "field-prayer",
-          heading: pt("How to pray"),
-        },
-        {
-          _type: "callToActionSection",
-          _key: "field-giving",
-          heading: pt("Partner with Global Missions"),
-          description:
-            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
-          buttonLabel: "Give to Global Missions",
-          buttonUrl: givingUrl,
-        },
-      ],
-    },
-  },
-  {
-    id: "project-update-newsletter",
-    title: "Project Update",
-    description:
-      "A focused report on a building, care, relief, or ministry project.",
-    schemaType: "newsletter",
-    value: {
-      ...sharedNewsletterDefaults,
-      newsletterType: "projectUpdate",
-      eyebrow: "Project Update",
-      sections: [
-        {
-          _type: "impactGrid",
-          _key: "project-impact",
-          heading: "Project progress",
-        },
-        {
-          _type: "storySection",
-          _key: "project-story",
-          eyebrow: "Why it matters",
+          _key: "story",
+          eyebrow: "Update",
+          heading: pt("What's happening"),
+          body: pt("Replace this with a few sentences describing the project update."),
         },
         {
           _type: "gallerySection",
-          _key: "project-gallery",
-          heading: pt("Project gallery"),
-        },
-        {
-          _type: "prayerSection",
-          _key: "project-prayer",
-          heading: pt("How to pray"),
-        },
-        {
-          _type: "callToActionSection",
-          _key: "project-giving",
-          heading: pt("Help move this project forward"),
-          description:
-            "Partner with Global Missions to support this work and the communities it serves.",
-          buttonLabel: "Give to Global Missions",
-          buttonUrl: givingUrl,
+          _key: "gallery",
+          heading: pt("Photo gallery"),
         },
       ],
     },
@@ -324,6 +281,51 @@ export const postTemplates = [
           heading: pt("Help move this project forward"),
           description:
             "Partner with Global Missions to support this work and the communities it serves.",
+          buttonLabel: "Give to Global Missions",
+          buttonUrl: givingUrl,
+        },
+      ],
+    },
+  },
+  {
+    id: "mission-update-post",
+    title: "Sample Mission Update",
+    description: "An example short update with text and a video, filled with placeholder content.",
+    schemaType: "post",
+    value: {
+      ...sharedPostDefaults,
+      title: "Sample Mission Update",
+      slug: { _type: "slug", current: "sample-mission-update" },
+      eyebrow: "Mission Update",
+      heroHeading: pt("A Mission Update"),
+      summary:
+        "A short placeholder summary for this mission update. Replace it with a sentence or two about what happened.",
+      landingTitle: "A sample mission update.",
+      landingSummary: "A short update with text and a video.",
+      landingHighlights: ["Update", "Video"],
+      sections: [
+        {
+          _type: "storySection",
+          _key: "update-story",
+          eyebrow: "What's happening",
+          heading: pt("A short update"),
+          body: pt(
+            "Replace this with a few sentences describing the update. Keep it short — a mission update is meant to be quick to read.",
+          ),
+        },
+        {
+          _type: "videoSection",
+          _key: "update-video",
+          heading: pt("Watch"),
+          url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+          description: "Replace this with your own YouTube video link.",
+        },
+        {
+          _type: "callToActionSection",
+          _key: "update-cta",
+          heading: pt("Partner with Global Missions"),
+          description:
+            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
           buttonLabel: "Give to Global Missions",
           buttonUrl: givingUrl,
         },
