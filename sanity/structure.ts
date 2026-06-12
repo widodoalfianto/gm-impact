@@ -1,7 +1,5 @@
-import { CogIcon, HomeIcon } from "@sanity/icons";
+import { CogIcon, DocumentsIcon } from "@sanity/icons";
 import type { StructureResolver } from "sanity/structure";
-import { apiVersion } from "./env";
-import { HOME_ID } from "./schemaTypes/homeType";
 import { SITE_SETTINGS_ID } from "./schemaTypes/siteSettingsType";
 
 export const structure: StructureResolver = (S) =>
@@ -9,81 +7,34 @@ export const structure: StructureResolver = (S) =>
     .title("GM Impact Content")
     .items([
       S.listItem()
-        .id("home")
-        .title("Home Page")
-        .icon(HomeIcon)
-        .child(
-          S.document()
-            .schemaType("homePage")
-            .documentId(HOME_ID)
-            .title("Home Page"),
-        ),
-      S.listItem()
-        .id("pages")
-        .title("Pages")
-        .child(
-          S.documentTypeList("page")
-            .title("Pages")
-            .defaultOrdering([{ field: "title", direction: "asc" }]),
-        ),
-      S.listItem()
-        .id("newsletters")
-        .title("Newsletters")
+        .id("articles")
+        .title("Articles")
+        .icon(DocumentsIcon)
         .child(
           S.list()
-            .title("Newsletters")
+            .title("Articles")
             .items([
               S.listItem()
-                .id("all-newsletters")
-                .title("All Newsletters")
+                .id("newsletters")
+                .title("Newsletters")
                 .child(
                   S.documentTypeList("newsletter")
-                    .title("All Newsletters")
+                    .title("Newsletters")
                     .defaultOrdering([
                       { field: "publishDate", direction: "desc" },
                     ]),
                 ),
               S.listItem()
-                .id("public-newsletters")
-                .title("Public Newsletters")
+                .id("field-updates")
+                .title("Field Updates")
                 .child(
-                  S.documentList()
-                    .id("public-newsletters-list")
-                    .title("Public Newsletters")
-                    .schemaType("newsletter")
-                    .apiVersion(apiVersion)
-                    .filter(
-                      '_type == "newsletter" && hideFromIndex != true && defined(slug.current)',
-                    )
+                  S.documentTypeList("post")
+                    .title("Field Updates")
                     .defaultOrdering([
                       { field: "publishDate", direction: "desc" },
-                    ]),
-                ),
-              S.listItem()
-                .id("hidden-newsletters")
-                .title("Hidden and Internal")
-                .child(
-                  S.documentList()
-                    .id("hidden-newsletters-list")
-                    .title("Hidden and Internal Newsletters")
-                    .schemaType("newsletter")
-                    .apiVersion(apiVersion)
-                    .filter(
-                      '_type == "newsletter" && hideFromIndex == true',
-                    )
-                    .defaultOrdering([
-                      { field: "_updatedAt", direction: "desc" },
                     ]),
                 ),
             ]),
-        ),
-      S.listItem()
-        .id("field-updates")
-        .title("Field Updates")
-        .child(
-          S.documentTypeList("post")
-            .title("Field Updates")
-            .defaultOrdering([{ field: "publishDate", direction: "desc" }]),
         ),
       S.divider(),
       S.listItem()
