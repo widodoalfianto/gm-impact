@@ -27,6 +27,7 @@ export async function getNewsletterLandingItems(): Promise<
 
     return {
       year,
+      date: newsletter.publishDate,
       label: newsletter.listName || year,
       href: `/newsletters/${newsletter.slug}`,
       title: newsletter.landingTitle || newsletter.title,
@@ -54,6 +55,7 @@ export async function getNewsletterLandingItems(): Promise<
 
     return {
       year,
+      date: post.publishDate,
       label: post.listName || year,
       href: `/posts/${post.slug}`,
       title: post.landingTitle || post.title,
@@ -83,7 +85,9 @@ export async function getNewsletterLandingItems(): Promise<
     (newsletter) => !cmsHrefs.has(newsletter.href),
   );
 
-  return [...cmsItems, ...postItems, ...legacyItems].sort(
-    (left, right) => Number(right.year) - Number(left.year),
+  const sortKey = (item: NewsletterSummary) => item.date ?? `${item.year}-01-01`;
+
+  return [...cmsItems, ...postItems, ...legacyItems].sort((left, right) =>
+    sortKey(right).localeCompare(sortKey(left)),
   );
 }

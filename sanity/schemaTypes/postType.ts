@@ -35,7 +35,10 @@ export const postType = defineType({
       name: "publishDate",
       title: "Publication date",
       type: "date",
-      group: "content",
+      group: "landing",
+      description:
+        "Set automatically to today. Change it only to backdate an archive; the article list is ordered by this date.",
+      initialValue: () => new Date().toISOString().slice(0, 10),
       validation: (rule) => rule.required(),
     }),
     defineField({

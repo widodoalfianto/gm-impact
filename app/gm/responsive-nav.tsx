@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import type { CSSProperties } from "react";
-import { MAIN_SITE_URL, NAV_ITEMS, NEWSLETTER_ITEMS, SANS, THEME, type NavItem } from "./data";
+import { MAIN_SITE_URL, NAV_ITEMS, SANS, THEME, type NavItem } from "./data";
 import { titleTight } from "./typography";
 
 function hasChildren(item: NavItem): item is NavItem & { children: readonly NavItem[] } {
@@ -48,22 +48,6 @@ function MainSiteDropdownLinks({
   );
 }
 
-function NewsletterDropdownLinks({
-  items,
-}: {
-  items: readonly { label: string; href: string }[];
-}) {
-  return (
-    <>
-      {items.map(item => (
-        <Link key={item.label} href={item.href} className="gm-nav-dropdown-link" role="menuitem">
-          {item.label}
-        </Link>
-      ))}
-    </>
-  );
-}
-
 function MobileMainSiteLinks({ closeMenu }: { closeMenu: () => void }) {
   return (
     <>
@@ -85,51 +69,10 @@ function MobileMainSiteLinks({ closeMenu }: { closeMenu: () => void }) {
   );
 }
 
-function MobileNewsletterLinks({
-  closeMenu,
-  items,
-}: {
-  closeMenu: () => void;
-  items: readonly { label: string; href: string }[];
-}) {
-  return (
-    <>
-      <Link href="/newsletters" className="gm-mobile-link" onClick={closeMenu}>
-        All Newsletters
-      </Link>
-      {items.map(item => (
-        <Link key={item.label} href={item.href} className="gm-mobile-sublink" onClick={closeMenu}>
-          {item.label}
-        </Link>
-      ))}
-    </>
-  );
-}
-
 export function ResponsiveNav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [newsletterItems, setNewsletterItems] = useState(NEWSLETTER_ITEMS);
   const closeMobileMenu = () => setMobileMenuOpen(false);
   const T = THEME;
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    fetch("/api/newsletters", { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((items) => {
-        if (Array.isArray(items) && items.length > 0) {
-          setNewsletterItems(items);
-        }
-      })
-      .catch((error: unknown) => {
-        if (!(error instanceof DOMException && error.name === "AbortError")) {
-          console.error("Unable to load newsletter navigation", error);
-        }
-      });
-
-    return () => controller.abort();
-  }, []);
 
   return (
     <nav aria-label="Primary navigation" style={{
@@ -195,14 +138,10 @@ export function ResponsiveNav() {
       </div>
 
       <div className="gm-newsletter-nav" style={{ fontSize: 14, fontWeight: 600 }}>
-        <div className="gm-nav-item gm-nav-item-dropdown">
-          <Link href="/newsletters" className="gm-nav-link" aria-haspopup="menu">
+        <div className="gm-nav-item">
+          <Link href="/" className="gm-nav-link">
             Newsletters
-            <DropdownIndicator />
           </Link>
-          <div className="gm-nav-dropdown gm-nav-dropdown-right" role="menu" aria-label="Newsletter links">
-            <NewsletterDropdownLinks items={newsletterItems} />
-          </div>
         </div>
       </div>
 
@@ -224,12 +163,10 @@ export function ResponsiveNav() {
       {mobileMenuOpen ? (
         <div id="gm-mobile-menu" className="gm-mobile-panel">
           <div>
-            <div className="gm-mobile-section-title">Newsletters</div>
             <div className="gm-mobile-links">
-              <MobileNewsletterLinks
-                closeMenu={closeMobileMenu}
-                items={newsletterItems}
-              />
+              <Link href="/" className="gm-mobile-link" onClick={closeMobileMenu}>
+                Newsletters
+              </Link>
             </div>
           </div>
           <div>

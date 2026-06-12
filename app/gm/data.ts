@@ -187,6 +187,7 @@ export const REGIONS: readonly Region[] = [
 
 export type NewsletterSummary = {
   year: string;
+  date?: string;
   label: string;
   href: string;
   title: string;
@@ -264,8 +265,6 @@ export const NEWSLETTERS: readonly NewsletterSummary[] = [
     countries: ["Indonesia", "Pakistan"],
   },
 ] as const;
-
-export const NEWSLETTER_ITEMS = NEWSLETTERS.map(({ label, href }) => ({ label, href }));
 
 export const ARCHIVE_NEWSLETTERS: Record<"2024" | "2025", ArchiveNewsletter> = {
   "2024": {
