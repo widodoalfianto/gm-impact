@@ -13,10 +13,13 @@ export const newsletterType = defineType({
   ],
   fields: [
     defineField({
+      // Set by the create template (Newsletter vs Project update), not chosen
+      // by the editor, so it stays hidden in the form.
       name: "newsletterType",
       title: "Newsletter format",
       type: "string",
       group: "content",
+      hidden: true,
       options: {
         layout: "radio",
         list: [

@@ -68,14 +68,14 @@ export default defineConfig({
     templates: [...newsletterTemplates, ...postTemplates, ...pageTemplates],
   },
   document: {
-    // Singletons are reached through the structure, never created ad hoc.
-    newDocumentOptions: (previousOptions, { creationContext }) =>
-      creationContext.type === "global"
-        ? previousOptions.filter(
-            (option) =>
-              option.templateId !== "siteSettings" &&
-              option.templateId !== "homePage",
-          )
-        : previousOptions,
+    // Hide the singletons (reached through the structure) and the blank
+    // default newsletter template, so newsletters are only created from the
+    // explicit Newsletter / Project update templates.
+    newDocumentOptions: (previousOptions) => {
+      const hidden = ["siteSettings", "homePage", "newsletter"];
+      return previousOptions.filter(
+        (option) => !hidden.includes(option.templateId),
+      );
+    },
   },
 });

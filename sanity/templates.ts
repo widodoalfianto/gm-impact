@@ -49,8 +49,7 @@ const projectUpdateHero = {
 
 export const newsletterTemplates = [
   {
-    // id matches the schema type, so this replaces the default blank template.
-    id: "newsletter",
+    id: "newsletter-full",
     title: "Newsletter",
     description:
       "A full newsletter: impact stats, where we work, and partner with us.",
