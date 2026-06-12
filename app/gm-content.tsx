@@ -202,7 +202,7 @@ export function GlobalMissionsImpactPage({
           </p>
           <div className="gm-newsletter-list">
             {newsletters.map((newsletter) => (
-              <NewsletterLandingCard key={newsletter.year} newsletter={newsletter} />
+              <NewsletterLandingCard key={newsletter.href} newsletter={newsletter} />
             ))}
           </div>
         </div>
