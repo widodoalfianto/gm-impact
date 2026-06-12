@@ -124,11 +124,19 @@ export const newsletterTemplates = [
   {
     id: "project-update-video",
     title: "Project update - video",
-    description: "A short project update with an embedded video and text.",
+    description: "A short project update led by an embedded video, with text.",
     schemaType: "newsletter",
     value: {
       ...projectUpdateHero,
       sections: [
+        {
+          _type: "embedBlock",
+          _key: "video",
+          heading: pt("Watch the update"),
+          url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+          description:
+            "Paste a YouTube, Vimeo, or other video embed URL. Use the embed/share link, not the page URL.",
+        },
         {
           _type: "storySection",
           _key: "story",
@@ -137,11 +145,13 @@ export const newsletterTemplates = [
           body: pt("Replace this with a few sentences describing the project update."),
         },
         {
-          _type: "videoSection",
-          _key: "video",
-          heading: pt("Watch"),
-          url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-          description: "Replace this with your own video link.",
+          _type: "callToActionSection",
+          _key: "cta",
+          heading: pt("Partner with Global Missions"),
+          description:
+            "Help sustain prayer, sending, discipleship, care, and church planting among unreached communities.",
+          buttonLabel: "Give to Global Missions",
+          buttonUrl: givingUrl,
         },
       ],
     },
