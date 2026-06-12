@@ -1,3 +1,14 @@
+import {
+  BlockquoteIcon,
+  BookIcon,
+  ChartUpwardIcon,
+  EarthGlobeIcon,
+  HeartIcon,
+  ImagesIcon,
+  PlayIcon,
+  RocketIcon,
+  UsersIcon,
+} from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { accentHeadingField, accentTitlePreview } from "./accentTitleType";
 
@@ -13,6 +24,7 @@ export const impactGridType = defineType({
   name: "impactGrid",
   title: "Impact Metrics",
   type: "object",
+  icon: ChartUpwardIcon,
   fields: [
     defineField({
       name: "heading",
@@ -50,6 +62,7 @@ export const storySectionType = defineType({
   name: "storySection",
   title: "Story",
   type: "object",
+  icon: BookIcon,
   fields: [
     defineField({
       name: "eyebrow",
@@ -90,6 +103,7 @@ export const quoteSectionType = defineType({
   name: "quoteSection",
   title: "Testimony or Quote",
   type: "object",
+  icon: BlockquoteIcon,
   fields: [
     defineField({
       name: "quote",
@@ -123,6 +137,7 @@ export const gallerySectionType = defineType({
   name: "gallerySection",
   title: "Photo Gallery",
   type: "object",
+  icon: ImagesIcon,
   fields: [
     accentHeadingField(),
     defineField({
@@ -139,10 +154,12 @@ export const gallerySectionType = defineType({
   preview: {
     select: {
       title: "heading",
+      media: "images.0",
     },
-    prepare: ({ title }) => ({
+    prepare: ({ title, media }) => ({
       title: accentTitlePreview(title) || "Photo Gallery",
       subtitle: "Gallery section",
+      media,
     }),
   },
 });
@@ -151,6 +168,7 @@ export const videoSectionType = defineType({
   name: "videoSection",
   title: "Video",
   type: "object",
+  icon: PlayIcon,
   fields: [
     accentHeadingField(),
     defineField({
@@ -186,6 +204,7 @@ export const prayerSectionType = defineType({
   name: "prayerSection",
   title: "Prayer Needs",
   type: "object",
+  icon: HeartIcon,
   fields: [
     accentHeadingField(),
     defineField({
@@ -216,6 +235,7 @@ export const callToActionSectionType = defineType({
   name: "callToActionSection",
   title: "Call to Action",
   type: "object",
+  icon: RocketIcon,
   fields: [
     accentHeadingField(),
     defineField({
@@ -371,6 +391,7 @@ export const countryGridSectionType = defineType({
   name: "countryGridSection",
   title: "Country Impact Grid",
   type: "object",
+  icon: EarthGlobeIcon,
   fields: [
     defineField({
       name: "eyebrow",
@@ -453,6 +474,7 @@ export const partnerGridSectionType = defineType({
   name: "partnerGridSection",
   title: "Partner Cards",
   type: "object",
+  icon: UsersIcon,
   fields: [
     defineField({
       name: "eyebrow",
