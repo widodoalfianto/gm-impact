@@ -1,5 +1,6 @@
 import { CogIcon, DocumentsIcon, HomeIcon } from "@sanity/icons";
 import type { StructureResolver } from "sanity/structure";
+import { apiVersion } from "./env";
 import { HOME_ID } from "./schemaTypes/homeType";
 import { SITE_SETTINGS_ID } from "./schemaTypes/siteSettingsType";
 
@@ -34,11 +35,14 @@ export const structure: StructureResolver = (S) =>
             .title("Articles")
             .items([
               S.listItem()
-                .id("newsletters")
-                .title("Newsletters")
+                .id("newsletter-field-updates")
+                .title("Newsletter & Field Updates")
                 .child(
-                  S.documentTypeList("newsletter")
-                    .title("Newsletters")
+                  S.documentList()
+                    .id("newsletter-field-updates-list")
+                    .title("Newsletter & Field Updates")
+                    .filter('_type == "newsletter" || _type == "post"')
+                    .apiVersion(apiVersion)
                     .defaultOrdering([
                       { field: "publishDate", direction: "desc" },
                     ]),
