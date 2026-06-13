@@ -27,6 +27,23 @@ function placeholderCountryCard(key: string, countryRef: string) {
   };
 }
 
+// Placeholder photos uploaded to the dataset via
+// sanity/scripts/upload-gallery-placeholders.ts. Sanity assets are
+// content-addressed, so these ids are stable as long as the asset documents
+// exist in the dataset.
+const galleryPlaceholderAssets = [
+  "image-4dce71dd36d442dfd09c5ba38bbbc60c74ebe58f-980x651-avif",
+  "image-be9b9d0a3e4ecd4d47875468c6a5fcddcc9489e2-980x651-avif",
+  "image-bd9824e9d2a16eecd61c986cca218314688120db-980x651-avif",
+];
+
+const galleryPlaceholders = galleryPlaceholderAssets.map((ref, index) => ({
+  _type: "imageWithAlt",
+  _key: `gallery-${index + 1}`,
+  asset: { _type: "reference", _ref: ref },
+  alt: "Replace this placeholder photo with your own.",
+}));
+
 const sharedNewsletterDefaults = {
   featured: false,
   hideFromIndex: false,
@@ -174,6 +191,7 @@ export const newsletterTemplates = [
           _type: "gallerySection",
           _key: "gallery",
           heading: pt("Photo gallery"),
+          images: galleryPlaceholders,
         },
       ],
     },

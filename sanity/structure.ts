@@ -45,6 +45,11 @@ export const structure: StructureResolver = (S) =>
                     .apiVersion(apiVersion)
                     .defaultOrdering([
                       { field: "publishDate", direction: "desc" },
+                    ])
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("newsletter-full"),
+                      S.initialValueTemplateItem("project-update-video"),
+                      S.initialValueTemplateItem("project-update-images"),
                     ]),
                 ),
             ]),
