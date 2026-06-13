@@ -35,7 +35,7 @@ export default defineConfig({
     presentationTool({
       title: "Studio",
       previewUrl: {
-        initial: "/newsletters/2026",
+        initial: "/",
         previewMode: {
           enable: "/api/draft-mode/enable",
           disable: "/api/draft-mode/disable",
