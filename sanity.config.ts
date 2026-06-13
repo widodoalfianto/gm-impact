@@ -18,7 +18,6 @@ import { structure } from "./sanity/structure";
 import {
   newsletterTemplates,
   pageTemplates,
-  postTemplates,
 } from "./sanity/templates";
 
 const visionApiVersion = apiVersion.startsWith("v")
@@ -65,7 +64,7 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
-    templates: [...newsletterTemplates, ...postTemplates, ...pageTemplates],
+    templates: [...newsletterTemplates, ...pageTemplates],
   },
   document: {
     // Hide the singletons (reached through the structure) and the blank
