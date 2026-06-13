@@ -140,6 +140,52 @@ CMS work should reach `master` through a pull request after CI, Vercel Preview,
 editor workflow testing, and client approval. Protect `master` from direct
 feature pushes once the team confirms this workflow.
 
+### Access control
+
+The Studio ships inside this Next app at `/studio`. That URL is publicly
+reachable, but it is **not** open editing: opening it requires logging into a
+Sanity account that is a **member of this project**. A visitor who is not a
+member only ever sees a login screen. Project membership — not the URL — is the
+lock.
+
+There are three independent layers:
+
+1. **Membership (who can get in).** Manage members in
+   [sanity.io/manage](https://sanity.io/manage) → this project → **Members**.
+   Invite people by email; remove someone here and they lose access
+   immediately. This is the primary control.
+2. **Roles (what a member can do).** Assign each member a role:
+   - **Administrator** — full control, including inviting others.
+   - **Editor** — create, edit, and publish content; no project settings.
+   - **Viewer** — read-only; can see drafts but cannot change them.
+
+   Give real content admins **Editor** and everyone else **Viewer** or no
+   membership. Per-dataset roles (e.g. Editor on `staging`, Viewer on
+   `production`) and custom roles require a paid Sanity plan.
+3. **Dataset read vs. write.** Writing always requires login plus membership —
+   there is no anonymous write. Reading is separate: a **public** dataset lets
+   anyone read *published* content through the API without a token (this is how
+   the live site fetches content), while a **private** dataset requires a token
+   even to read. Making `production` public only lets the public **view** the
+   site; it never lets them edit.
+
+Production guidance:
+
+- Keep `/studio` as-is — it is safe to be reachable because Sanity auth gates
+  it.
+- In `sanity.io/manage`, invite only real admins as **Editors**; everyone else
+  **Viewer**.
+- Let the public site read the `production` dataset (public dataset or a
+  server-side read token). The page is read-only to visitors by nature.
+- Never expose a **write** token to the browser. The draft-mode preview uses
+  its read token server-side only.
+
+Because the live site and the Studio are the same Next app, deploying the site
+also deploys the Studio. That is fine: the page is read-only to visitors and
+the only door to editing (`/studio`) is locked by Sanity login. For
+defense-in-depth you can additionally keep `/studio` behind Vercel
+Authentication, but it is not required.
+
 ### Validation
 
 ```bash
