@@ -42,8 +42,8 @@ Studio is organized into five tools:
 1. Create a Sanity organization and a project with `staging` and `production`
    datasets.
 2. Copy `.env.example` to `.env.local`.
-3. Configure the dataset and site URL. The public GM Impact project ID is
-   included as the application default and can be overridden when necessary:
+3. Set the project ID, dataset, and site URL (the GM Impact project ID is
+   `ipt53rbp`):
 
 ```bash
 NEXT_PUBLIC_SANITY_PROJECT_ID=ipt53rbp
