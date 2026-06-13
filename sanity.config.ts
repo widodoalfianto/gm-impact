@@ -71,11 +71,27 @@ export default defineConfig({
     // Hide the singletons (reached through the structure) and the blank
     // default newsletter template, so newsletters are only created from the
     // explicit Newsletter / Project update templates.
-    newDocumentOptions: (previousOptions) => {
+    newDocumentOptions: (previousOptions, { creationContext }) => {
       const hidden = ["siteSettings", "homePage", "newsletter"];
-      return previousOptions.filter(
+      const options = previousOptions.filter(
         (option) => !hidden.includes(option.templateId),
       );
+
+      // The navbar "+" mirrors the Articles list: only the three article
+      // create templates. Structure panes (Pages, Countries, ...) keep their
+      // own create options.
+      if (creationContext.type === "global") {
+        const articleTemplates = [
+          "newsletter-full",
+          "project-update-video",
+          "project-update-images",
+        ];
+        return options.filter((option) =>
+          articleTemplates.includes(option.templateId),
+        );
+      }
+
+      return options;
     },
   },
 });
