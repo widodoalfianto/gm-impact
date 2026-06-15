@@ -228,36 +228,3 @@ export type CmsPage = {
   sections?: CmsBlock[];
 };
 
-export type CmsPostSummary = {
-  _id: string;
-  title: string;
-  listName?: string;
-  slug: string;
-  publishDate: string;
-  landingTitle: string;
-  landingSummary: string;
-  landingHighlights?: string[];
-  heroImage?: CmsImage;
-  country?: {
-    name: string;
-    isoCode: string;
-  };
-};
-
-export type CmsPost = {
-  _id: string;
-  title: string;
-  publishDate: string;
-  eyebrow: string;
-  heroHeading?: PortableTextBlock[];
-  heroAccent?: string;
-  summary: string;
-  heroImage?: CmsImage;
-  country?: {
-    _id: string;
-    name: string;
-    isoCode: string;
-  };
-  landingHighlights?: string[];
-  sections?: CmsBlock[];
-};

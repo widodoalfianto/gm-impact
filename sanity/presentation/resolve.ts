@@ -6,10 +6,6 @@ export const mainDocuments = defineDocuments([
     filter: `_type == "newsletter" && slug.current == $slug`,
   },
   {
-    route: "/posts/:slug",
-    filter: `_type == "post" && slug.current == $slug`,
-  },
-  {
     route: "/:slug",
     filter: `_type == "page" && slug.current == $slug`,
   },
@@ -27,31 +23,6 @@ export const locations = {
             {
               title: document.title || "Newsletter",
               href: `/newsletters/${document.slug}`,
-            },
-            {
-              title: "Newsletter index",
-              href: "/newsletters",
-            },
-          ]
-        : [
-            {
-              title: "Newsletter index",
-              href: "/newsletters",
-            },
-          ],
-    }),
-  }),
-  post: defineLocations({
-    select: {
-      title: "title",
-      slug: "slug.current",
-    },
-    resolve: (document) => ({
-      locations: document?.slug
-        ? [
-            {
-              title: document.title || "Field Update",
-              href: `/posts/${document.slug}`,
             },
             {
               title: "Newsletter index",

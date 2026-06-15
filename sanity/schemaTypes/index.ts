@@ -14,7 +14,6 @@ import { imageWithAltType } from "./imageWithAltType";
 import { metricType } from "./metricType";
 import { newsletterType } from "./newsletterType";
 import { pageType } from "./pageType";
-import { postType } from "./postType";
 import { appearanceFields } from "./sectionAppearance";
 import { siteSettingsType } from "./siteSettingsType";
 import {
@@ -45,7 +44,6 @@ export const schemaTypes = [
   pageType,
   countryType,
   newsletterType,
-  postType,
   imageWithAltType,
   metricType,
   actionLinkType,

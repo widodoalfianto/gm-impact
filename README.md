@@ -75,12 +75,14 @@ repository version.
 
 ### Newsletter Templates
 
-Choose a format from `Start Here` to create a pre-structured newsletter:
+Newsletters are the only article type. Use the "+" in the navbar (or on the
+Articles list) to create one from a pre-structured format:
 
-- `Global Impact Report` for metrics-led mid-year or annual reporting.
-- `Mission Trip Highlight` for a visual report centered on one trip.
-- `Project Update` for ministry, building, care, or relief progress.
-- `Country or Field Update` for a focused update from one ministry field.
+- `Newsletter` — a full newsletter with impact stats, where we work, and
+  partner-with-us calls to action.
+- `Project update - video` — a short update led by an embedded video, with
+  text and a giving call to action.
+- `Project update - images` — a short update with text and a photo gallery.
 
 Sanity Studio also includes a complete Global Impact starting point:
 

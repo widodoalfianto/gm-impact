@@ -2,8 +2,8 @@ import { defineQuery } from "next-sanity";
 
 /**
  * Shared projection for the block library. Every page-like document
- * (newsletter, post, and later generic pages) renders the same `sections[]`,
- * so they all dereference it the same way here.
+ * (newsletters and generic pages) renders the same `sections[]`, so they all
+ * dereference it the same way here.
  */
 const SECTIONS_PROJECTION = `
   sections[]{
@@ -82,26 +82,6 @@ export const NEWSLETTER_BY_SLUG_QUERY = defineQuery(`
   }
 `);
 
-export const POST_BY_SLUG_QUERY = defineQuery(`
-  *[_type == "post" && slug.current == $slug][0] {
-    _id,
-    title,
-    publishDate,
-    eyebrow,
-    heroHeading,
-    heroAccent,
-    summary,
-    heroImage,
-    "country": country->{
-      _id,
-      name,
-      isoCode
-    },
-    landingHighlights,
-    ${SECTIONS_PROJECTION}
-  }
-`);
-
 export const NEWSLETTER_INDEX_QUERY = defineQuery(`
   *[
     _type == "newsletter" &&
@@ -119,29 +99,6 @@ export const NEWSLETTER_INDEX_QUERY = defineQuery(`
       landingHighlights,
       heroImage,
       "countries": countries[]->{
-        name,
-        isoCode
-      }
-    }
-`);
-
-export const POST_INDEX_QUERY = defineQuery(`
-  *[
-    _type == "post" &&
-    defined(slug.current) &&
-    hideFromIndex != true
-  ]
-    | order(featured desc, publishDate desc) {
-      _id,
-      title,
-      listName,
-      "slug": slug.current,
-      publishDate,
-      landingTitle,
-      landingSummary,
-      landingHighlights,
-      heroImage,
-      "country": country->{
         name,
         isoCode
       }

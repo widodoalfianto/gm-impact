@@ -31,27 +31,16 @@ export const structure: StructureResolver = (S) =>
         .title("Articles")
         .icon(DocumentsIcon)
         .child(
-          S.list()
+          S.documentList()
+            .id("articles-list")
             .title("Articles")
-            .items([
-              S.listItem()
-                .id("newsletter-field-updates")
-                .title("Newsletter & Field Updates")
-                .child(
-                  S.documentList()
-                    .id("newsletter-field-updates-list")
-                    .title("Newsletter & Field Updates")
-                    .filter('_type == "newsletter" || _type == "post"')
-                    .apiVersion(apiVersion)
-                    .defaultOrdering([
-                      { field: "publishDate", direction: "desc" },
-                    ])
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("newsletter-full"),
-                      S.initialValueTemplateItem("project-update-video"),
-                      S.initialValueTemplateItem("project-update-images"),
-                    ]),
-                ),
+            .filter('_type == "newsletter"')
+            .apiVersion(apiVersion)
+            .defaultOrdering([{ field: "publishDate", direction: "desc" }])
+            .initialValueTemplates([
+              S.initialValueTemplateItem("newsletter-full"),
+              S.initialValueTemplateItem("project-update-video"),
+              S.initialValueTemplateItem("project-update-images"),
             ]),
         ),
       S.divider(),
