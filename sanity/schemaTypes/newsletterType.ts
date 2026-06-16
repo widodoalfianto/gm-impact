@@ -2,6 +2,16 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { accentHeadingField } from "./accentTitleType";
 import { sharedSectionMembers } from "./sectionMembers";
 
+// A video-led update (first block is a video/embed) renders with no hero, so
+// the hero-only fields below don't apply to it and are hidden in the editor.
+function isVideoLed(document?: Record<string, unknown>): boolean {
+  const sections = document?.sections as
+    | Array<{ _type?: string }>
+    | undefined;
+  const first = sections?.[0];
+  return first?._type === "embedBlock" || first?._type === "videoSection";
+}
+
 export const newsletterType = defineType({
   name: "newsletter",
   title: "Newsletter",
@@ -107,6 +117,9 @@ export const newsletterType = defineType({
       title: "Countries",
       type: "array",
       group: "content",
+      description:
+        "Shown as flag chips on the home/feed card and in the hero. Hidden for video updates, which have no hero.",
+      hidden: ({ document }) => isVideoLed(document),
       of: [
         defineArrayMember({
           type: "reference",
@@ -120,6 +133,10 @@ export const newsletterType = defineType({
       title: "Hero buttons",
       type: "array",
       group: "content",
+      description:
+        "Call-to-action buttons in the hero. Only used on the full Newsletter format, so hidden on project updates.",
+      // Only the Global Impact newsletter renders hero buttons.
+      hidden: ({ document }) => document?.newsletterType !== "globalImpact",
       of: [defineArrayMember({ type: "actionLink" })],
       validation: (rule) => rule.max(2),
     }),
@@ -139,7 +156,7 @@ export const newsletterType = defineType({
       type: "string",
       group: "landing",
       description:
-        "Short name shown in the newsletter list and menu, e.g. '2026 Q1' or '2025'. Defaults to the year.",
+        "Short label shown on the home/feed card and in the menu, e.g. '2026 Q1' or '2025'. Defaults to the year.",
       validation: (rule) => rule.max(40),
     }),
     defineField({
