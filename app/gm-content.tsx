@@ -32,7 +32,7 @@ function NewsletterCardVisual({ newsletter }: { newsletter: NewsletterSummary })
         alt={newsletter.image.alt}
         fill
         sizes="(max-width: 980px) 100vw, 44vw"
-        style={{ objectFit: "cover", filter: "grayscale(100%)" }}
+        style={{ objectFit: "cover" }}
         priority={newsletter.year === "2026"}
       />
     );
