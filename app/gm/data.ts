@@ -221,51 +221,6 @@ export type ArchiveNewsletter = {
   stories: readonly ArchiveNewsletterStory[];
 };
 
-export const NEWSLETTER_COUNTRIES: readonly FlagName[] = [
-  "Nepal",
-  "Algeria",
-  "Indonesia",
-  "Afghanistan",
-  "Somalia",
-];
-
-export const NEWSLETTERS: readonly NewsletterSummary[] = [
-  {
-    year: "2026",
-    label: "2026 Newsletter",
-    href: "/newsletters/2026",
-    title: "Five nations reached in the first half of 2026.",
-    snippet:
-      "New believers baptized, Bibles placed in hands, pastors equipped, and medical care extended across Nepal, Algeria, Indonesia, Afghanistan, and Somalia.",
-    chips: ["5 Nations", "193+ New Believers", "1,000 Bibles Given"],
-    countries: NEWSLETTER_COUNTRIES,
-    image: {
-      src: "/images/newsletter-2026.avif",
-      alt: "People gathered during a Global Missions outreach",
-    },
-  },
-  {
-    year: "2025",
-    label: "2025 Newsletter",
-    href: "/newsletters/2025",
-    title: "A placeholder year for upcoming mission stories.",
-    snippet:
-      "Mock content for layout review: this card reserves space for 2025 stories, impact numbers, locations, photos, and giving updates.",
-    chips: ["Mock Content", "Photos TBD", "Metrics TBD"],
-    countries: ["Nepal", "Indonesia", "Somalia"],
-  },
-  {
-    year: "2024",
-    label: "2024 Newsletter",
-    href: "/newsletters/2024",
-    title: "Youth revival, church strengthening, and mission momentum.",
-    snippet:
-      "A 2024 archive draft shaped from IFGF Global reports in Southwest Papua and Pakistan, highlighting youth outreach, church visits, leadership gatherings, and discipleship growth.",
-    chips: ["2 Reports", "Indonesia + Pakistan", "Archive Draft"],
-    countries: ["Indonesia", "Pakistan"],
-  },
-] as const;
-
 export const ARCHIVE_NEWSLETTERS: Record<"2024" | "2025", ArchiveNewsletter> = {
   "2024": {
     year: "2024",
