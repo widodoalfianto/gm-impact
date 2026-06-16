@@ -94,6 +94,7 @@ export const NEWSLETTER_INDEX_QUERY = defineQuery(`
       summary,
       "slug": slug.current,
       publishDate,
+      cardLabel,
       landingTitle,
       landingSummary,
       landingHighlights,

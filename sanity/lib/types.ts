@@ -210,6 +210,7 @@ export type CmsNewsletterSummary = {
   summary?: string;
   slug: string;
   publishDate: string;
+  cardLabel?: string;
   landingTitle?: string;
   landingSummary?: string;
   landingHighlights?: string[];

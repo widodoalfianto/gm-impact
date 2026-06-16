@@ -72,6 +72,15 @@ export const newsletterType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "cardLabel",
+      title: "Card label",
+      type: "string",
+      group: "landing",
+      description:
+        "Short label on the home/feed card, e.g. 'Q1' or '2026 Q1'. Lets you tell apart multiple issues in the same year. Defaults to the year.",
+      validation: (rule) => rule.max(40),
+    }),
+    defineField({
       name: "eyebrow",
       title: "Eyebrow",
       type: "string",

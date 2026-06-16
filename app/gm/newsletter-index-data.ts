@@ -59,7 +59,7 @@ export async function getNewsletterLandingItems(): Promise<
       return {
         year,
         date: newsletter.publishDate,
-        label: year,
+        label: newsletter.cardLabel || year,
         href: `/newsletters/${newsletter.slug}`,
         // The card is connected to the article's own fields, with the optional
         // listing fields acting as overrides.
