@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/studio)",
+      "Bash(echo \"tsc exit: $?\")",
+      "Bash(npm run *)",
+      "Bash(MIGRATE_APPLY=1 npm run sanity:migrate:posts)"
+    ]
+  }
+}

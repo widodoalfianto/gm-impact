@@ -406,5 +406,3 @@ export function NewsletterLandingPage({
     />
   );
 }
-
-export default GlobalMissionsImpactPage;
