@@ -13,6 +13,41 @@ function pt(text: string) {
   ];
 }
 
+// Portable-text body blocks: a bold sub-heading and a bullet list item.
+function strongBlock(key: string, text: string) {
+  return {
+    _type: "block",
+    _key: key,
+    style: "normal",
+    markDefs: [],
+    children: [{ _type: "span", _key: `${key}-0`, text, marks: ["strong"] }],
+  };
+}
+
+function bulletBlock(key: string, text: string) {
+  return {
+    _type: "block",
+    _key: key,
+    style: "normal",
+    listItem: "bullet",
+    level: 1,
+    markDefs: [],
+    children: [{ _type: "span", _key: `${key}-0`, text, marks: [] }],
+  };
+}
+
+// Placeholder update body that mirrors the real Q2 report format: bold
+// location/theme headings, each followed by a short bullet list.
+const projectUpdateStoryBody = [
+  strongBlock("intro", "Report highlights"),
+  strongBlock("loc1", "Location or focus area"),
+  bulletBlock("loc1-a", "Add a key result or highlight here"),
+  bulletBlock("loc1-b", "Add another highlight"),
+  strongBlock("loc2", "Another location or focus area"),
+  bulletBlock("loc2-a", "Add a key result or highlight here"),
+  bulletBlock("loc2-b", "Add another highlight"),
+];
+
 function placeholderCountryCard(key: string, countryRef: string) {
   return {
     _type: "countryImpact",
@@ -148,17 +183,16 @@ export const newsletterTemplates = [
         {
           _type: "embedBlock",
           _key: "video",
-          heading: pt("Watch the update"),
+          heading: pt("Project update title"),
           url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-          description:
-            "Paste a YouTube, Vimeo, or other video embed URL. Use the embed/share link, not the page URL.",
+          description: "Add a short subtitle for this update",
         },
         {
           _type: "storySection",
           _key: "story",
           eyebrow: "Update",
           heading: pt("What's happening"),
-          body: pt("Replace this with a few sentences describing the project update."),
+          body: projectUpdateStoryBody,
         },
         {
           _type: "callToActionSection",
