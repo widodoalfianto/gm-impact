@@ -1,4 +1,9 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import {
+  defineArrayMember,
+  defineField,
+  defineType,
+  type ConditionalProperty,
+} from "sanity";
 
 type PreviewBlock = { _type?: string; children?: { text?: string }[] };
 
@@ -23,12 +28,14 @@ export function accentHeadingField(options?: {
   description?: string;
   group?: string;
   required?: boolean;
+  hidden?: ConditionalProperty;
 }) {
   return defineField({
     name: options?.name ?? "heading",
     title: options?.title ?? "Heading",
     type: "accentTitle",
     ...(options?.group ? { group: options.group } : {}),
+    ...(options?.hidden !== undefined ? { hidden: options.hidden } : {}),
     description:
       options?.description ??
       "Select any words and use the Accent button to highlight them.",

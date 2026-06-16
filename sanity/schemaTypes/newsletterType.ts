@@ -77,6 +77,7 @@ export const newsletterType = defineType({
       type: "string",
       group: "content",
       description: "Short label shown above the main heading.",
+      hidden: ({ document }) => isVideoLed(document),
       validation: (rule) => rule.required().max(80),
     }),
     accentHeadingField({
@@ -84,6 +85,7 @@ export const newsletterType = defineType({
       title: "Main heading",
       group: "content",
       required: true,
+      hidden: ({ document }) => isVideoLed(document),
     }),
     defineField({
       name: "heroAccent",
@@ -92,6 +94,7 @@ export const newsletterType = defineType({
       group: "content",
       description:
         "Optional second line rendered in the Superior Title accent style.",
+      hidden: ({ document }) => isVideoLed(document),
       validation: (rule) => rule.max(90),
     }),
     defineField({
