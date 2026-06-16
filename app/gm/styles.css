@@ -472,6 +472,35 @@ html {
   margin: 0 0 20px;
 }
 
+/* Tailwind's preflight strips list styling; restore readable bullets/numbers
+   and spacing for rich-text bodies. */
+.gm-cms-rich-text ul,
+.gm-cms-rich-text ol {
+  margin: 0 0 24px;
+  padding-left: 1.5em;
+}
+
+.gm-cms-rich-text ul {
+  list-style: disc;
+}
+
+.gm-cms-rich-text ol {
+  list-style: decimal;
+}
+
+.gm-cms-rich-text li {
+  margin: 0 0 10px;
+  padding-left: 6px;
+}
+
+.gm-cms-rich-text li::marker {
+  color: var(--gm-hero-accent);
+}
+
+.gm-cms-rich-text strong {
+  font-weight: 700;
+}
+
 .gm-cms-quote blockquote {
   text-align: center;
 }

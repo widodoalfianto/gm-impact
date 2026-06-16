@@ -20,8 +20,8 @@ export function CmsNewsletterPreview({
   settings?: CmsSiteSettings | null;
 }) {
   // A video-led update (e.g. the "Project update - video" template) leads with
-  // the video above the hero. When the first block is a video/embed, lift it
-  // to the top of the page and render the remaining blocks after the hero.
+  // the video and skips the hero title entirely — it's just the video and the
+  // update blocks below it. Triggered when the first block is a video/embed.
   const sections = newsletter.sections ?? [];
   const leadVideo =
     sections[0]?._type === "videoSection" || sections[0]?._type === "embedBlock"
@@ -37,6 +37,7 @@ export function CmsNewsletterPreview({
       ) : (
         <main>
         {leadVideo ? <CmsBlockView section={leadVideo} /> : null}
+        {leadVideo ? null : (
         <section className="gm-cms-hero">
           <span>{newsletter.eyebrow}</span>
           <h1>
@@ -62,6 +63,7 @@ export function CmsNewsletterPreview({
             </div>
           ) : null}
         </section>
+        )}
         {bodySections.map((section) => (
           <CmsBlockView key={section._key} section={section} />
         ))}
