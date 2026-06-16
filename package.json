@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sanity:seed": "sanity exec sanity/scripts/seed-demo.ts --with-user-token",
-    "sanity:seed:2026": "sanity exec sanity/scripts/seed-2026.ts --with-user-token",
     "sanity:validate": "sanity schema validate"
   },
   "dependencies": {
