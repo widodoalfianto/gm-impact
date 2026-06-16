@@ -19,6 +19,16 @@ export function CmsNewsletterPreview({
   newsletter: CmsNewsletter;
   settings?: CmsSiteSettings | null;
 }) {
+  // A video-led update (e.g. the "Project update - video" template) leads with
+  // the video above the hero. When the first block is a video/embed, lift it
+  // to the top of the page and render the remaining blocks after the hero.
+  const sections = newsletter.sections ?? [];
+  const leadVideo =
+    sections[0]?._type === "videoSection" || sections[0]?._type === "embedBlock"
+      ? sections[0]
+      : null;
+  const bodySections = leadVideo ? sections.slice(1) : sections;
+
   return (
     <div className="gm-page" style={pageStyle}>
       <ResponsiveNav />
@@ -26,6 +36,7 @@ export function CmsNewsletterPreview({
         <CmsGlobalImpactNewsletter newsletter={newsletter} />
       ) : (
         <main>
+        {leadVideo ? <CmsBlockView section={leadVideo} /> : null}
         <section className="gm-cms-hero">
           <span>{newsletter.eyebrow}</span>
           <h1>
@@ -51,7 +62,7 @@ export function CmsNewsletterPreview({
             </div>
           ) : null}
         </section>
-        {newsletter.sections?.map((section) => (
+        {bodySections.map((section) => (
           <CmsBlockView key={section._key} section={section} />
         ))}
         </main>
