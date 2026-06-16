@@ -33,11 +33,11 @@ export const newsletterType = defineType({
     }),
     defineField({
       name: "title",
-      title: "Internal title",
+      title: "Title",
       type: "string",
       group: "content",
       description:
-        "Used in the Studio and as a fallback page title. Keep it descriptive.",
+        "The article title. Also used as the home/feed card headline unless you set a separate listing headline below.",
       validation: (rule) => rule.required().max(100),
     }),
     defineField({
@@ -90,6 +90,8 @@ export const newsletterType = defineType({
       type: "text",
       rows: 3,
       group: "content",
+      description:
+        "A one or two sentence intro. Also used as the home/feed card summary unless you set a separate listing summary below.",
       validation: (rule) => rule.required().max(360),
     }),
     defineField({
@@ -140,33 +142,36 @@ export const newsletterType = defineType({
     }),
     defineField({
       name: "landingTitle",
-      title: "Listing headline",
+      title: "Listing headline (optional)",
       type: "string",
       group: "landing",
       description:
-        "Short, punchy headline for the card on the Newsletters page.",
-      validation: (rule) => rule.required().max(100),
+        "Override for the home/feed card headline. Defaults to the article title above.",
+      validation: (rule) => rule.max(100),
     }),
     defineField({
       name: "landingSummary",
-      title: "Listing summary",
+      title: "Listing summary (optional)",
       type: "text",
       rows: 3,
       group: "landing",
-      validation: (rule) => rule.required().max(260),
+      description:
+        "Override for the home/feed card summary. Defaults to the introduction above.",
+      validation: (rule) => rule.max(260),
     }),
     defineField({
       name: "landingHighlights",
-      title: "Card highlights",
+      title: "Card highlights (optional)",
       type: "array",
       group: "landing",
+      description: "Up to four short chips shown on the feed card.",
       of: [
         defineArrayMember({
           type: "string",
           validation: (rule) => rule.required().max(36),
         }),
       ],
-      validation: (rule) => rule.required().min(1).max(4),
+      validation: (rule) => rule.max(4),
     }),
     defineField({
       name: "featured",

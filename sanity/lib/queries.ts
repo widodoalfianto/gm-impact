@@ -91,6 +91,7 @@ export const NEWSLETTER_INDEX_QUERY = defineQuery(`
     | order(featured desc, publishDate desc) {
       _id,
       title,
+      summary,
       listName,
       "slug": slug.current,
       publishDate,

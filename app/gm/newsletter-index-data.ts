@@ -27,8 +27,10 @@ export async function getNewsletterLandingItems(): Promise<
       date: newsletter.publishDate,
       label: newsletter.listName || year,
       href: `/newsletters/${newsletter.slug}`,
+      // The card is connected to the article's own fields, with the optional
+      // listing fields acting as overrides.
       title: newsletter.landingTitle || newsletter.title,
-      snippet: newsletter.landingSummary,
+      snippet: newsletter.landingSummary || newsletter.summary || "",
       chips: newsletter.landingHighlights ?? [],
       countries:
         newsletter.countries
@@ -41,7 +43,10 @@ export async function getNewsletterLandingItems(): Promise<
               .height(800)
               .fit("crop")
               .url(),
-            alt: newsletter.heroImage.alt || newsletter.landingTitle,
+            alt:
+              newsletter.heroImage.alt ||
+              newsletter.landingTitle ||
+              newsletter.title,
           }
         : undefined,
     };

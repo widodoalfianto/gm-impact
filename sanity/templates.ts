@@ -94,9 +94,6 @@ const projectUpdateHero = {
   eyebrow: "Project Update",
   heroHeading: pt("Project update"),
   summary: "Give a short summary here that details this mission's impacts",
-  landingTitle: "Project update headline",
-  landingSummary: "A short summary for the newsletter card.",
-  landingHighlights: ["Project", "Update"],
 };
 
 export const newsletterTemplates = [
@@ -114,9 +111,6 @@ export const newsletterTemplates = [
       heroHeading: pt("Newsletter heading"),
       heroAccent: "Accent line",
       summary: "Give a short summary here that details this mission's impacts",
-      landingTitle: "Newsletter listing headline",
-      landingSummary: "A short summary for the newsletter card.",
-      landingHighlights: ["Highlight one", "Highlight two"],
       sections: [
         {
           _type: "impactGrid",
