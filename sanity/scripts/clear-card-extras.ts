@@ -1,21 +1,21 @@
 import { getCliClient } from "sanity/cli";
 
 /**
- * One-off cleanup: remove card highlights from existing newsletters, and the
- * stray country reference on the 2025 Q2 video update (whose Countries field is
- * now hidden in the editor, so it can't be cleared by hand).
+ * One-off cleanup for fields removed from the newsletter schema:
+ *  - landingHighlights and listName are no longer used (cleared everywhere)
+ *  - the stray country on the 2025 Q2 video update (Countries field is now
+ *    hidden in the editor, so it can't be cleared by hand)
  *
- * Staging only unless MIGRATE_ALLOW_NON_STAGING=1.
+ * Unsetting fields that are no longer in the schema keeps the editor from
+ * flagging them as unknown fields. Staging only unless MIGRATE_ALLOW_NON_STAGING=1.
  */
 const client = getCliClient({ apiVersion: "2026-06-08" });
 const allowNonStaging = process.env.MIGRATE_ALLOW_NON_STAGING === "1";
 
-const targets: Record<string, string[]> = {
-  // 2025 Q2 Project Update (video) — drop the leftover Indonesia flag too.
-  "a2b87579-5125-4ed8-a673-4e8dbf12f15a": ["landingHighlights", "countries"],
-  // 2026 Global Impact Report — keep its countries, just drop highlights.
-  "newsletter-2026-global-impact": ["landingHighlights"],
-};
+// Cleared from every newsletter.
+const GLOBAL_UNSET = ["landingHighlights", "listName"];
+// Cleared from this doc only (the 2025 Q2 video update's leftover country).
+const COUNTRY_DOC = "a2b87579-5125-4ed8-a673-4e8dbf12f15a";
 
 async function run() {
   const dataset = client.config().dataset;
@@ -29,25 +29,32 @@ async function run() {
     return;
   }
 
-  // Patch both the published and draft version of each target, where present.
-  const candidateIds = Object.keys(targets).flatMap((id) => [
-    id,
-    `drafts.${id}`,
-  ]);
+  const ids: string[] = await client.fetch(`*[_type == "newsletter"]._id`);
+  // Include drafts as well as published versions.
+  const candidateIds = Array.from(
+    new Set(
+      ids.flatMap((id) => {
+        const base = id.replace(/^drafts\./, "");
+        return [base, `drafts.${base}`];
+      }),
+    ),
+  );
   const existing: string[] = await client.fetch(`*[_id in $ids]._id`, {
     ids: candidateIds,
   });
 
   const tx = client.transaction();
   for (const docId of existing) {
-    const fields = targets[docId.replace(/^drafts\./, "")];
-    if (!fields) continue;
+    const fields =
+      docId.replace(/^drafts\./, "") === COUNTRY_DOC
+        ? [...GLOBAL_UNSET, "countries"]
+        : GLOBAL_UNSET;
     tx.patch(docId, (p) => p.unset(fields));
     console.log(`  ${docId}: unset ${fields.join(", ")}`);
   }
 
   await tx.commit();
-  console.log("\nDone clearing card highlights and the stray country.\n");
+  console.log("\nDone clearing removed fields.\n");
 }
 
 run().catch((error) => {

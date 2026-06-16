@@ -58,7 +58,6 @@ function archiveDoc(year: "2024" | "2025") {
     _type: "newsletter",
     newsletterType: "globalImpact",
     title: `${year} Newsletter`,
-    listName: `${year}`,
     slug: { _type: "slug", current: `${year}` },
     publishDate: `${year}-12-31`,
     eyebrow: archive.overline,
@@ -116,7 +115,6 @@ function templateDoc() {
     _type: "newsletter",
     newsletterType: "globalImpact",
     title: "2025 Newsletter",
-    listName: "2025",
     slug: { _type: "slug", current: "2025" },
     publishDate: "2025-12-31",
     eyebrow: "2025 Newsletter",
@@ -200,11 +198,6 @@ async function seed() {
     transaction.createOrReplace(doc);
     console.log(`  ${doc._id}`);
   }
-
-  // Give the existing 2026 newsletter an example list name (only if unset).
-  transaction.patch("newsletter-2026-global-impact", (p) =>
-    p.setIfMissing({ listName: "2026 Q1" }),
-  );
 
   await transaction.commit();
   console.log("\nSeeded the 2024 archive and the 2025 template newsletter.\n");

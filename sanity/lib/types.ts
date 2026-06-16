@@ -208,7 +208,6 @@ export type CmsNewsletterSummary = {
   _id: string;
   title: string;
   summary?: string;
-  listName?: string;
   slug: string;
   publishDate: string;
   landingTitle?: string;

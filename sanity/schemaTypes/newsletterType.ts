@@ -112,8 +112,7 @@ export const newsletterType = defineType({
       title: "Hero image",
       type: "imageWithAlt",
       group: "content",
-      description:
-        "Used as the home/feed card image. For video updates, the video's thumbnail is used automatically — upload here only to override it.",
+      description: "Used as the home/feed card image.",
     }),
     defineField({
       name: "countries",
@@ -152,15 +151,6 @@ export const newsletterType = defineType({
         "Add and reorder approved sections. The website controls their responsive layout.",
       of: sharedSectionMembers,
       validation: (rule) => rule.required().min(1).max(20),
-    }),
-    defineField({
-      name: "listName",
-      title: "List name",
-      type: "string",
-      group: "landing",
-      description:
-        "Short label shown on the home/feed card and in the menu, e.g. '2026 Q1' or '2025'. Defaults to the year.",
-      validation: (rule) => rule.max(40),
     }),
     defineField({
       name: "landingTitle",
