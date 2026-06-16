@@ -15,6 +15,16 @@ function isSupportedFlag(name: string): name is FlagName {
   return supportedFlags.includes(name as FlagName);
 }
 
+// Derives a YouTube thumbnail URL from a video/embed URL, for use as the card
+// image when no hero image is uploaded. hqdefault is always available.
+function youtubeThumbnail(url?: string): string | undefined {
+  if (!url) return undefined;
+  const match = url.match(
+    /(?:youtube\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([\w-]{11})/,
+  );
+  return match ? `https://i.ytimg.com/vi/${match[1]}/hqdefault.jpg` : undefined;
+}
+
 export async function getNewsletterLandingItems(): Promise<
   NewsletterSummary[]
 > {
@@ -36,6 +46,7 @@ export async function getNewsletterLandingItems(): Promise<
         newsletter.countries
           ?.map((country) => country.name)
           .filter(isSupportedFlag) ?? [],
+      // Uploaded hero image wins; otherwise fall back to the video thumbnail.
       image: newsletter.heroImage
         ? {
             src: urlFor(newsletter.heroImage)
@@ -48,7 +59,12 @@ export async function getNewsletterLandingItems(): Promise<
               newsletter.landingTitle ||
               newsletter.title,
           }
-        : undefined,
+        : youtubeThumbnail(newsletter.videoUrl)
+          ? {
+              src: youtubeThumbnail(newsletter.videoUrl) as string,
+              alt: newsletter.landingTitle || newsletter.title,
+            }
+          : undefined,
     };
   });
   // Only show CMS-managed newsletters, not the legacy hardcoded entries.

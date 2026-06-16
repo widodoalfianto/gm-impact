@@ -99,6 +99,7 @@ export const NEWSLETTER_INDEX_QUERY = defineQuery(`
       landingSummary,
       landingHighlights,
       heroImage,
+      "videoUrl": sections[_type == "embedBlock" || _type == "videoSection"][0].url,
       "countries": countries[]->{
         name,
         isoCode

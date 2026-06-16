@@ -215,6 +215,7 @@ export type CmsNewsletterSummary = {
   landingSummary?: string;
   landingHighlights?: string[];
   heroImage?: CmsImage;
+  videoUrl?: string;
   countries?: Array<{
     name: string;
     isoCode: string;

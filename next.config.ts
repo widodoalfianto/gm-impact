@@ -7,15 +7,23 @@ const sanityProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: sanityProjectId
-      ? [
-          {
-            protocol: "https",
-            hostname: "cdn.sanity.io",
-            pathname: `/images/${sanityProjectId}/**`,
-          },
-        ]
-      : [],
+    remotePatterns: [
+      // YouTube thumbnails, used as the card image fallback for video updates.
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
+      ...(sanityProjectId
+        ? [
+            {
+              protocol: "https" as const,
+              hostname: "cdn.sanity.io",
+              pathname: `/images/${sanityProjectId}/**`,
+            },
+          ]
+        : []),
+    ],
   },
 };
 

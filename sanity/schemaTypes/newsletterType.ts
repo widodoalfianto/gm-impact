@@ -99,6 +99,8 @@ export const newsletterType = defineType({
       title: "Hero image",
       type: "imageWithAlt",
       group: "content",
+      description:
+        "Used as the home/feed card image. For video updates, the video's thumbnail is used automatically — upload here only to override it.",
     }),
     defineField({
       name: "countries",
