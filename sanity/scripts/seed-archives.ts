@@ -67,9 +67,6 @@ function archiveDoc(year: "2024" | "2025") {
     summary: archive.intro,
     landingTitle: archive.stories[0]?.title ?? `${year} Newsletter`,
     landingSummary: archive.intro.slice(0, 260),
-    landingHighlights: archive.stats
-      .slice(0, 3)
-      .map((stat) => `${stat.value} ${stat.label}`.slice(0, 36)),
     featured: false,
     hideFromIndex: false,
     sections: [
@@ -128,7 +125,6 @@ function templateDoc() {
     summary: "Give a short summary here that details this mission's impacts",
     landingTitle: "2025 mission updates.",
     landingSummary: "Give a short summary here that details this mission's impacts",
-    landingHighlights: ["Placeholder", "Edit me"],
     featured: false,
     hideFromIndex: false,
     sections: [

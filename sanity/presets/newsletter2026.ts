@@ -135,11 +135,6 @@ export const newsletter2026Value = {
   landingTitle: "Five nations reached in the first half of 2026.",
   landingSummary:
     "New believers baptized, Bibles placed in hands, pastors equipped, and medical care extended across Nepal, Algeria, Indonesia, Afghanistan, and Somalia.",
-  landingHighlights: [
-    "5 Nations",
-    "193+ New Believers",
-    "1,000 Bibles Given",
-  ],
   featured: true,
   hideFromIndex: false,
   seoTitle: "2026 Global Missions Impact Report",

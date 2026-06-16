@@ -44,7 +44,6 @@ async function seed() {
     landingTitle: "A mission trip shaped by presence, prayer, and partnership.",
     landingSummary:
       "This demo shows the proposed editing workflow before real mission data is migrated.",
-    landingHighlights: ["2 Countries", "1 Field Team", "Demo Content"],
     featured: false,
     hideFromIndex: true,
     sections: [
