@@ -4,6 +4,7 @@ import {
   AccentText,
   CmsBlockView,
   CmsImageView,
+  EditDocProvider,
 } from "./cms-newsletter-sections";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
@@ -30,6 +31,7 @@ export function CmsNewsletterPreview({
   const bodySections = leadVideo ? sections.slice(1) : sections;
 
   return (
+    <EditDocProvider id={newsletter._id} type="newsletter">
     <div className="gm-page" style={pageStyle}>
       <ResponsiveNav />
       {stegaClean(newsletter.newsletterType) === "globalImpact" ? (
@@ -81,5 +83,6 @@ export function CmsNewsletterPreview({
         }
       `}</style>
     </div>
+    </EditDocProvider>
   );
 }

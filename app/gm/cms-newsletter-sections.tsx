@@ -2,9 +2,15 @@
 
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import { stegaClean } from "next-sanity";
+import { createDataAttribute, stegaClean } from "next-sanity";
 import { Image } from "next-sanity/image";
-import { useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   DISPLAY,
   SANS,
@@ -25,6 +31,7 @@ import {
 import { CountryFlag, CountryMap, StatIllustration } from "./visuals";
 import { useCountUpValues } from "./use-count-up-stats";
 import { getCountryArtName } from "../../lib/gm-visual-library";
+import { dataset, projectId } from "../../sanity/env";
 import { urlFor } from "../../sanity/lib/image";
 import type {
   CmsActionLink,
@@ -33,6 +40,44 @@ import type {
   CmsImage,
   CmsMetric,
 } from "../../sanity/lib/types";
+
+// Lets a deeply-nested block (e.g. a country card) emit a Visual Editing
+// "edit" attribute so clicking it in the Presentation preview opens that exact
+// item in the Studio. The provider is a client component so it can be dropped
+// into the server-rendered page/newsletter views.
+const EditDocContext = createContext<{
+  id: string;
+  type: string;
+} | null>(null);
+
+export function EditDocProvider({
+  id,
+  type,
+  children,
+}: {
+  id: string;
+  type: string;
+  children: ReactNode;
+}) {
+  return (
+    <EditDocContext.Provider value={{ id, type }}>
+      {children}
+    </EditDocContext.Provider>
+  );
+}
+
+function useEditAttribute(path: string): string | undefined {
+  const doc = useContext(EditDocContext);
+  if (!doc) return undefined;
+  return createDataAttribute({
+    projectId,
+    dataset,
+    baseUrl: "/studio",
+    id: doc.id,
+    type: doc.type,
+    path,
+  }).toString();
+}
 
 const knownCountries: readonly CountryName[] = [
   "Nepal",
@@ -274,13 +319,18 @@ function StatsGrid({
 
 function CountryCard({
   region,
+  sectionKey,
   open,
   toggle,
 }: {
   region: CmsCountryImpact;
+  sectionKey: string;
   open: boolean;
   toggle: () => void;
 }) {
+  const editAttribute = useEditAttribute(
+    `sections[_key=="${sectionKey}"].regions[_key=="${region._key}"]`,
+  );
   const countryName = region.country?.name;
   const cleanCountryName = countryName ? stegaClean(countryName) : undefined;
   const cleanVisualKey = region.country?.visualKey
@@ -297,6 +347,7 @@ function CountryCard({
   return (
     <div
       className={`gm-region-card${open ? " is-open" : ""}`}
+      data-sanity={editAttribute}
       onClick={toggle}
       onKeyDown={(event) => {
         if (event.target !== event.currentTarget) return;
@@ -462,6 +513,7 @@ function CountryGrid({
             <CountryCard
               key={region._key}
               region={region}
+              sectionKey={section._key}
               open={expanded === index}
               toggle={() =>
                 setExpanded((current) => (current === index ? null : index))

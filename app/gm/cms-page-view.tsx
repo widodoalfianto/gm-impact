@@ -1,4 +1,4 @@
-import { CmsBlockView } from "./cms-newsletter-sections";
+import { CmsBlockView, EditDocProvider } from "./cms-newsletter-sections";
 import { DISPLAY, SANS, THEME } from "./data";
 import { SiteFooter } from "./footer";
 import { ResponsiveNav } from "./responsive-nav";
@@ -14,6 +14,7 @@ export function CmsPageView({
   settings?: CmsSiteSettings | null;
 }) {
   return (
+    <EditDocProvider id={page._id} type="page">
     <div className="gm-page" style={pageStyle}>
       <ResponsiveNav />
       <main>
@@ -33,5 +34,6 @@ export function CmsPageView({
         }
       `}</style>
     </div>
+    </EditDocProvider>
   );
 }
