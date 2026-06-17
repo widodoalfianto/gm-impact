@@ -23,6 +23,7 @@ html {
   min-height: 32px;
   text-decoration: none;
   transition: color 180ms ease, transform 180ms ease;
+  white-space: nowrap;
 }
 
 .gm-brand-link {
@@ -41,11 +42,35 @@ html {
   position: relative;
 }
 
+.gm-nav-item-dropdown::after {
+  content: "";
+  height: 12px;
+  left: -8px;
+  position: absolute;
+  right: -8px;
+  top: 100%;
+}
+
 .gm-nav-caret {
-  font-size: 11px;
-  line-height: 1;
-  margin-left: 4px;
+  align-self: center;
+  display: block;
+  flex: 0 0 auto;
+  height: 8px;
+  margin-left: 6px;
+  overflow: visible;
+  position: relative;
+  top: 2px;
   transition: transform 180ms ease;
+  width: 14px;
+}
+
+.gm-nav-caret path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
 }
 
 .gm-nav-item:hover .gm-nav-caret,
@@ -61,8 +86,11 @@ html {
   display: grid;
   gap: 2px;
   left: 50%;
+  max-height: min(70vh, 520px);
   min-width: 190px;
   opacity: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 8px;
   pointer-events: none;
   position: absolute;
@@ -250,6 +278,405 @@ html {
   border-color: var(--gm-hero-accent);
   box-shadow: 0 18px 42px rgba(64, 64, 64, 0.1);
   transform: translateY(-2px);
+}
+
+.gm-cms-empty {
+  align-items: center;
+  background: var(--gm-bg, #f8f6f0);
+  color: var(--gm-text, #404040);
+  display: flex;
+  font-family: var(--gm-sans, system-ui, sans-serif);
+  justify-content: center;
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.gm-cms-empty > div {
+  max-width: 680px;
+}
+
+.gm-cms-empty span,
+.gm-cms-hero > span,
+.gm-cms-story > div > span {
+  color: var(--gm-hero-accent);
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.gm-cms-empty h1 {
+  font-size: clamp(44px, 8vw, 76px);
+  line-height: 0.98;
+  margin: 16px 0 22px;
+}
+
+.gm-cms-empty p {
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.gm-cms-hero {
+  background: var(--gm-bg);
+  padding: 96px 28px 72px;
+  text-align: center;
+}
+
+.gm-cms-hero h1 {
+  color: var(--gm-text);
+  font-size: clamp(58px, 10vw, 126px);
+  font-weight: 500;
+  line-height: 0.9;
+  margin: 22px auto 30px;
+  max-width: 1120px;
+}
+
+.gm-cms-hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.gm-cms-hero > p {
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 300;
+  line-height: 1.35;
+  margin: 0 auto;
+  max-width: 820px;
+}
+
+.gm-cms-country-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 34px auto 0;
+}
+
+.gm-cms-country-list span {
+  border: 1px solid var(--gm-divider);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 13px;
+}
+
+.gm-cms-hero-image {
+  aspect-ratio: 16 / 8;
+  border-radius: 8px;
+  margin: 58px auto 0;
+  max-width: 1180px;
+  overflow: hidden;
+}
+
+.gm-cms-hero-image img,
+.gm-cms-story-image,
+.gm-cms-gallery img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.gm-cms-section {
+  background: var(--gm-bg);
+  padding: 84px 28px;
+}
+
+.gm-cms-prayer {
+  background: var(--gm-accent-light);
+}
+
+/* Per-section accent band (admin choice). The inner section goes transparent
+   so the warm band shows through, and the curved dividers blend with it. */
+.gm-cms-block-accent {
+  background: var(--gm-accent-light);
+}
+
+.gm-cms-block-accent .gm-cms-section {
+  background: transparent;
+}
+
+.gm-cms-section-inner,
+.gm-cms-story,
+.gm-cms-quote blockquote {
+  margin: 0 auto;
+  max-width: 1080px;
+}
+
+.gm-cms-section h2 {
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 0.98;
+  margin: 0 0 24px;
+}
+
+.gm-cms-section-inner > p,
+.gm-cms-rich-text,
+.gm-cms-cta p {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 760px;
+}
+
+.gm-cms-metric-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  margin-top: 42px;
+}
+
+.gm-cms-metric {
+  border-top: 1px solid color-mix(in srgb, var(--gm-text) 22%, transparent);
+  display: grid;
+  gap: 8px;
+  padding-top: 18px;
+}
+
+.gm-cms-metric .gm-stat-art {
+  margin: 0 0 6px;
+  width: min(100%, 96px);
+}
+
+.gm-cms-metric strong {
+  color: var(--gm-stat);
+  font-family: var(--gm-display);
+  font-size: clamp(44px, 6vw, 72px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.gm-cms-metric span {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.gm-cms-story {
+  display: grid;
+  gap: 52px;
+}
+
+.gm-cms-story.has-image {
+  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+}
+
+.gm-cms-story-image {
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+}
+
+.gm-cms-rich-text p {
+  margin: 0 0 20px;
+}
+
+/* Tailwind's preflight strips list styling; restore readable bullets/numbers
+   and spacing for rich-text bodies. */
+.gm-cms-rich-text ul,
+.gm-cms-rich-text ol {
+  margin: 0 0 24px;
+  padding-left: 1.5em;
+}
+
+.gm-cms-rich-text ul {
+  list-style: disc;
+}
+
+.gm-cms-rich-text ol {
+  list-style: decimal;
+}
+
+.gm-cms-rich-text li {
+  margin: 0 0 10px;
+  padding-left: 6px;
+}
+
+.gm-cms-rich-text li::marker {
+  color: var(--gm-hero-accent);
+}
+
+.gm-cms-rich-text strong {
+  font-weight: 700;
+}
+
+.gm-cms-quote blockquote {
+  text-align: center;
+}
+
+.gm-cms-quote blockquote p {
+  color: var(--gm-hero-accent);
+  font-family: var(--gm-display);
+  font-size: clamp(44px, 6vw, 78px);
+  font-style: italic;
+  line-height: 1.05;
+  margin: 0 auto 28px;
+}
+
+.gm-cms-quote blockquote footer {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.gm-cms-gallery {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 42px;
+}
+
+.gm-cms-gallery figure {
+  margin: 0;
+}
+
+.gm-cms-gallery img {
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+}
+
+.gm-cms-gallery figcaption {
+  color: var(--gm-text-muted);
+  font-size: 14px;
+  margin-top: 9px;
+}
+
+.gm-cms-video {
+  aspect-ratio: 16 / 9;
+  margin-top: 36px;
+}
+
+.gm-cms-video iframe {
+  border: 0;
+  border-radius: 8px;
+  height: 100%;
+  width: 100%;
+}
+
+.gm-cms-prayer ul {
+  display: grid;
+  gap: 14px;
+  list-style: none;
+  margin: 36px 0 0;
+  max-width: 820px;
+  padding: 0;
+}
+
+.gm-cms-prayer li {
+  border-top: 1px solid color-mix(in srgb, var(--gm-text) 22%, transparent);
+  font-size: 19px;
+  line-height: 1.5;
+  padding: 17px 0 0 28px;
+  position: relative;
+}
+
+.gm-cms-prayer li::before {
+  color: var(--gm-hero-accent);
+  content: "+";
+  left: 0;
+  position: absolute;
+}
+
+.gm-cms-cta {
+  text-align: center;
+}
+
+.gm-cms-cta p {
+  margin: 0 auto 30px;
+}
+
+.gm-cms-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.gm-cms-hero-block {
+  text-align: center;
+}
+
+.gm-cms-accent {
+  color: var(--gm-hero-accent);
+  font-family: var(--gm-display);
+  font-style: italic;
+}
+
+.gm-cms-hero-block .gm-cms-actions {
+  justify-content: center;
+}
+
+.gm-cms-imagetext.image-left .gm-cms-story-image {
+  order: -1;
+}
+
+.gm-cms-faq-list {
+  display: grid;
+  gap: 0;
+  margin-top: 36px;
+  max-width: 820px;
+}
+
+.gm-cms-faq-list details {
+  border-top: 1px solid color-mix(in srgb, var(--gm-text) 22%, transparent);
+  padding: 18px 0;
+}
+
+.gm-cms-faq-list summary {
+  cursor: pointer;
+  font-size: 19px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.gm-cms-faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.gm-cms-faq-list summary::after {
+  color: var(--gm-hero-accent);
+  content: "+";
+  float: right;
+}
+
+.gm-cms-faq-list details[open] summary::after {
+  content: "–";
+}
+
+.gm-cms-faq-list details p {
+  margin: 14px 0 0;
+}
+
+.gm-cms-logos {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.gm-cms-logos img {
+  height: 56px;
+  object-fit: contain;
+  width: auto;
+}
+
+@media (max-width: 760px) {
+  .gm-cms-story.has-image {
+    grid-template-columns: 1fr;
+  }
+
+  .gm-cms-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .gm-cms-hero,
+  .gm-cms-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .gm-newsletter-image {
@@ -543,7 +970,8 @@ html {
 .gm-stats-grid {
   display: grid;
   gap: 56px 18px;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 200px));
+  justify-content: center;
   margin: 0 auto;
   max-width: 1320px;
   text-align: center;
@@ -661,7 +1089,7 @@ html {
   outline-offset: 4px;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1240px) {
   .gm-site-nav {
     display: none;
   }
@@ -677,10 +1105,6 @@ html {
 }
 
 @media (max-width: 980px) {
-  .gm-site-nav {
-    gap: 12px 16px;
-  }
-
   .gm-newsletter-card {
     grid-template-columns: 1fr;
   }
@@ -694,7 +1118,6 @@ html {
   }
 
   .gm-stats-grid {
-    grid-template-columns: repeat(3, minmax(160px, 1fr));
     max-width: 760px;
   }
 
@@ -745,7 +1168,6 @@ html {
 
   .gm-stats-grid {
     gap: 48px 20px;
-    grid-template-columns: repeat(2, minmax(140px, 1fr));
   }
 
   .gm-stat-art {
@@ -762,6 +1184,6 @@ html {
 
 @media (max-width: 420px) {
   .gm-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 200px));
   }
 }

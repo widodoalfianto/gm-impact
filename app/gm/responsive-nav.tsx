@@ -3,11 +3,24 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import type { CSSProperties } from "react";
-import { MAIN_SITE_URL, NAV_ITEMS, NEWSLETTER_ITEMS, SANS, THEME, type NavItem } from "./data";
+import { MAIN_SITE_URL, NAV_ITEMS, SANS, THEME, type NavItem } from "./data";
 import { titleTight } from "./typography";
 
 function hasChildren(item: NavItem): item is NavItem & { children: readonly NavItem[] } {
   return Array.isArray(item.children) && item.children.length > 0;
+}
+
+function DropdownIndicator() {
+  return (
+    <svg
+      className="gm-nav-caret"
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 18 10"
+    >
+      <path d="M2 2L9 8L16 2" />
+    </svg>
+  );
 }
 
 function MainSiteDropdownLinks({
@@ -35,18 +48,6 @@ function MainSiteDropdownLinks({
   );
 }
 
-function NewsletterDropdownLinks() {
-  return (
-    <>
-      {NEWSLETTER_ITEMS.map(item => (
-        <Link key={item.label} href={item.href} className="gm-nav-dropdown-link" role="menuitem">
-          {item.label}
-        </Link>
-      ))}
-    </>
-  );
-}
-
 function MobileMainSiteLinks({ closeMenu }: { closeMenu: () => void }) {
   return (
     <>
@@ -63,21 +64,6 @@ function MobileMainSiteLinks({ closeMenu }: { closeMenu: () => void }) {
             ))
             : null}
         </React.Fragment>
-      ))}
-    </>
-  );
-}
-
-function MobileNewsletterLinks({ closeMenu }: { closeMenu: () => void }) {
-  return (
-    <>
-      <Link href="/newsletters" className="gm-mobile-link" onClick={closeMenu}>
-        All Newsletters
-      </Link>
-      {NEWSLETTER_ITEMS.map(item => (
-        <Link key={item.label} href={item.href} className="gm-mobile-sublink" onClick={closeMenu}>
-          {item.label}
-        </Link>
       ))}
     </>
   );
@@ -114,10 +100,17 @@ export function ResponsiveNav() {
 
       <div className="gm-site-nav" style={{ fontSize: 14, fontWeight: 500 }}>
         {NAV_ITEMS.map(item => (
-          <div key={item.label} className="gm-nav-item">
-            <a href={item.href} className="gm-nav-link">
+          <div
+            key={item.label}
+            className={`gm-nav-item${hasChildren(item) ? " gm-nav-item-dropdown" : ""}`}
+          >
+            <a
+              href={item.href}
+              className="gm-nav-link"
+              aria-haspopup={hasChildren(item) ? "menu" : undefined}
+            >
               {item.label}
-              {hasChildren(item) ? <span className="gm-nav-caret">⌄</span> : null}
+              {hasChildren(item) ? <DropdownIndicator /> : null}
             </a>
             {hasChildren(item) ? (
               <div className="gm-nav-dropdown" role="menu" aria-label={`${item.label} links`}>
@@ -133,10 +126,10 @@ export function ResponsiveNav() {
       </div>
 
       <div className="gm-compact-main-nav" style={{ fontSize: 14, fontWeight: 600 }}>
-        <div className="gm-nav-item">
-          <a href={MAIN_SITE_URL} className="gm-nav-link">
+        <div className="gm-nav-item gm-nav-item-dropdown">
+          <a href={MAIN_SITE_URL} className="gm-nav-link" aria-haspopup="menu">
             Main Site
-            <span className="gm-nav-caret">⌄</span>
+            <DropdownIndicator />
           </a>
           <div className="gm-nav-dropdown" role="menu" aria-label="Main site links">
             <MainSiteDropdownLinks nestedStyle={{ paddingLeft: 22 }} />
@@ -146,13 +139,9 @@ export function ResponsiveNav() {
 
       <div className="gm-newsletter-nav" style={{ fontSize: 14, fontWeight: 600 }}>
         <div className="gm-nav-item">
-          <Link href="/newsletters" className="gm-nav-link">
+          <Link href="/" className="gm-nav-link">
             Newsletters
-            <span className="gm-nav-caret">⌄</span>
           </Link>
-          <div className="gm-nav-dropdown gm-nav-dropdown-right" role="menu" aria-label="Newsletter links">
-            <NewsletterDropdownLinks />
-          </div>
         </div>
       </div>
 
@@ -174,9 +163,10 @@ export function ResponsiveNav() {
       {mobileMenuOpen ? (
         <div id="gm-mobile-menu" className="gm-mobile-panel">
           <div>
-            <div className="gm-mobile-section-title">Newsletters</div>
             <div className="gm-mobile-links">
-              <MobileNewsletterLinks closeMenu={closeMobileMenu} />
+              <Link href="/" className="gm-mobile-link" onClick={closeMobileMenu}>
+                Newsletters
+              </Link>
             </div>
           </div>
           <div>

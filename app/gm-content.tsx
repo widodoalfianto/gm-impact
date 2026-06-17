@@ -4,19 +4,17 @@ import Link from "next/link";
 import React, { useState } from "react";
 import {
   DISPLAY,
-  ARCHIVE_NEWSLETTERS,
   GIVE_URL,
-  NEWSLETTERS,
   REGIONS,
   SANS,
   SERIF,
   STAT_TARGETS,
   STATS,
   THEME,
-  type ArchiveNewsletter,
   type NewsletterSummary,
   formatStatNumber,
 } from "./gm/data";
+import { AccentText } from "./gm/cms-newsletter-sections";
 import { SiteFooter } from "./gm/footer";
 import { ResponsiveNav } from "./gm/responsive-nav";
 import "./gm/styles.css";
@@ -24,6 +22,7 @@ import { pageStyle } from "./gm/theme-vars";
 import { bodyStyle, h2Style, heroLightTitle, overline, titleAccent, titleTight } from "./gm/typography";
 import { useCountUpStats } from "./gm/use-count-up-stats";
 import { CountryFlag, CountryMap, StatIllustration } from "./gm/visuals";
+import type { CmsHome } from "../sanity/lib/types";
 
 function NewsletterCardVisual({ newsletter }: { newsletter: NewsletterSummary }) {
   if (newsletter.image) {
@@ -33,7 +32,7 @@ function NewsletterCardVisual({ newsletter }: { newsletter: NewsletterSummary })
         alt={newsletter.image.alt}
         fill
         sizes="(max-width: 980px) 100vw, 44vw"
-        style={{ objectFit: "cover", filter: "grayscale(100%)" }}
+        style={{ objectFit: "cover" }}
         priority={newsletter.year === "2026"}
       />
     );
@@ -151,8 +150,12 @@ function PartnerSection() {
 
 export function GlobalMissionsImpactPage({
   variant = "update",
+  newsletters = [],
+  home,
 }: {
   variant?: "update" | "newsletter";
+  newsletters?: readonly NewsletterSummary[];
+  home?: CmsHome | null;
 } = {}) {
   const [expanded, setExpanded] = useState<number | null>(null);
   const { animatedStats, statsRef } = useCountUpStats();
@@ -173,7 +176,7 @@ export function GlobalMissionsImpactPage({
         textAlign: "center",
       }}>
         <div style={{ maxWidth: 1120, margin: "0 auto" }}>
-          <span style={overline}>Newsletters</span>
+          <span style={overline}>{home?.eyebrow || "Newsletters"}</span>
           <h1 style={{
             fontFamily: SERIF,
             fontSize: "clamp(54px, 9vw, 112px)",
@@ -184,14 +187,19 @@ export function GlobalMissionsImpactPage({
             color: T.text,
             ...titleTight,
           }}>
-            Global Missions Updates
+            {home?.heading?.length ? (
+              <AccentText value={home.heading} />
+            ) : (
+              "Global Missions Updates"
+            )}
           </h1>
           <p style={{ ...bodyStyle, marginBottom: 48 }}>
-            Read the latest stories of sending, discipleship, care, and church planting among unreached communities.
+            {home?.intro ||
+              "Read the latest stories of sending, discipleship, care, and church planting among unreached communities."}
           </p>
           <div className="gm-newsletter-list">
-            {NEWSLETTERS.map((newsletter) => (
-              <NewsletterLandingCard key={newsletter.year} newsletter={newsletter} />
+            {newsletters.map((newsletter) => (
+              <NewsletterLandingCard key={newsletter.href} newsletter={newsletter} />
             ))}
           </div>
         </div>
@@ -383,173 +391,18 @@ export function GlobalMissionsImpactPage({
   );
 }
 
-export function NewsletterLandingPage() {
-  return <GlobalMissionsImpactPage variant="newsletter" />;
-}
-
-export function ArchiveNewsletterPage({ year }: { year: "2024" | "2025" }) {
-  const archive: ArchiveNewsletter = ARCHIVE_NEWSLETTERS[year];
-  const T = THEME;
-
+export function NewsletterLandingPage({
+  newsletters = [],
+  home,
+}: {
+  newsletters?: readonly NewsletterSummary[];
+  home?: CmsHome | null;
+} = {}) {
   return (
-    <div className="gm-page" style={pageStyle}>
-      <ResponsiveNav />
-
-      <section id={`newsletter-${archive.year}`} style={{
-        background: T.heroBg,
-        color: T.navText,
-        padding: "94px 28px 88px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{ position: "relative" }}>
-          <span style={overline}>{archive.overline}</span>
-          <h1 style={{
-            fontFamily: SANS,
-            fontSize: "clamp(58px, 11vw, 132px)",
-            fontWeight: 500,
-            lineHeight: 0.92,
-            margin: "0 auto 34px",
-            maxWidth: 1120,
-            color: T.navText,
-            ...titleTight,
-          }}>
-            <span style={heroLightTitle}>{archive.title}</span><br />
-            <em style={{ color: T.heroAccent, fontFamily: DISPLAY, fontStyle: "italic", fontWeight: 400, ...titleTight }}>
-              {archive.accent}
-            </em>
-          </h1>
-          <p style={{
-            fontSize: "clamp(20px, 2.6vw, 28px)",
-            fontWeight: 300,
-            lineHeight: 1.2,
-            color: T.navText,
-            maxWidth: 780,
-            margin: "0 auto 52px",
-          }}>
-            {archive.intro}
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#archive-impact" className="gm-hero-action gm-hero-primary">See Highlights ↓</a>
-            <a href="#planters-giving" className="gm-hero-action gm-hero-secondary">Partner With Us</a>
-          </div>
-        </div>
-      </section>
-
-      <div aria-hidden="true" style={{
-        height: "clamp(96px, 12vw, 170px)",
-        background: T.heroBg,
-        overflow: "hidden",
-        marginTop: -2,
-        marginBottom: -2,
-      }}>
-        <svg viewBox="0 0 1440 180" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
-          <path
-            d="M0 180 L0 148 C270 148 440 122 650 76 C900 22 1135 8 1440 0 L1440 180 Z"
-            fill={T.accentLight}
-          />
-        </svg>
-      </div>
-
-      <section id="archive-impact" style={{ background: T.accentLight, padding: "56px 28px 72px" }}>
-        <p style={{
-          textAlign: "center",
-          fontFamily: SANS,
-          fontSize: 13,
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          fontWeight: 600,
-          color: T.textMuted,
-          marginBottom: 52,
-        }}>{archive.year} Mission Highlights</p>
-        <div className="gm-archive-stats-grid">
-          {archive.stats.map(({ value, label, art }) => (
-            <div key={label} className="gm-stat-card">
-              <StatIllustration kind={art} label={label} />
-              <div style={{
-                fontFamily: DISPLAY,
-                fontSize: "clamp(42px, 4.8vw, 64px)",
-                fontWeight: 400,
-                color: T.stat,
-                lineHeight: 1,
-                marginBottom: 10,
-                fontKerning: "normal",
-                fontFeatureSettings: "\"kern\" 1",
-                fontVariantNumeric: "tabular-nums",
-                letterSpacing: 0,
-                whiteSpace: "nowrap",
-                width: "100%",
-              }}>{value}</div>
-              <div style={{ fontSize: 15, fontWeight: 400, color: T.textMuted, letterSpacing: "0.04em" }}>{label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <div aria-hidden="true" style={{
-        height: "clamp(86px, 11vw, 150px)",
-        background: T.accentLight,
-        overflow: "hidden",
-        marginTop: -2,
-        marginBottom: -2,
-      }}>
-        <svg viewBox="0 0 1440 180" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
-          <path
-            d="M0 180 L0 58 C190 106 388 138 625 90 C830 48 1012 38 1216 78 C1304 95 1378 112 1440 118 L1440 180 Z"
-            fill={T.bg}
-          />
-        </svg>
-      </div>
-
-      <section id="stories" style={{ padding: "56px 28px 96px", background: T.bg }}>
-        <div style={{ maxWidth: 1120, margin: "0 auto", textAlign: "center" }}>
-          <span style={overline}>Mission Stories</span>
-          <h2 style={h2Style}>{archive.year} newsletter notes.</h2>
-          <p style={{ ...bodyStyle, marginBottom: 50 }}>
-            These sections are written in the same visual language as the 2026 update, with short summaries, quick numbers, and clear source links where available.
-          </p>
-          <div className="gm-archive-story-grid">
-            {archive.stories.map((story) => (
-              <article key={story.title} className="gm-archive-story-card">
-                <span className="gm-archive-story-eyebrow">{story.eyebrow}</span>
-                <h3 style={{
-                  fontFamily: SERIF,
-                  fontSize: "clamp(34px, 4.8vw, 58px)",
-                  fontWeight: 400,
-                  lineHeight: 0.98,
-                  margin: "0 0 22px",
-                  color: T.text,
-                  ...titleTight,
-                }}>{story.title}</h3>
-                <div className="gm-archive-story-body">
-                  {story.body.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-                <div className="gm-archive-story-stats">
-                  {story.stats.map(({ value, label }) => (
-                    <div key={label}>
-                      <div className="gm-archive-story-stat-value">{value}</div>
-                      <div className="gm-archive-story-stat-label">{label}</div>
-                    </div>
-                  ))}
-                </div>
-                {story.source ? (
-                  <a href={story.source.href} className="gm-text-link gm-archive-source-link">
-                    Source: {story.source.label} →
-                  </a>
-                ) : null}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <PartnerSection />
-      <SiteFooter />
-    </div>
+    <GlobalMissionsImpactPage
+      variant="newsletter"
+      newsletters={newsletters}
+      home={home}
+    />
   );
 }
-
-export default GlobalMissionsImpactPage;
