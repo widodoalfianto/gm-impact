@@ -107,6 +107,7 @@ export const newsletterTemplates = [
       ...sharedNewsletterDefaults,
       newsletterType: "globalImpact",
       title: "New Newsletter",
+      slug: { _type: "slug", current: "new-newsletter" },
       eyebrow: "Global Impact",
       heroHeading: pt("Newsletter heading"),
       heroAccent: "Accent line",
@@ -173,6 +174,7 @@ export const newsletterTemplates = [
     schemaType: "newsletter",
     value: {
       ...projectUpdateHero,
+      slug: { _type: "slug", current: "new-video-update" },
       sections: [
         {
           _type: "embedBlock",
@@ -207,6 +209,7 @@ export const newsletterTemplates = [
     schemaType: "newsletter",
     value: {
       ...projectUpdateHero,
+      slug: { _type: "slug", current: "new-image-update" },
       sections: [
         {
           _type: "storySection",
@@ -233,6 +236,7 @@ export const pageTemplates = [
     description: "A blank page with a hero and a text section to start from.",
     schemaType: "page",
     value: {
+      slug: { _type: "slug", current: "new-page" },
       sections: [
         { _type: "heroBlock", _key: "hero", eyebrow: "" },
         { _type: "richTextBlock", _key: "intro" },
