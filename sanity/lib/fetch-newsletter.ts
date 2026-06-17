@@ -21,9 +21,10 @@ export async function getHome() {
   }
 
   const { data } = await sanityFetch({
-    query: HOME_QUERY,
-    perspective: "published",
+    // No explicit perspective, so the live preview shows drafts (Presentation)
+    // while the public site still gets published content.
     stega: false,
+    query: HOME_QUERY,
     tags: ["homePage"],
   });
 
@@ -95,9 +96,11 @@ export async function getNewsletterSummaries() {
   }
 
   const { data } = await sanityFetch({
-    query: NEWSLETTER_INDEX_QUERY,
-    perspective: "published",
+    // No explicit perspective, so the live preview shows drafts (new/edited
+    // articles appear on the home feed in Presentation); the public site
+    // still gets only published content.
     stega: false,
+    query: NEWSLETTER_INDEX_QUERY,
     tags: ["newsletters"],
   });
 
