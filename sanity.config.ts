@@ -7,6 +7,7 @@ import { structureTool } from "sanity/structure";
 import {
   apiVersion,
   dataset,
+  previewOrigin,
   projectId,
 } from "./sanity/env";
 import {
@@ -34,7 +35,10 @@ export default defineConfig({
     presentationTool({
       title: "Studio",
       previewUrl: {
-        initial: "/",
+        // Absolute origin so the preview works from a standalone Studio
+        // (gm-impact.sanity.studio), not just the embedded /studio.
+        origin: previewOrigin,
+        preview: "/",
         previewMode: {
           enable: "/api/draft-mode/enable",
           disable: "/api/draft-mode/disable",
